@@ -1,4 +1,13 @@
 ﻿import "./byeie"; // loučíme se s IE
+import React from "react";
+import ReactDOM from "react-dom";
+import Kalkulacka from "./Kalkulacka.jsx";
+
+ReactDOM.render(
+    <Kalkulacka />,
+  document.getElementById('kalkulacka')
+);
+
 
 /*
 // snadné načtení souboru pro každého!

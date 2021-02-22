@@ -5,32 +5,40 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import DalsiButton from "./DalsiButton.jsx";
 
+const useStyles = makeStyles((theme) => {
+  return {
+    root: {
+      width: "100%",
+    },
+    heading: {
+      fontSize: theme.typography.pxToRem(16),
+      fontWeight: 700,
+      flexBasis: "33.33%",
+      flexShrink: 0,
+    },
+    secondaryHeading: {
+      fontSize: theme.typography.pxToRem(15),
+      color: theme.palette.text.secondary,
+    },
+    accordionDetailsInside: {
+      flexDirection: "column",
+      alignItems: "center",
+    },
+  };
+});
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-  },
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-    fontWeight: 700,
-    flexBasis: "33.33%",
-    flexShrink: 0,
-  },
-  secondaryHeading: {
-    fontSize: theme.typography.pxToRem(15),
-    color: theme.palette.text.secondary,
-  },
-}));
-
-const Kalkulacka = function() {
-
+const Kalkulacka = function () {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState("panel1");
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
-
+  function dalsiButtonClick(e) {
+    const cislo = expanded.match(/\d+/);
+    setExpanded(`panel${Number(cislo[0]) + 1}`);
+  }
   return (
     <div className={classes.root}>
       <Accordion
@@ -49,11 +57,12 @@ const Kalkulacka = function() {
             Tady může být klíďo ještě vysvětlivka.
           </Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails className={classes.accordionDetailsInside}>
           <Typography>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
             malesuada lacus ex, sit amet blandit leo lobortis eget.
           </Typography>
+          <DalsiButton onClick={dalsiButtonClick}></DalsiButton>
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -65,13 +74,16 @@ const Kalkulacka = function() {
           aria-controls="panel2a-content"
           id="panel2a-header"
         >
-          <Typography className={classes.heading}>2. Kdo dostane mandát?</Typography>
+          <Typography className={classes.heading}>
+            2. Kdo dostane mandát?
+          </Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails className={classes.accordionDetailsInside}>
           <Typography>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
             malesuada lacus ex, sit amet blandit leo lobortis eget.
           </Typography>
+          <DalsiButton onClick={dalsiButtonClick}></DalsiButton>
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -87,11 +99,12 @@ const Kalkulacka = function() {
             3. Mandátové číslo
           </Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails className={classes.accordionDetailsInside}>
           <Typography>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
             malesuada lacus ex, sit amet blandit leo lobortis eget.
           </Typography>
+          <DalsiButton onClick={dalsiButtonClick}></DalsiButton>
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -107,11 +120,12 @@ const Kalkulacka = function() {
             4. První skrutinium
           </Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails className={classes.accordionDetailsInside}>
           <Typography>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
             malesuada lacus ex, sit amet blandit leo lobortis eget.
           </Typography>
+          <DalsiButton onClick={dalsiButtonClick}></DalsiButton>
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -127,11 +141,12 @@ const Kalkulacka = function() {
             5. Rozdělení zbývajících mandátů
           </Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails className={classes.accordionDetailsInside}>
           <Typography>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
             malesuada lacus ex, sit amet blandit leo lobortis eget.
           </Typography>
+          <DalsiButton onClick={dalsiButtonClick}></DalsiButton>
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -147,11 +162,13 @@ const Kalkulacka = function() {
             6. Přikázání mandátů v krajích
           </Typography>
         </AccordionSummary>
-        <AccordionDetails>
+
+        <AccordionDetails className={classes.accordionDetailsInside}>
           <Typography>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
             malesuada lacus ex, sit amet blandit leo lobortis eget.
           </Typography>
+          <DalsiButton onClick={dalsiButtonClick}></DalsiButton>
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -165,13 +182,14 @@ const Kalkulacka = function() {
         >
           <Typography className={classes.heading}>
             7. Přikázání mandátů v krajích 2
-           </Typography>
+          </Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails className={classes.accordionDetailsInside}>
           <Typography>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
             malesuada lacus ex, sit amet blandit leo lobortis eget.
           </Typography>
+          <DalsiButton onClick={dalsiButtonClick}></DalsiButton>
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -185,9 +203,9 @@ const Kalkulacka = function() {
         >
           <Typography className={classes.heading}>
             8. Výsledné rozložení sil ve sněmovně
-           </Typography>
+          </Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails className={classes.accordionDetailsInside}>
           <Typography>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
             malesuada lacus ex, sit amet blandit leo lobortis eget.
