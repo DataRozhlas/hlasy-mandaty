@@ -6,6 +6,7 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import DalsiButton from "./DalsiButton.jsx";
+import SimpleSelect from "./SimpleSelect.jsx";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -51,17 +52,20 @@ const Kalkulacka = function () {
           id="panel1a-header"
         >
           <Typography className={classes.heading}>
-            1. Voliči „rozdají karty”
+            1. Voliči „rozdají karty" 🗳️
           </Typography>
           <Typography className={classes.secondaryHeading}>
-            Tady může být klíďo ještě vysvětlivka.
+            Záleží ale na přepočtu, jaké hry s nimi půjde hrát.
           </Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetailsInside}>
           <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
+            Jeden výsledek voleb 🍏🍏🍏🍎🍎🍌🍒🍐🍋 může vést pokaždé k trochu
+            jinému rozložení sil ve sněmovně 🍏🍏🍏🍏🍎🍎🍎🍌🍌🍒, i k jiné
+            vládě 🍏🍏🍏🍏🍎. Záleží na způsobu přepočtení hlasů na mandáty.{" "}
+            <strong>Vyberte, které sněmovní volby si chcete přepočítat</strong>.
           </Typography>
+          <SimpleSelect></SimpleSelect>
           <DalsiButton onClick={dalsiButtonClick}></DalsiButton>
         </AccordionDetails>
       </Accordion>
