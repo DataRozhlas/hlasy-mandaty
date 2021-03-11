@@ -30,5 +30,8 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "webpack": "^4.41.0"
+  },
+  "devDependencies": {
+    "xml-js": "^1.6.11"
   }
 }
