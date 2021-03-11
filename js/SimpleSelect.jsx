@@ -2,7 +2,6 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
@@ -16,13 +15,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SimpleSelect() {
+function SimpleSelect({setVysledek}) {
   const classes = useStyles();
   const [rok, setRok] = React.useState(2017);
 
   const handleChange = (event) => {
     setRok(event.target.value);
-    console.log(event.target.value);
+    const dataURL = `https://data.irozhlas.cz/hlasy-mandaty/data/vysledky${event.target.value}.json`;
+    fetch(dataURL)
+      .then((response) => response.json()) // nebo .text(), když to není json
+      .then((data) => {
+        setVysledek(data);
+      });
   };
 
   return (
@@ -39,7 +43,6 @@ function SimpleSelect() {
           <MenuItem value={2013}>2013 (vítěz ČSSD s B. Sobotkou)</MenuItem>
           <MenuItem value={2010}>2010 (vítěz ČSSD s J. Paroubkem)</MenuItem>
           <MenuItem value={2006}>2006 (vítěz ODS s M. Topolánkem)</MenuItem>
-          <MenuItem value={2002}>2002 (vítěz ČSSD s V. Špidlou)</MenuItem>
         </Select>
       </FormControl>
     </div>

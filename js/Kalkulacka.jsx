@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import DalsiButton from "./DalsiButton.jsx";
 import SimpleSelect from "./SimpleSelect.jsx";
+import * as data from "../data/vysledky2017.json";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -33,6 +34,7 @@ const useStyles = makeStyles((theme) => {
 const Kalkulacka = function () {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState("panel1");
+  const [vysledek, setVysledek] = React.useState(data);
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
@@ -62,10 +64,10 @@ const Kalkulacka = function () {
           <Typography>
             Jeden výsledek voleb 🍏🍏🍏🍎🍎🍌🍒🍐🍋 může vést pokaždé k trochu
             jinému rozložení sil ve sněmovně 🍏🍏🍏🍏🍎🍎🍎🍌🍌🍒, i k jiné
-            vládě 🍏🍏🍏🍏🍎. Záleží na způsobu přepočtení hlasů na mandáty.{" "}
+            vládě 🍏🍏🍏🍏🍌. Záleží na způsobu přepočtení hlasů na mandáty.{" "}
             <strong>Vyberte, které sněmovní volby si chcete přepočítat</strong>.
           </Typography>
-          <SimpleSelect></SimpleSelect>
+          <SimpleSelect setVysledek={setVysledek}></SimpleSelect>
           <DalsiButton onClick={dalsiButtonClick}></DalsiButton>
         </AccordionDetails>
       </Accordion>
