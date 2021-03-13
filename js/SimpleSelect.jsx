@@ -15,18 +15,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SimpleSelect({setVysledek}) {
+function SimpleSelect({ stahniData, rok, setRok }) {
   const classes = useStyles();
-  const [rok, setRok] = React.useState(2017);
 
-  const handleChange = (event) => {
+  const zmenRok = (event) => {
+    stahniData(event.target.value);
     setRok(event.target.value);
-    const dataURL = `https://data.irozhlas.cz/hlasy-mandaty/data/vysledky${event.target.value}.json`;
-    fetch(dataURL)
-      .then((response) => response.json()) // nebo .text(), když to není json
-      .then((data) => {
-        setVysledek(data);
-      });
   };
 
   return (
@@ -37,7 +31,7 @@ function SimpleSelect({setVysledek}) {
           labelId="select-rok-label"
           id="select-rok"
           value={rok}
-          onChange={handleChange}
+          onChange={zmenRok}
         >
           <MenuItem value={2017}>2017 (vítěz ANO s A. Babišem)</MenuItem>
           <MenuItem value={2013}>2013 (vítěz ČSSD s B. Sobotkou)</MenuItem>

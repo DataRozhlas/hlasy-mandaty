@@ -7,7 +7,6 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import DalsiButton from "./DalsiButton.jsx";
 import SimpleSelect from "./SimpleSelect.jsx";
-import * as data from "../data/vysledky2017.json";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -34,14 +33,29 @@ const useStyles = makeStyles((theme) => {
 const Kalkulacka = function () {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState("panel1");
-  const [vysledek, setVysledek] = React.useState(data);
+  const [vysledek, setVysledek] = React.useState();
+  const [rok, setRok] = React.useState(2017);
+  const stahniData = (rok) => {
+    new Promise(function () {
+      fetch(`https://data.irozhlas.cz/hlasy-mandaty/data/vysledky${rok}.json`)
+        .then((response) => response.json())
+        .then((data) => {
+          setVysledek(data.VYSLEDKY);
+        });
+    });
+  };
+  React.useEffect(() => {
+    stahniData(2017);
+  }, []);
+
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
-  function dalsiButtonClick(e) {
+  const dalsiButtonClick = (e) => {
     const cislo = expanded.match(/\d+/);
     setExpanded(`panel${Number(cislo[0]) + 1}`);
-  }
+  };
+
   return (
     <div className={classes.root}>
       <Accordion
@@ -67,7 +81,14 @@ const Kalkulacka = function () {
             vládě 🍏🍏🍏🍏🍌. Záleží na způsobu přepočtení hlasů na mandáty.{" "}
             <strong>Vyberte, které sněmovní volby si chcete přepočítat</strong>.
           </Typography>
-          <SimpleSelect setVysledek={setVysledek}></SimpleSelect>
+          <SimpleSelect
+            stahniData={stahniData}
+            rok={rok}
+            setRok={setRok}
+          ></SimpleSelect>
+          <Typography>
+            {`Voliči odevzdali ${vysledek ? vysledek.CR.UCAST._attributes.PLATNE_HLASY.toLocaleString("cs-CZ") : ''} platných hlasů.`}
+          </Typography>
           <DalsiButton onClick={dalsiButtonClick}></DalsiButton>
         </AccordionDetails>
       </Accordion>
