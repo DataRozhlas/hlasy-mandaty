@@ -25,6 +25,8 @@
     "@material-ui/icons": "^4.11.2",
     "babel-loader": "^8.0.6",
     "clean-css": "^4.2.1",
+    "highcharts": "^9.0.1",
+    "highcharts-react-official": "^3.0.0",
     "js-yaml": "^3.13.1",
     "marked": "^0.7.0",
     "react": "^17.0.1",

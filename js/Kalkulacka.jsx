@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import DalsiButton from "./DalsiButton.jsx";
 import SimpleSelect from "./SimpleSelect.jsx";
+import GrafStran from "./GrafStran.jsx";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -36,13 +37,11 @@ const Kalkulacka = function () {
   const [vysledek, setVysledek] = React.useState();
   const [rok, setRok] = React.useState(2017);
   const stahniData = (rok) => {
-    new Promise(function () {
-      fetch(`https://data.irozhlas.cz/hlasy-mandaty/data/vysledky${rok}.json`)
-        .then((response) => response.json())
-        .then((data) => {
-          setVysledek(data.VYSLEDKY);
-        });
-    });
+    fetch(`https://data.irozhlas.cz/hlasy-mandaty/data/vysledky${rok}.json`)
+      .then((response) => response.json())
+      .then((data) => {
+        setVysledek(data.VYSLEDKY);
+      });
   };
   React.useEffect(() => {
     stahniData(2017);
@@ -76,9 +75,10 @@ const Kalkulacka = function () {
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetailsInside}>
           <Typography>
-            Jeden výsledek voleb 🍏🍏🍏🍎🍎🍌🍒🍐🍋 může vést pokaždé k trochu
-            jinému rozložení sil ve sněmovně 🍏🍏🍏🍏🍎🍎🍎🍌🍌🍒, i k jiné
-            vládě 🍏🍏🍏🍏🍌. Záleží na způsobu přepočtení hlasů na mandáty.{" "}
+            Jeden výsledek voleb 🍏🍏🍏🍎🍎🍌🍒🍐🍋 může vést pokaždé k
+            rozdílnému rozložení sil ve sněmovně 🍏🍏🍏🍏🍎🍎🍎🍌🍌🍒, a tedy i
+            k jiné vládě 🍏🍏🍏🍏🍌. Záleží na způsobu přepočtení hlasů na
+            mandáty.{" "}
             <strong>Vyberte, které sněmovní volby si chcete přepočítat</strong>.
           </Typography>
           <SimpleSelect
@@ -87,8 +87,11 @@ const Kalkulacka = function () {
             setRok={setRok}
           ></SimpleSelect>
           <Typography>
-            {`Voliči odevzdali ${vysledek ? vysledek.CR.UCAST._attributes.PLATNE_HLASY.toLocaleString("cs-CZ") : ''} platných hlasů.`}
+            {vysledek && `${vysledek.CR.STRANA.length} politických stran si rozdělilo ${
+              vysledek.CR.UCAST._attributes.PLATNE_HLASY.toLocaleString("cs-CZ")
+            } platných hlasů`}
           </Typography>
+          <GrafStran vysledek={vysledek}></GrafStran>
           <DalsiButton onClick={dalsiButtonClick}></DalsiButton>
         </AccordionDetails>
       </Accordion>

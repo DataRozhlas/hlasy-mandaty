@@ -1,5 +1,6 @@
 ul.snowfall, ol.snowfall {
     list-style: initial !important;
+    list-style-image: none !important;
     font-size: medium !important;
     line-height: 1.5 !important;
 }
