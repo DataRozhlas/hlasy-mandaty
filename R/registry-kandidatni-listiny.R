@@ -1,0 +1,7 @@
+library(foreign)
+download.file("https://volby.cz/opendata/ps2013/PS2013reg20131026.zip", "2013.zip")
+unzip("2013.zip")
+read.dbf("PSRKL.dbf")
+file.remove("PSRK.dbf")
+file.remove("PSRKL.dbf")
+file.remove("2013.zip")

@@ -4,7 +4,11 @@ import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
 import DalsiButton from "./DalsiButton.jsx";
 import SimpleSelect from "./SimpleSelect.jsx";
 import GrafStran from "./GrafStran.jsx";
@@ -35,6 +39,7 @@ const Kalkulacka = function () {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState("panel1");
   const [vysledek, setVysledek] = React.useState();
+  const [postupuji, setPostupuji] = React.useState([]);
   const [rok, setRok] = React.useState(2017);
   const stahniData = (rok) => {
     fetch(`https://data.irozhlas.cz/hlasy-mandaty/data/vysledky${rok}.json`)
@@ -48,13 +53,22 @@ const Kalkulacka = function () {
   }, []);
 
   const handleChange = (panel) => (event, isExpanded) => {
+    panel === "panel2" && zjistiPostupujiciStrany(vysledek);
     setExpanded(isExpanded ? panel : false);
   };
   const dalsiButtonClick = (e) => {
     const cislo = expanded.match(/\d+/);
-    setExpanded(`panel${Number(cislo[0]) + 1}`);
+    handleChange(`panel${Number(cislo[0]) + 1}`)(e, true);
   };
-
+  const zjistiPostupujiciStrany = (vysledek) => {
+    const result = vysledek.CR.STRANA.filter(
+      (strana) => strana.HODNOTY_STRANA._attributes.PROC_HLASU > 5
+    ).sort(
+      (a, b) =>
+        a.HODNOTY_STRANA._attributes.HLASY < b.HODNOTY_STRANA._attributes.HLASY
+    );
+    setPostupuji(result);
+  };
   return (
     <div className={classes.root}>
       <Accordion
@@ -70,26 +84,32 @@ const Kalkulacka = function () {
             1. Voliči „rozdají karty" 🗳️
           </Typography>
           <Typography className={classes.secondaryHeading}>
-            Záleží ale na přepočtu, jaké hry s nimi půjde hrát.
+            Záleží na přepočtu, jakou hru s nimi půjde hrát.
           </Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetailsInside}>
           <Typography>
-            Jeden výsledek voleb 🍏🍏🍏🍎🍎🍌🍒🍐🍋 může vést pokaždé k
-            rozdílnému rozložení sil ve sněmovně 🍏🍏🍏🍏🍎🍎🍎🍌🍌🍒, a tedy i
-            k jiné vládě 🍏🍏🍏🍏🍌. Záleží na způsobu přepočtení hlasů na
-            mandáty.{" "}
-            <strong>Vyberte, které sněmovní volby si s námi chcete přepočítat</strong>.
+            Totožný výsledek voleb 🍏🍏🍏🍎🍎🍌🍒🍐🍋 může vést k odlišnému
+            rozložení sil ve sněmovně 🍏🍏🍏🍏🍎🍎🍎🍌🍌🍒, a tedy i k jiné
+            vládě 🍏🍏🍏🍏🍌. Záleží na způsobu přepočtení hlasů na mandáty.{" "}
+            <strong>
+              Vyberte, které sněmovní volby si s námi chcete přepočítat
+            </strong>
+            .
           </Typography>
           <SimpleSelect
             stahniData={stahniData}
             rok={rok}
             setRok={setRok}
           ></SimpleSelect>
+
           <Typography>
-            {vysledek && `${vysledek.CR.STRANA.length} politických stran si rozdělilo ${
-              vysledek.CR.UCAST._attributes.PLATNE_HLASY.toLocaleString("cs-CZ")
-            } platných hlasů`}
+            {vysledek &&
+              `${
+                vysledek.CR.STRANA.length
+              } politických stran obdrželo ${vysledek.CR.UCAST._attributes.PLATNE_HLASY.toLocaleString(
+                "cs-CZ"
+              )} platných hlasů`}
           </Typography>
           <GrafStran vysledek={vysledek}></GrafStran>
           <DalsiButton onClick={dalsiButtonClick}></DalsiButton>
@@ -105,13 +125,47 @@ const Kalkulacka = function () {
           id="panel2a-header"
         >
           <Typography className={classes.heading}>
-            2. Kdo dostane mandát?
+            2. Kdo dostane mandát? 🧑🏽‍⚖️
+          </Typography>
+          <Typography className={classes.secondaryHeading}>
+            A proč bylo dosud tak málo koalic.
           </Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetailsInside}>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
+          <Typography paragraph={true}>
+            {`V roce ${rok}, který jste si vybrali, překonalo hranici pro vstup do sněmovny ${postupuji.length} stran:`}
+          </Typography>
+          <List dense={true} disablePadding={true}> 
+            {postupuji.map((strana) => {
+              return (
+                <ListItem key={strana._attributes.KSTRANA} dense={true}>
+                  <ListItemText primary={strana._attributes.NAZ_STR} secondary={`${strana.HODNOTY_STRANA._attributes.PROC_HLASU.toLocaleString("cs-CZ")} %, tj. ${strana.HODNOTY_STRANA._attributes.HLASY.toLocaleString("cs-CZ")} hlasů`}/>
+                </ListItem>
+              );
+            })}
+          </List>
+          <Typography paragraph={true}>
+            Strana musí na celostátní úrovni dosáhnout hranice 5 % hlasů. Dokud
+            ji{" "}
+            <Link
+              href="https://www.usoud.cz/fileadmin/user_upload/Tiskova_mluvci/Publikovane_nalezy/2021/Pl._US_44_17_vcetne_disentu.pdf"
+              target="_blank"
+            >
+              Ústavní soud nezrušil
+            </Link>
+            , platila zvýšená <em>uzavírací klauzule</em>, tedy vyšší práh pro
+            vstup do sněmovny, pro všechny koalice. Dvoučlenné musely získat 10
+            %, tříčlenné 15 % a početnější 20 % hlasů.
+          </Typography>
+          <Typography paragraph={true}>
+            Přísné pravidlo přispělo k tomu, že v posledních čtyřech volbách do
+            sněmovny kandidovala jedna jediná koalice: Koalice pro Českou
+            republiku se skládala ze sedmi subjektů a zíkala 8 140 hlasů. Starší
+            volební výsledky v této aplikaci nejsou, protože je{" "}
+            <Link href="https://volby.cz/opendata/opendata.htm" target="_blank">
+              ČSÚ nepublikuje ve standardním otevřeném formátu
+            </Link>
+            .
           </Typography>
           <DalsiButton onClick={dalsiButtonClick}></DalsiButton>
         </AccordionDetails>

@@ -11,7 +11,7 @@ function GrafStran({ vysledek }) {
     const options = {
       chart: {
         type: "bar",
-        height: data.length * 18,
+        height: data.length * 20,
       },
       title: {
         text: "",

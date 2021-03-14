@@ -7,7 +7,7 @@ import Select from "@material-ui/core/Select";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
-    margin: theme.spacing(3),
+    margin: theme.spacing(1),
     minWidth: 120,
   },
   selectEmpty: {
@@ -24,7 +24,6 @@ function SimpleSelect({ stahniData, rok, setRok }) {
   };
 
   return (
-    <div>
       <FormControl className={classes.formControl}>
         <InputLabel id="select-rok-label">Sněmovní volby</InputLabel>
         <Select
@@ -39,7 +38,6 @@ function SimpleSelect({ stahniData, rok, setRok }) {
           <MenuItem value={2006}>2006 (vítěz ODS s M. Topolánkem)</MenuItem>
         </Select>
       </FormControl>
-    </div>
   );
 }
 
