@@ -19,17 +19,27 @@ function GrafStran({ vysledek }) {
       credits: {
         enabled: false,
       },
+      legend: {
+        enabled: false,
+      },
       plotOptions: {
         series: {
           animation: false,
+          dataLabels: {
+            enabled: true,
+          },
         },
       },
+      yAxis: {
+        visible: false,
+      },
       xAxis: {
-        type: "category",
+        type: 'category',
       },
       series: [
         {
           data: data,
+          name: "hlasů",
         },
       ],
     };
@@ -39,6 +49,7 @@ function GrafStran({ vysledek }) {
           highcharts={Highcharts}
           options={options}
           containerProps={{ style: { maxWidth: "100%" } }}
+          immutable={true}
         />
       </>
     );

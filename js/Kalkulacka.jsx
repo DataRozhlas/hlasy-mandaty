@@ -79,7 +79,7 @@ const Kalkulacka = function () {
             rozdílnému rozložení sil ve sněmovně 🍏🍏🍏🍏🍎🍎🍎🍌🍌🍒, a tedy i
             k jiné vládě 🍏🍏🍏🍏🍌. Záleží na způsobu přepočtení hlasů na
             mandáty.{" "}
-            <strong>Vyberte, které sněmovní volby si chcete přepočítat</strong>.
+            <strong>Vyberte, které sněmovní volby si s námi chcete přepočítat</strong>.
           </Typography>
           <SimpleSelect
             stahniData={stahniData}
