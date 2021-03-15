@@ -54,6 +54,7 @@ const Kalkulacka = function () {
 
   const handleChange = (panel) => (event, isExpanded) => {
     panel === "panel2" && zjistiPostupujiciStrany(vysledek);
+    panel === "panel3" && zjistiPostupujiciStrany(vysledek);
     setExpanded(isExpanded ? panel : false);
   };
   const dalsiButtonClick = (e) => {
@@ -81,7 +82,7 @@ const Kalkulacka = function () {
           id="panel1a-header"
         >
           <Typography className={classes.heading}>
-            1. Voliči „rozdají karty" 🗳️
+            1. Voliči &bdquo;rozdají karty&ldquo; 🗳️
           </Typography>
           <Typography className={classes.secondaryHeading}>
             Záleží na přepočtu, jakou hru s nimi půjde hrát.
@@ -125,21 +126,28 @@ const Kalkulacka = function () {
           id="panel2a-header"
         >
           <Typography className={classes.heading}>
-            2. Kdo dostane mandát? 🧑🏽‍⚖️
+            2. Kdo se dostane sněmovny? 🧑🏽‍⚖️
           </Typography>
           <Typography className={classes.secondaryHeading}>
-            A proč bylo dosud tak málo koalic.
+            A proč bylo málo koalic.
           </Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetailsInside}>
           <Typography paragraph={true}>
             {`V roce ${rok}, který jste si vybrali, překonalo hranici pro vstup do sněmovny ${postupuji.length} stran:`}
           </Typography>
-          <List dense={true} disablePadding={true}> 
+          <List dense={true} disablePadding={true}>
             {postupuji.map((strana) => {
               return (
                 <ListItem key={strana._attributes.KSTRANA} dense={true}>
-                  <ListItemText primary={strana._attributes.NAZ_STR} secondary={`${strana.HODNOTY_STRANA._attributes.PROC_HLASU.toLocaleString("cs-CZ")} %, tj. ${strana.HODNOTY_STRANA._attributes.HLASY.toLocaleString("cs-CZ")} hlasů`}/>
+                  <ListItemText
+                    primary={strana._attributes.NAZ_STR}
+                    secondary={`${strana.HODNOTY_STRANA._attributes.PROC_HLASU.toLocaleString(
+                      "cs-CZ"
+                    )} %, tj. ${strana.HODNOTY_STRANA._attributes.HLASY.toLocaleString(
+                      "cs-CZ"
+                    )} hlasů`}
+                  />
                 </ListItem>
               );
             })}
@@ -158,14 +166,26 @@ const Kalkulacka = function () {
             %, tříčlenné 15 % a početnější 20 % hlasů.
           </Typography>
           <Typography paragraph={true}>
-            Přísné pravidlo přispělo k tomu, že v posledních čtyřech volbách do
-            sněmovny kandidovala jedna jediná koalice: Koalice pro Českou
+            Přísné pravidlo přispělo k tomu, že za posledních patnáct let
+            kandidovala do sněmovny jedna jediná koalice: Koalice pro Českou
             republiku se skládala ze sedmi subjektů a zíkala 8 140 hlasů. Starší
             volební výsledky v této aplikaci nejsou, protože je{" "}
             <Link href="https://volby.cz/opendata/opendata.htm" target="_blank">
               ČSÚ nepublikuje ve standardním otevřeném formátu
             </Link>
             .
+          </Typography>
+          <Typography paragraph={true}>
+            <Link
+              href="https://apps.odok.cz/veklep-detail?pid=ALBSBYGDNBUX"
+              target="_blank"
+            >
+              Návrh ministerstva vnitra
+            </Link>
+            , který už schválila vláda, a teď ho ve výborech posuzují poslanci,
+            počítá v obou svých variantách se snížením hranice pro dvoukoalice
+            na 7 % hlasů, u trojkoalic na 9 % a u větších uskupení na 11 %
+            hlasů.{" "}
           </Typography>
           <DalsiButton onClick={dalsiButtonClick}></DalsiButton>
         </AccordionDetails>
@@ -180,13 +200,61 @@ const Kalkulacka = function () {
           id="panel3a-header"
         >
           <Typography className={classes.heading}>
-            3. Mandátové číslo
+            3. Kolik hlasů na poslance 🧮
+          </Typography>
+          <Typography className={classes.secondaryHeading}>
+            Mandátové/volební číslo.
           </Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetailsInside}>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
+          <Typography paragraph={true}>
+            Teď je potřeba zjistit aspoň přibližně, kolik hlasů
+            &bdquo;stojí&ldquo; jedno místo v poslanecké sněmovně. Až do
+            únorového{" "}
+            <Link
+              href="https://www.usoud.cz/fileadmin/user_upload/Tiskova_mluvci/Publikovane_nalezy/2021/Pl._US_44_17_vcetne_disentu.pdf"
+              target="_blank"
+            >
+              rozhodnutí Ústavního soudu
+            </Link>{" "}
+            k tomu sloužilo <em>republikové mandátové číslo</em>. To se počítalo tak, že
+            se součet všech platných hlasů vydělil počtem poslanců, tedy 200.
+          </Typography>
+          <Typography paragraph={true}>
+            V roce {rok}, který jste si vybrali v prvním kroku, vypadá výpočet
+            následovně:
+          </Typography>
+          <Typography paragraph={true}>
+            {vysledek &&
+              `${vysledek.CR.UCAST._attributes.PLATNE_HLASY.toLocaleString(
+                "cs-CZ"
+              )} : 200 = ${(
+                vysledek.CR.UCAST._attributes.PLATNE_HLASY / 200
+              ).toLocaleString("cs-CZ")}`}
+          </Typography>
+          <Typography paragraph={true}>
+            {vysledek &&
+              `Výsledek se zaokrouhloval na jednotky. Vychází nám tedy republikové mandátové číslo ${Math.round(
+                vysledek.CR.UCAST._attributes.PLATNE_HLASY / 200
+              ).toLocaleString("cs-CZ")}.`}
+          </Typography>
+          <Typography paragraph={true}>
+            Podle{" "}
+            <Link
+              href="https://apps.odok.cz/veklep-detail?pid=ALBSBYGDNBUX"
+              target="_blank"
+            >
+              návrhu ministerstva vnitra
+            </Link>{" "}
+            by se nově pojmenované <em>volební číslo</em> počítalo odlišně: Počtem poslanců by se
+            nedělily všechny hlasy, ale <em>jen hlasy pro strany a koalice, které
+            postoupily do sněmovny</em>. Nezaokrouhlovalo by se na celá čísla, ale na dvě desetinná místa směrem nahoru. 
+          </Typography>
+          <Typography paragraph={true}>
+              {postupuji.length>0 &&  `V našem příkladu by volební číslo vycházelo na ${postupuji.reduce((acc, curr) => acc + curr.HODNOTY_STRANA._attributes.HLASY, 0).toLocaleString("cs-CZ")} : 200 = ${(Math.ceil(postupuji.reduce((acc, curr) => acc + curr.HODNOTY_STRANA._attributes.HLASY, 0)/200*100)/100).toLocaleString("cs-CZ")}.`}
+          </Typography>
+          <Typography paragraph={true}>
+              {postupuji.length>0 &&  `Pokud by poslanci schválili druhou variantu ministerstva vnitra a celá republika by byla jeden volební kraj, dělily by se počty hlasů počtem poslanců zvýšeným o jedna: ${postupuji.reduce((acc, curr) => acc + curr.HODNOTY_STRANA._attributes.HLASY, 0).toLocaleString("cs-CZ")} : 201 = ${(Math.ceil(postupuji.reduce((acc, curr) => acc + curr.HODNOTY_STRANA._attributes.HLASY, 0)/201*100)/100).toLocaleString("cs-CZ")}.`}
           </Typography>
           <DalsiButton onClick={dalsiButtonClick}></DalsiButton>
         </AccordionDetails>
@@ -201,7 +269,7 @@ const Kalkulacka = function () {
           id="panel4a-header"
         >
           <Typography className={classes.heading}>
-            4. První skrutinium
+            4. 
           </Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetailsInside}>
@@ -222,7 +290,7 @@ const Kalkulacka = function () {
           id="panel5a-header"
         >
           <Typography className={classes.heading}>
-            5. Rozdělení zbývajících mandátů
+            5. 
           </Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetailsInside}>
@@ -243,7 +311,7 @@ const Kalkulacka = function () {
           id="panel6a-header"
         >
           <Typography className={classes.heading}>
-            6. Přikázání mandátů v krajích
+            6. 
           </Typography>
         </AccordionSummary>
 
@@ -265,7 +333,7 @@ const Kalkulacka = function () {
           id="panel7a-header"
         >
           <Typography className={classes.heading}>
-            7. Přikázání mandátů v krajích 2
+            7. 
           </Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetailsInside}>
