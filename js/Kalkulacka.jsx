@@ -43,6 +43,7 @@ const Kalkulacka = function () {
   const [postupuji, setPostupuji] = React.useState([]);
   const [rok, setRok] = React.useState(2017);
   const [postaru, setPostaru] = React.useState({});
+  const [uzka, setUzka] = React.useState({});
   const [vybranykraj, setVybranykraj] = React.useState("Středočeský");
   const stahniData = (rok) => {
     fetch(`https://data.irozhlas.cz/hlasy-mandaty/data/vysledky${rok}.json`)
@@ -56,15 +57,17 @@ const Kalkulacka = function () {
   }, []);
 
   const handleChange = (panel) => (event, isExpanded) => {
-    panel != "panel1" && zjistiPostupujiciStrany(vysledek);
+    panel != "panel1" && zjistiPostupujiciStrany(vysledek, spoctiUzkou);
     panel != "panel1" && spoctiPostaru(vysledek);
+    // panel != "panel1" && spoctiUzkou(postupuji);
     setExpanded(isExpanded ? panel : false);
   };
   const dalsiButtonClick = (e) => {
+    e.preventDefault();
     const cislo = expanded.match(/\d+/);
     handleChange(`panel${Number(cislo[0]) + 1}`)(e, true);
   };
-  const zjistiPostupujiciStrany = (vysledek) => {
+  const zjistiPostupujiciStrany = (vysledek, callback) => {
     const result = vysledek.CR.STRANA.filter(
       (strana) => strana.HODNOTY_STRANA._attributes.PROC_HLASU > 5
     ).sort(
@@ -72,6 +75,7 @@ const Kalkulacka = function () {
         a.HODNOTY_STRANA._attributes.HLASY < b.HODNOTY_STRANA._attributes.HLASY
     );
     setPostupuji(result);
+    callback(result, dopocitejUzkeMandaty);
   };
   const spoctiPostaru = (vysledek) => {
     setPostaru({
@@ -106,6 +110,47 @@ const Kalkulacka = function () {
       }),
     });
   };
+
+  const spoctiUzkou = (postupuji, callback) => {
+    const result = {
+      ...uzka,
+      strany: postupuji.map((strana) => {
+        const volebniCislo =
+          Math.ceil(
+            (postupuji.reduce(
+              (acc, curr) => acc + curr.HODNOTY_STRANA._attributes.HLASY,
+              0
+            ) /
+              200) *
+              100
+          ) / 100;
+        return {
+          nazev: strana._attributes.NAZ_STR,
+          kstrana: strana._attributes.KSTRANA,
+          mandatu: Math.floor(
+            strana.HODNOTY_STRANA._attributes.HLASY / volebniCislo
+          ),
+          zbytek: strana.HODNOTY_STRANA._attributes.HLASY % volebniCislo,
+        };
+      }),
+    };
+    setUzka(result);
+    callback(result);
+  };
+
+  const dopocitejUzkeMandaty = (uzka) => {
+    const chybiMandatu =
+      200 - uzka.strany.reduce((acc, curr) => acc + curr.mandatu, 0);
+    setUzka({
+      ...uzka,
+      stranyExtraMandaty: uzka.strany
+        .sort((a, b) => a.zbytek < b.zbytek)
+        .map((strana, i) => {
+          return { ...strana, extramandat: i < chybiMandatu ? 1 : 0 };
+        }),
+    });
+  };
+
   return (
     <div className={classes.root}>
       <Accordion
@@ -121,16 +166,16 @@ const Kalkulacka = function () {
             1. Voliči &bdquo;rozdají karty&ldquo; 🗳️
           </Typography>
           <Typography className={classes.secondaryHeading}>
-            Záleží také na přepočtu, jakou hru s nimi půjde hrát.
+            Jakou hru s nimi půjde hrát?
           </Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetailsInside}>
           <Typography>
             Stejný výsledek voleb 🍏🍏🍏🍎🍎🍌🍒🍐🍋 může vést k mírně odlišnému
             rozložení sil ve sněmovně 🍏🍏🍏🍏🍎🍎🍎🍌🍌🍒, a případně i k
-            různým vládám 🍏🍏🍏🍏🍌. Tady si můžete vyzkoušet, do jaké míry by
-            ovlivnily předchozí volby nyní navrhované způsoby přepočtení hlasů
-            na mandáty.{" "}
+            různým vládám 🍏🍏🍏🍏🍌. Tady si můžete vyzkoušet, jak by dopadly
+            čtvery předchozí volby, kdyby se na ně vztahovaly aktuálně
+            navrhované změny ve způsobu přepočtení hlasů na mandáty.{" "}
             <strong>Které sněmovní volby si s námi chcete přepočítat?</strong>
           </Typography>
           <SimpleSelect
@@ -188,8 +233,7 @@ const Kalkulacka = function () {
             })}
           </List>
           <Typography paragraph={true}>
-            Strana musí na celostátní úrovni dosáhnout hranice 5 % hlasů. Dokud
-            ji{" "}
+            Strana musí na celostátní úrovni dostat aspoň 5 % hlasů. Dokud ji{" "}
             <Link
               href="https://www.usoud.cz/fileadmin/user_upload/Tiskova_mluvci/Publikovane_nalezy/2021/Pl._US_44_17_vcetne_disentu.pdf"
               target="_blank"
@@ -197,23 +241,20 @@ const Kalkulacka = function () {
               Ústavní soud nezrušil
             </Link>
             , platila zvýšená <em>uzavírací klauzule</em>, tedy vyšší práh pro
-            vstup do sněmovny, pro všechny koalice. Dvoučlenné musely získat 10
-            %, tříčlenné 15 % a početnější 20 % hlasů.
+            vstup do sněmovny, pro všechny koalice složené z více stran.
+            Dvoučlenné musely získat 10 %, tříčlenné 15 % a početnější 20 %
+            hlasů.
           </Typography>
           <Typography paragraph={true}>
             Přísné pravidlo přispělo k tomu, že za posledních patnáct let
-            kandidovala do sněmovny jediná koalice: Koalice pro Českou republiku
-            se skládala ze sedmi subjektů a v roce 2006 získala 8 140 hlasů – na
-            vstup do sněmovny by jí (těsně) nestočilo ani o milon hlasů víc.
+            kandidovala do sněmovny jenom jedna: Koalice pro Českou republiku se
+            skládala ze sedmi subjektů a v roce 2006 získala 8 140 hlasů – na
+            postup do sněmovny by jí (těsně) nestačilo ani o milon hlasů víc.
           </Typography>
           <Typography paragraph={true}>
-            Změna tohoto pravidla by tedy výsledky posledních čtyř hlasování
-            nijak neovlivnila. Starší volební výsledky v této aplikaci nejsou,
-            protože je{" "}
-            <Link href="https://volby.cz/opendata/opendata.htm" target="_blank">
-              ČSÚ nepublikuje ve standardním otevřeném formátu
-            </Link>
-            .
+            Do letošních voleb se chystají dvě koalice, kterým předvolební
+            průzkumy dávají naději, že by mohly překonat i původní vysokou
+            vstupní bariéru.
           </Typography>
           <Typography paragraph={true}>
             <Link
@@ -248,8 +289,9 @@ const Kalkulacka = function () {
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetailsInside}>
           <Typography paragraph={true}>
-            Teď je potřeba zjistit, kolik hlasů &bdquo;stojí&ldquo; jedno místo
-            v poslanecké sněmovně. Až do únorového{" "}
+            Teď je potřeba zjistit aspoň přibližně, kolik hlasů
+            &bdquo;stojí&ldquo; jedno místo v poslanecké sněmovně. Až do
+            únorového{" "}
             <Link
               href="https://www.usoud.cz/fileadmin/user_upload/Tiskova_mluvci/Publikovane_nalezy/2021/Pl._US_44_17_vcetne_disentu.pdf"
               target="_blank"
@@ -284,15 +326,16 @@ const Kalkulacka = function () {
               href="https://apps.odok.cz/veklep-detail?pid=ALBSBYGDNBUX"
               target="_blank"
             >
-              návrhu ministerstva vnitra
+              ministerstva vnitra
             </Link>{" "}
-            by se nově pojmenované <em>volební číslo</em> počítalo odlišně:
-            Počtem poslanců by se nedělily všechny platné hlasy, ale{" "}
+            by se v návrhu zákona nově pojmenované <em>volební číslo</em> mělo
+            počítat odlišně: Počtem poslanců by se nedělily všechny platné
+            hlasy, ale{" "}
             <em>
               jen hlasy pro strany a koalice, které postoupily do sněmovny
             </em>
             . Nezaokrouhlovalo by se na celá čísla, ale na dvě desetinná místa
-            směrem nahoru.
+            nahoru.
           </Typography>
           <Typography paragraph={true}>
             {postupuji.length > 0 &&
@@ -314,7 +357,7 @@ const Kalkulacka = function () {
           </Typography>
           <Typography paragraph={true}>
             {postupuji.length > 0 &&
-              `Pokud by poslanci schválili druhou variantu ministerstva vnitra a celá republika by byla jeden volební kraj, dělilo by se navíc počtem poslanců zvýšeným o jedna: ${postupuji
+              `Pokud by poslanci schválili druhou variantu navrženou ministerstvem vnitra a celá republika by byla jeden volební kraj, dělilo by se navíc počtem poslanců zvýšeným o jedna: ${postupuji
                 .reduce(
                   (acc, curr) => acc + curr.HODNOTY_STRANA._attributes.HLASY,
                   0
@@ -360,6 +403,11 @@ const Kalkulacka = function () {
             krajům s největším zbytkem po dělení. V případě remízy rozhodoval
             los.{" "}
           </Typography>
+          <SimpleSelect
+            stahniData={stahniData}
+            rok={rok}
+            setRok={setRok}
+          ></SimpleSelect>
           <List dense={true} disablePadding={true}>
             {vysledek &&
               vysledek.KRAJ.sort(
@@ -392,7 +440,7 @@ const Kalkulacka = function () {
           id="panel5a-header"
         >
           <Typography className={classes.heading}>
-            5. Rozdělení mandátů v krajích 🔪
+            5. Dělení mandátů nejprve v krajích 🔪
           </Typography>
           <Typography className={classes.secondaryHeading}>
             D'Hondtův dělitel
@@ -404,13 +452,16 @@ const Kalkulacka = function () {
             Počet hlasů pro danou stranu v daném kraji se postupně dělil pořadím
             na kandidátce, tedy čísly 1, 2, 3... až počet kandidátů. Výsledky
             všech kandidátů všech stran se pak shromáždily do jedné velké
-            tabulky a seřadily.
+            tabulky a seřadily sestupně.
           </Typography>
           <Typography paragraph={true}>
-            Kdo v ní byl &bdquo;nad čarou&ldquo;, tedy měl pořadové číslo menší
-            nebo rovné počtu mandátů pro daný kraj, stal se poslankyní či
-            poslancem. (Teď zanedbejme možnost posouvat se na kandidátkách
-            pomocí preferenčních hlasů, kterou Ústavní soud nezrušil.)
+            Kdo byl v tabulce &bdquo;nad čarou&ldquo;, tedy měl pořadové číslo
+            menší nebo rovné počtu mandátů pro daný kraj, stal se poslankyní či
+            poslancem. (Zanedbejme možnost posouvat se na kandidátkách pomocí
+            preferenčních hlasů, kterou Ústavní soud nezrušil.)
+          </Typography>
+          <Typography paragraph={true}>
+            {`Takhle to dopadalo ve vámi zvoleném roce ${rok} v jednotlivých krajích:`}
           </Typography>
           <SelectKraj
             vybranykraj={vybranykraj}
@@ -430,7 +481,11 @@ const Kalkulacka = function () {
                       >
                         <ListItemText
                           primary={`${i + 1}. mandát získává ${mandat.nazev}`}
-                          secondary={`${mandat.delitel.toFixed()} (${mandat.hlasy.toLocaleString(
+                          secondary={`${(
+                            Math.round(mandat.delitel * 100) / 100
+                          ).toLocaleString(
+                            "cs-CZ"
+                          )} (výsledek dělení ${mandat.hlasy.toLocaleString(
                             "cs-CZ"
                           )} hlasů : ${mandat.id + 1}. místo na kandidátce)`}
                         />
@@ -451,13 +506,58 @@ const Kalkulacka = function () {
           aria-controls="panel6a-content"
           id="panel6a-header"
         >
-          <Typography className={classes.heading}>6.</Typography>
+          <Typography className={classes.heading}>
+            6. Dělení mandátů nejprve celostátně 🍰
+          </Typography>
+          <Typography className={classes.secondaryHeading}>
+            Hareova kvóta
+          </Typography>
         </AccordionSummary>
 
         <AccordionDetails className={classes.accordionDetailsInside}>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
+          <Typography paragraph={true}>
+            Je možné, že v podzimních volbách se bude postupovat opačně: nejdřív
+            se přidělí mandáty stranám, až poté krajům. Ministerstvo vnitra
+            tento návrh označuje za &bdquo;úzkou variantu&ldquo;.
+          </Typography>
+          <Typography paragraph={true}>
+            Volebním číslem vypočítaným v kroku 3, tak zvanou Hareovou kvótou,
+            se vydělí celkový počet hlasů, který každá ze stran postoupivších do
+            sněmovny získala ve všech krajích. Tím se zjistí počet mandátů,
+            které bude mít ve sněmovně.
+          </Typography>
+          <List dense={true} disablePadding={true}>
+            {uzka.stranyExtraMandaty &&
+              uzka.stranyExtraMandaty
+                .sort(
+                  (a, b) =>
+                    a.mandatu + a.extramandat < b.mandatu + b.extramandat
+                )
+                .map((strana) => {
+                  return (
+                    <ListItem key={strana.kstrana} dense={true}>
+                      <ListItemText
+                        primary={strana.nazev}
+                        secondary={`${
+                          strana.mandatu + strana.extramandat
+                        } mandátů ${
+                          strana.extramandat > 0
+                            ? `(z toho 1 ve druhém kole)`
+                            : ``
+                        }`}
+                      />
+                    </ListItem>
+                  );
+                })}
+          </List>
+          <Typography paragraph={true}>
+            {`Zaokrouhluje se dolů, takže je pravděpodobné, že na konci ještě
+            nějaké mandáty zbudou. V našem případě zbyly ${
+              uzka.strany &&
+              200 - uzka.strany.reduce((acc, curr) => acc + curr.mandatu, 0)
+            }. Ty se postupně
+            rozdělí stranám s největším zbytkem po dělení. Pokud má více stran
+            stejný zbytek, mandát připadne té s celkově vyšším počtem hlasů.`}
           </Typography>
           <DalsiButton onClick={dalsiButtonClick}></DalsiButton>
         </AccordionDetails>
