@@ -7,7 +7,7 @@ function GrafStran({ vysledek }) {
     const data = vysledek.CR.STRANA.map((strana) => [
       strana._attributes.NAZ_STR,
       strana.HODNOTY_STRANA._attributes.HLASY,
-    ]).sort((a, b) => a[1] < b[1]);
+    ]).sort((a, b) => a[1] < b[1] ? 1 : -1);
     const options = {
       chart: {
         type: "bar",
