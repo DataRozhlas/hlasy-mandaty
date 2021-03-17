@@ -13,7 +13,7 @@ import DalsiButton from "./DalsiButton.jsx";
 import SimpleSelect from "./SimpleSelect.jsx";
 import SelectKraj from "./SelectKraj.jsx";
 import GrafStran from "./GrafStran.jsx";
-import Paper from '@material-ui/core/Paper';
+import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -185,7 +185,7 @@ const Kalkulacka = function () {
           id="panel1a-header"
         >
           <Typography className={classes.heading}>
-            1. Voliči &bdquo;rozdají karty&ldquo; 
+            1. Voliči &bdquo;rozdají karty&ldquo;
           </Typography>
           <Typography className={classes.secondaryHeading}>
             Jakou hru s nimi půjde hrát?
@@ -193,11 +193,10 @@ const Kalkulacka = function () {
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetailsInside}>
           <Typography>
-            Stejný výsledek voleb může vést k mírně odlišnému
-            rozložení sil ve sněmovně a případně i k
-            různým vládám. Tady si můžete vyzkoušet, jak by dopadly
-            čtvery předchozí volby, kdyby se na ně vztahovaly aktuálně
-            navrhované změny ve způsobu přepočtení hlasů na mandáty.{" "}
+            Stejný výsledek voleb může vést k mírně odlišnému rozložení sil ve
+            sněmovně a případně i k různým vládám. Tady si můžete vyzkoušet, jak
+            by dopadly čtvery předchozí volby, kdyby se na ně vztahovaly
+            aktuálně navrhované změny ve způsobu přepočtení hlasů na mandáty.{" "}
           </Typography>
           <Typography>
             Které sněmovní volby si s námi chcete přepočítat?
@@ -255,9 +254,10 @@ const Kalkulacka = function () {
                 </ListItem>
               );
             })}
-            </List>
+          </List>
           <Typography paragraph={true}>
-            Strana musí na celostátní úrovni dostat aspoň 5 % hlasů. Dokud ji na začátku února {" "}
+            Strana musí na celostátní úrovni dostat aspoň 5 % hlasů. Dokud ji na
+            začátku února{" "}
             <Link
               href="https://www.usoud.cz/fileadmin/user_upload/Tiskova_mluvci/Publikovane_nalezy/2021/Pl._US_44_17_vcetne_disentu.pdf"
               target="_blank"
@@ -278,7 +278,8 @@ const Kalkulacka = function () {
           <Typography paragraph={true}>
             Do letošních voleb se chystají dvě koalice, kterým předvolební
             průzkumy dávají naději, že by mohly překonat i původní vysokou
-            vstupní bariéru: jednou jsou Piráti a Starostové, druhou SPOLU (ODS, KDU-ČSL a TOP 09).
+            vstupní bariéru: jednou jsou Piráti a Starostové, druhou SPOLU (ODS,
+            KDU-ČSL a TOP 09).
           </Typography>
           <Typography paragraph={true}>
             <Link
@@ -305,7 +306,7 @@ const Kalkulacka = function () {
           id="panel3a-header"
         >
           <Typography className={classes.heading}>
-            3. Kolik hlasů na poslance 
+            3. Kolik hlasů na poslance
           </Typography>
           <Typography className={classes.secondaryHeading}>
             Mandátové/volební číslo.
@@ -410,7 +411,7 @@ const Kalkulacka = function () {
           id="panel4a-header"
         >
           <Typography className={classes.heading}>
-            4. Kolik poslanců bude mít který kraj 
+            4. Kolik poslanců bude mít který kraj
           </Typography>
           <Typography className={classes.secondaryHeading}>
             Víc obvyvatel + vyšší účast = víc mandátů
@@ -464,7 +465,7 @@ const Kalkulacka = function () {
           id="panel5a-header"
         >
           <Typography className={classes.heading}>
-            5. Dělení mandátů nejprve v krajích 
+            5. Dělení mandátů nejprve v krajích
           </Typography>
           <Typography className={classes.secondaryHeading}>
             D'Hondtův dělitel
@@ -473,13 +474,14 @@ const Kalkulacka = function () {
         <AccordionDetails className={classes.accordionDetailsInside}>
           <Typography paragraph={true}>
             Před zásahem Ústavního soudu se mandáty v krajích rozdělovaly takto:
-            Počet hlasů pro danou stranu v daném kraji se postupně dělil pořadím
-            na kandidátce, tedy čísly 1, 2, 3... až počet kandidátů. Výsledky
-            všech kandidátů všech stran se pak shromáždily do jedné velké
-            tabulky a seřadily sestupně.
+            U každého kandidáta se počet hlasů pro jeho stranu v daném kraji
+            vydělil jeho pořadím na kandidátce. Lídr kandidátky jako by měl k dispozici všechny hlasy své strany,
+            druhý na kandidátce polovinu hlasů, třetí třetinu atd.
           </Typography>
           <Typography paragraph={true}>
-            Kdo byl v tabulce &bdquo;nad čarou&ldquo;, tedy měl pořadové číslo
+            Výsledky tohoto dělení u všech kandidátů a všech postupujících stran se pak
+            shromáždily do jedné velké tabulky a seřadily od nejvyššího k
+            nejnižšímu. Kdo byl v tabulce &bdquo;nad čarou&ldquo;, tedy měl pořadové číslo
             menší nebo rovné počtu mandátů pro daný kraj, stal se poslankyní či
             poslancem. (Zanedbejme možnost posouvat se na kandidátkách pomocí
             preferenčních hlasů, kterou Ústavní soud nezrušil.)
@@ -531,7 +533,7 @@ const Kalkulacka = function () {
           id="panel6a-header"
         >
           <Typography className={classes.heading}>
-            6. Dělení mandátů nejprve celostátně 
+            6. Dělení mandátů nejprve celostátně
           </Typography>
           <Typography className={classes.secondaryHeading}>
             Hareova kvóta
@@ -600,7 +602,7 @@ const Kalkulacka = function () {
           id="panel7a-header"
         >
           <Typography className={classes.heading}>
-            7. Celá republika jako jeden kraj 
+            7. Celá republika jako jeden kraj
           </Typography>
           <Typography className={classes.secondaryHeading}>
             Hagenbach-Bischoffova kvóta
@@ -653,7 +655,7 @@ const Kalkulacka = function () {
           id="panel8a-header"
         >
           <Typography className={classes.heading}>
-            8. Jak by se lišilo rozložení sil ve sněmovně 
+            8. Jak by se lišilo rozložení sil ve sněmovně
           </Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetailsInside}>
