@@ -260,7 +260,7 @@ const Kalkulacka = function () {
             })}
           </List>
           <Typography paragraph={true}>
-            Strana musí na celostátní úrovni dostat aspoň 5 % hlasů. Dokud ji na
+            Strany musí na celostátní úrovni dostat aspoň 5 % hlasů. Dokud ji na
             začátku února{" "}
             <Link
               href="https://www.usoud.cz/fileadmin/user_upload/Tiskova_mluvci/Publikovane_nalezy/2021/Pl._US_44_17_vcetne_disentu.pdf"
@@ -310,10 +310,10 @@ const Kalkulacka = function () {
           id="panel3a-header"
         >
           <Typography className={classes.heading}>
-            3. Kolik hlasů na poslance
+            3. Čára mezi kandidáty a poslanci
           </Typography>
           <Typography className={classes.secondaryHeading}>
-            Mandátové/volební číslo.
+            Mandátové/volební číslo
           </Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetailsInside}>
@@ -415,7 +415,7 @@ const Kalkulacka = function () {
           id="panel4a-header"
         >
           <Typography className={classes.heading}>
-            4. Kolik poslanců bude mít který kraj
+            4. Kolik poslanců měl který kraj?
           </Typography>
           <Typography className={classes.secondaryHeading}>
             Víc obvyvatel + vyšší účast = víc mandátů
@@ -469,7 +469,7 @@ const Kalkulacka = function () {
           id="panel5a-header"
         >
           <Typography className={classes.heading}>
-            5. Dělení mandátů nejprve v krajích
+            5. Jak se dělily mandáty?
           </Typography>
           <Typography className={classes.secondaryHeading}>
             D'Hondtův dělitel
@@ -477,8 +477,7 @@ const Kalkulacka = function () {
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetailsInside}>
           <Typography paragraph={true}>
-            Před zásahem Ústavního soudu se mandáty v krajích rozdělovaly takto:
-            U každého kandidáta se počet hlasů pro jeho stranu v daném kraji
+            Před zásahem Ústavního soudu se mandáty v krajích rozdělovaly tak, že se u každého kandidáta počet hlasů pro jeho stranu v daném kraji
             vydělil jeho pořadím na kandidátce. Lídr kandidátky jako by měl k dispozici všechny hlasy své strany,
             druhý na kandidátce polovinu hlasů, třetí třetinu atd.
           </Typography>
@@ -537,7 +536,7 @@ const Kalkulacka = function () {
           id="panel6a-header"
         >
           <Typography className={classes.heading}>
-            6. Dělení mandátů nejprve celostátně
+            6. Celostátní rozpočítání a dělení po krajích
           </Typography>
           <Typography className={classes.secondaryHeading}>
             Hareova kvóta
@@ -659,7 +658,7 @@ const Kalkulacka = function () {
           id="panel8a-header"
         >
           <Typography className={classes.heading}>
-            8. Jak by se lišilo rozložení sil ve sněmovně
+            8. Jak by se lišilo zastoupení ve sněmovně?
           </Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetailsInside}>
@@ -667,9 +666,9 @@ const Kalkulacka = function () {
             Na modelu předchozích čtyř voleb se od sebe dvě varianty přepočtu
             navrhované ministerstvem vnitra odchylují jen minimálně. Tři ze čtyř
             hlasování by po přepočtu dopadla stejně, jen v roce 2006 by
-            nejsilnější ODS měla o jednoho poslance méně a nejslabší strana
-            Zelených o jednoho více při použití &bdquo;širší&ldquo; varianty
-            celé republiky jako jediného kraje.
+při použití &bdquo;širší&ldquo; varianty
+            celé republiky jako jediného kraje měla nejsilnější ODS o jednoho poslance méně a nejslabší strana
+            Zelených o jednoho více.
           </Typography>
           <Typography>
             Při srovnání navrhovaných metod s dosud používaným systémem je vidět
@@ -678,8 +677,7 @@ const Kalkulacka = function () {
           </Typography>
           <Typography>TADY BUDE GRAF TĚCH ROZDÍLŮ!</Typography>
           <Typography>
-            Nicméně je ve hvězdách, co poslanci vymyslí, může to být i něco
-            úplně jiného. Ve hře je stále také senátní a poslanecký návrh.
+            Zatím není jasné, k jaké variantě se poslanci přikloní, případně zda nepřijdou s třetí. Ve hře také stále zůstávají <a href="https://apps.odok.cz/veklep-detail?pid=KORNBJ6FQK72">poslanecký</a> a <a href="https://www.senat.cz/xqw/xervlet/pssenat/historie?action=detail&value=4738">senátní návrh</a>.
           </Typography>
         </AccordionDetails>
       </Accordion>
