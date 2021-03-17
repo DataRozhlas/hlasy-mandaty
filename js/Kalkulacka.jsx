@@ -13,7 +13,8 @@ import DalsiButton from "./DalsiButton.jsx";
 import SimpleSelect from "./SimpleSelect.jsx";
 import SelectKraj from "./SelectKraj.jsx";
 import GrafStran from "./GrafStran.jsx";
-import TargetScroller from 'react-target-scroller';
+import GrafSnemovna from "./GrafSnemovna.jsx";
+import TargetScroller from "react-target-scroller";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -63,7 +64,7 @@ const Kalkulacka = function () {
     panel != "panel1" && zjistiPostupujiciStrany(vysledek, spoctiUzkou);
     panel != "panel1" && spoctiPostaru(vysledek);
     setTimeout(() => setScrollTarget(`#${panel}a-header`), 680);
-    
+
     // panel != "panel1" && spoctiUzkou(postupuji);
   };
   const dalsiButtonClick = (e) => {
@@ -477,17 +478,20 @@ const Kalkulacka = function () {
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetailsInside}>
           <Typography paragraph={true}>
-            Před zásahem Ústavního soudu se mandáty v krajích rozdělovaly tak, že se u každého kandidáta počet hlasů pro jeho stranu v daném kraji
-            vydělil jeho pořadím na kandidátce. Lídr kandidátky jako by měl k dispozici všechny hlasy své strany,
-            druhý na kandidátce polovinu hlasů, třetí třetinu atd.
+            Před zásahem Ústavního soudu se mandáty v krajích rozdělovaly tak,
+            že se u každého kandidáta počet hlasů pro jeho stranu v daném kraji
+            vydělil jeho pořadím na kandidátce. Lídr kandidátky jako by měl k
+            dispozici všechny hlasy své strany, druhý na kandidátce polovinu
+            hlasů, třetí třetinu atd.
           </Typography>
           <Typography paragraph={true}>
-            Výsledky tohoto dělení u všech kandidátů a všech postupujících stran se pak
-            shromáždily do jedné velké tabulky a seřadily od nejvyššího k
-            nejnižšímu. Kdo byl v tabulce &bdquo;nad čarou&ldquo;, tedy měl pořadové číslo
-            menší nebo rovné počtu mandátů pro daný kraj, stal se poslankyní či
-            poslancem. (Zanedbejme možnost posouvat se na kandidátkách pomocí
-            preferenčních hlasů, kterou Ústavní soud nezrušil.)
+            Výsledky tohoto dělení u všech kandidátů a všech postupujících stran
+            se pak shromáždily do jedné velké tabulky a seřadily od nejvyššího k
+            nejnižšímu. Kdo byl v tabulce &bdquo;nad čarou&ldquo;, tedy měl
+            pořadové číslo menší nebo rovné počtu mandátů pro daný kraj, stal se
+            poslankyní či poslancem. (Zanedbejme možnost posouvat se na
+            kandidátkách pomocí preferenčních hlasů, kterou Ústavní soud
+            nezrušil.)
           </Typography>
           <Typography paragraph={true}>
             {`Takhle to dopadalo ve vámi zvoleném roce ${rok} v jednotlivých krajích:`}
@@ -612,7 +616,7 @@ const Kalkulacka = function () {
           </Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetailsInside}>
-          <Typography>
+          <Typography paragraph={true}>
             Strany by nepodávaly kandidátky v každém kraji, ale jen jednu
             společnou pro celou republiku. Počet hlasů pro každý subjekt, který
             by prošel do sněmovny, by se dělil číslem 201. Výsledek zaokrouhlený
@@ -662,22 +666,64 @@ const Kalkulacka = function () {
           </Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetailsInside}>
-          <Typography>
+          <Typography paragraph={true}>
             Na modelu předchozích čtyř voleb se od sebe dvě varianty přepočtu
             navrhované ministerstvem vnitra odchylují jen minimálně. Tři ze čtyř
-            hlasování by po přepočtu dopadla stejně, jen v roce 2006 by
-při použití &bdquo;širší&ldquo; varianty
-            celé republiky jako jediného kraje měla nejsilnější ODS o jednoho poslance méně a nejslabší strana
-            Zelených o jednoho více.
+            hlasování by po přepočtu dopadla stejně, jen v roce 2006 by při
+            použití &bdquo;širší&ldquo; varianty celé republiky jako jediného
+            kraje měla nejsilnější ODS o jednoho poslance méně a nejslabší
+            strana Zelených o jednoho více.
           </Typography>
-          <Typography>
+          <Typography paragraph={true}>
             Při srovnání navrhovaných metod s dosud používaným systémem je vidět
             větší rozdíl: Velké strany by oslabily. Například ANO by v minulých
             volbách získalo o 15 mandátů méně.
           </Typography>
-          <Typography>TADY BUDE GRAF TĚCH ROZDÍLŮ!</Typography>
-          <Typography>
-            Zatím není jasné, k jaké variantě se poslanci přikloní, případně zda nepřijdou s třetí. Ve hře také stále zůstávají <a href="https://apps.odok.cz/veklep-detail?pid=KORNBJ6FQK72">poslanecký</a> a <a href="https://www.senat.cz/xqw/xervlet/pssenat/historie?action=detail&value=4738">senátní návrh</a>.
+
+          <GrafSnemovna
+            data={
+              postupuji
+                ? postupuji.map((strana) => [
+                    strana._attributes.NAZ_STR,
+                    strana.HODNOTY_STRANA._attributes.MANDATY,
+                  ])
+                : null
+            }
+            titulek={`Původní přepočet, rok ${rok}`}
+          ></GrafSnemovna>
+          <GrafSnemovna
+            data={
+              Object.entries(uzka).length > 0
+                ? postupuji.map((strana) => [
+                    strana._attributes.NAZ_STR,
+                    uzka.stranyExtraMandaty.filter(
+                      (i) => i.nazev === strana._attributes.NAZ_STR
+                    )[0].mandatu +
+                      uzka.stranyExtraMandaty.filter(
+                        (i) => i.nazev === strana._attributes.NAZ_STR
+                      )[0].extramandat,
+                  ])
+                : null
+            }
+            titulek={`Navržený přepočet (Hareova kvóta), rok ${rok}`}
+          ></GrafSnemovna>
+          <Typography paragraph={true}>
+            Zatím není jasné, k jaké variantě se poslanci přikloní, případně zda
+            nepřijdou s třetí. Ve hře také stále zůstávají{" "}
+            <Link
+              href="https://apps.odok.cz/veklep-detail?pid=KORNBJ6FQK72"
+              target="_blank"
+            >
+              poslanecký
+            </Link>{" "}
+            a{" "}
+            <Link
+              href="https://www.senat.cz/xqw/xervlet/pssenat/historie?action=detail&value=4738"
+              target="_blank"
+            >
+              senátní návrh
+            </Link>
+            .
           </Typography>
         </AccordionDetails>
       </Accordion>
