@@ -62,7 +62,8 @@ const Kalkulacka = function () {
     setExpanded(isExpanded ? panel : false);
     panel != "panel1" && zjistiPostupujiciStrany(vysledek, spoctiUzkou);
     panel != "panel1" && spoctiPostaru(vysledek);
-    setScrollTarget(`${panel}a-header`);  
+    setTimeout(() => setScrollTarget(`#${panel}a-header`), 500);
+    
     // panel != "panel1" && spoctiUzkou(postupuji);
   };
   const dalsiButtonClick = (e) => {
@@ -177,7 +178,7 @@ const Kalkulacka = function () {
 
   return (
     <div className={classes.root}>
-      <TargetScroller target={scrollTarget} />
+      <TargetScroller target={scrollTarget} offset={40} />
       <Accordion
         expanded={expanded === "panel1"}
         onChange={handleChange("panel1")}
