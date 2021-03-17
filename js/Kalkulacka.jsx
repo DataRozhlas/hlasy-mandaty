@@ -13,7 +13,7 @@ import DalsiButton from "./DalsiButton.jsx";
 import SimpleSelect from "./SimpleSelect.jsx";
 import SelectKraj from "./SelectKraj.jsx";
 import GrafStran from "./GrafStran.jsx";
-import Paper from "@material-ui/core/Paper";
+import TargetScroller from 'react-target-scroller';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => {
 const Kalkulacka = function () {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState("panel1");
+  const [scrollTarget, setScrollTarget] = React.useState();
   const [vysledek, setVysledek] = React.useState();
   const [postupuji, setPostupuji] = React.useState([]);
   const [rok, setRok] = React.useState(2017);
@@ -58,10 +59,11 @@ const Kalkulacka = function () {
   }, []);
 
   const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
     panel != "panel1" && zjistiPostupujiciStrany(vysledek, spoctiUzkou);
     panel != "panel1" && spoctiPostaru(vysledek);
+    setScrollTarget(`${panel}a-header`);  
     // panel != "panel1" && spoctiUzkou(postupuji);
-    setExpanded(isExpanded ? panel : false);
   };
   const dalsiButtonClick = (e) => {
     e.preventDefault();
@@ -175,6 +177,7 @@ const Kalkulacka = function () {
 
   return (
     <div className={classes.root}>
+      <TargetScroller target={scrollTarget} />
       <Accordion
         expanded={expanded === "panel1"}
         onChange={handleChange("panel1")}
