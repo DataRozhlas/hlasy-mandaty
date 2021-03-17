@@ -13,6 +13,7 @@ import DalsiButton from "./DalsiButton.jsx";
 import SimpleSelect from "./SimpleSelect.jsx";
 import SelectKraj from "./SelectKraj.jsx";
 import GrafStran from "./GrafStran.jsx";
+import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -252,7 +253,7 @@ const Kalkulacka = function () {
                 </ListItem>
               );
             })}
-          </List>
+            </List>
           <Typography paragraph={true}>
             Strana musí na celostátní úrovni dostat aspoň 5 % hlasů. Dokud ji{" "}
             <Link
