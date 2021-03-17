@@ -185,7 +185,7 @@ const Kalkulacka = function () {
           id="panel1a-header"
         >
           <Typography className={classes.heading}>
-            1. Voliči &bdquo;rozdají karty&ldquo; 🗳️
+            1. Voliči &bdquo;rozdají karty&ldquo; 
           </Typography>
           <Typography className={classes.secondaryHeading}>
             Jakou hru s nimi půjde hrát?
@@ -193,12 +193,14 @@ const Kalkulacka = function () {
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetailsInside}>
           <Typography>
-            Stejný výsledek voleb 🍏🍏🍏🍎🍎🍌🍒🍐🍋 může vést k mírně odlišnému
-            rozložení sil ve sněmovně 🍏🍏🍏🍏🍎🍎🍎🍌🍌🍒, a případně i k
-            různým vládám 🍏🍏🍏🍏🍌. Tady si můžete vyzkoušet, jak by dopadly
+            Stejný výsledek voleb může vést k mírně odlišnému
+            rozložení sil ve sněmovně a případně i k
+            různým vládám. Tady si můžete vyzkoušet, jak by dopadly
             čtvery předchozí volby, kdyby se na ně vztahovaly aktuálně
             navrhované změny ve způsobu přepočtení hlasů na mandáty.{" "}
-            <strong>Které sněmovní volby si s námi chcete přepočítat?</strong>
+          </Typography>
+          <Typography>
+            Které sněmovní volby si s námi chcete přepočítat?
           </Typography>
           <SimpleSelect
             stahniData={stahniData}
@@ -228,7 +230,7 @@ const Kalkulacka = function () {
           id="panel2a-header"
         >
           <Typography className={classes.heading}>
-            2. Kdo se dostane sněmovny? 🧑🏽‍⚖️
+            2. Kdo se dostane sněmovny?
           </Typography>
           <Typography className={classes.secondaryHeading}>
             A proč bylo málo koalic.
@@ -246,7 +248,7 @@ const Kalkulacka = function () {
                     primary={strana._attributes.NAZ_STR}
                     secondary={`${strana.HODNOTY_STRANA._attributes.PROC_HLASU.toLocaleString(
                       "cs-CZ"
-                    )} %, tj. ${strana.HODNOTY_STRANA._attributes.HLASY.toLocaleString(
+                    )} %, ${strana.HODNOTY_STRANA._attributes.HLASY.toLocaleString(
                       "cs-CZ"
                     )} hlasů`}
                   />
@@ -255,7 +257,7 @@ const Kalkulacka = function () {
             })}
             </List>
           <Typography paragraph={true}>
-            Strana musí na celostátní úrovni dostat aspoň 5 % hlasů. Dokud ji{" "}
+            Strana musí na celostátní úrovni dostat aspoň 5 % hlasů. Dokud ji na začátku února {" "}
             <Link
               href="https://www.usoud.cz/fileadmin/user_upload/Tiskova_mluvci/Publikovane_nalezy/2021/Pl._US_44_17_vcetne_disentu.pdf"
               target="_blank"
@@ -276,7 +278,7 @@ const Kalkulacka = function () {
           <Typography paragraph={true}>
             Do letošních voleb se chystají dvě koalice, kterým předvolební
             průzkumy dávají naději, že by mohly překonat i původní vysokou
-            vstupní bariéru.
+            vstupní bariéru: jednou jsou Piráti a Starostové, druhou SPOLU (ODS, KDU-ČSL a TOP 09).
           </Typography>
           <Typography paragraph={true}>
             <Link
@@ -285,7 +287,7 @@ const Kalkulacka = function () {
             >
               Návrh ministerstva vnitra
             </Link>
-            , který už schválila vláda, a teď ho ve výborech posuzují poslanci,
+            , který už schválila vláda a teď ho ve výborech posuzují poslanci,
             počítá v obou svých variantách se snížením hranice pro dvoukoalice
             na 7 % hlasů, u trojkoalic na 9 % a u větších uskupení na 11 %
             hlasů.{" "}
@@ -303,7 +305,7 @@ const Kalkulacka = function () {
           id="panel3a-header"
         >
           <Typography className={classes.heading}>
-            3. Kolik hlasů na poslance 🧮
+            3. Kolik hlasů na poslance 
           </Typography>
           <Typography className={classes.secondaryHeading}>
             Mandátové/volební číslo.
@@ -311,7 +313,7 @@ const Kalkulacka = function () {
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetailsInside}>
           <Typography paragraph={true}>
-            Teď je potřeba zjistit aspoň přibližně, kolik hlasů
+            Teď je potřeba aspoň přibližně spočítat, kolik hlasů
             &bdquo;stojí&ldquo; jedno místo v poslanecké sněmovně. Až do
             únorového{" "}
             <Link
@@ -408,7 +410,7 @@ const Kalkulacka = function () {
           id="panel4a-header"
         >
           <Typography className={classes.heading}>
-            4. Kolik poslanců bude mít který kraj ✨
+            4. Kolik poslanců bude mít který kraj 
           </Typography>
           <Typography className={classes.secondaryHeading}>
             Víc obvyvatel + vyšší účast = víc mandátů
@@ -462,7 +464,7 @@ const Kalkulacka = function () {
           id="panel5a-header"
         >
           <Typography className={classes.heading}>
-            5. Dělení mandátů nejprve v krajích 🔪
+            5. Dělení mandátů nejprve v krajích 
           </Typography>
           <Typography className={classes.secondaryHeading}>
             D'Hondtův dělitel
@@ -529,7 +531,7 @@ const Kalkulacka = function () {
           id="panel6a-header"
         >
           <Typography className={classes.heading}>
-            6. Dělení mandátů nejprve celostátně 🍰
+            6. Dělení mandátů nejprve celostátně 
           </Typography>
           <Typography className={classes.secondaryHeading}>
             Hareova kvóta
@@ -598,7 +600,7 @@ const Kalkulacka = function () {
           id="panel7a-header"
         >
           <Typography className={classes.heading}>
-            7. Celá republika jako jeden kraj 🥮
+            7. Celá republika jako jeden kraj 
           </Typography>
           <Typography className={classes.secondaryHeading}>
             Hagenbach-Bischoffova kvóta
@@ -651,7 +653,7 @@ const Kalkulacka = function () {
           id="panel8a-header"
         >
           <Typography className={classes.heading}>
-            8. Jak by se lišilo rozložení sil ve sněmovně ⚖️
+            8. Jak by se lišilo rozložení sil ve sněmovně 
           </Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetailsInside}>
