@@ -62,7 +62,7 @@ const Kalkulacka = function () {
     setExpanded(isExpanded ? panel : false);
     panel != "panel1" && zjistiPostupujiciStrany(vysledek, spoctiUzkou);
     panel != "panel1" && spoctiPostaru(vysledek);
-    setTimeout(() => setScrollTarget(`#${panel}a-header`), 500);
+    setTimeout(() => setScrollTarget(`#${panel}a-header`), 680);
     
     // panel != "panel1" && spoctiUzkou(postupuji);
   };
