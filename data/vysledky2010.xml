@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <VYSLEDKY xmlns="http://www.volby.cz/ps/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://www.volby.cz/ps/ ps_vysledky.xsd"
-          DATUM_CAS_GENEROVANI="2021-03-13T19:02:53">
+          DATUM_CAS_GENEROVANI="2021-03-18T17:19:37">
 <KRAJ CIS_KRAJ="1" NAZ_KRAJ="Hl. m. Praha" POCMANDATU="25">
 <UCAST OKRSKY_CELKEM="1126" OKRSKY_ZPRAC="1126" OKRSKY_ZPRAC_PROC="100.00" ZAPSANI_VOLICI="943459" VYDANE_OBALKY="641416" UCAST_PROC="67.99" ODEVZDANE_OBALKY="640740" PLATNE_HLASY="637328" PLATNE_HLASY_PROC="99.47" />
 <STRANA KSTRANA="1" NAZ_STR="OBČANÉ.CZ">

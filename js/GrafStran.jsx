@@ -2,7 +2,7 @@ import React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
-function GrafStran({ vysledek }) {
+function GrafStran({ vysledek, titulek }) {
   if (vysledek) {
     const data = vysledek.CR.STRANA.map((strana) => [
       strana._attributes.NAZ_STR,
@@ -14,7 +14,7 @@ function GrafStran({ vysledek }) {
         height: data.length * 20,
       },
       title: {
-        text: "",
+        text: titulek,
       },
       credits: {
         enabled: false,

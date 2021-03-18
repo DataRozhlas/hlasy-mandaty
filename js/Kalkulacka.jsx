@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import List from "@material-ui/core/List";
+import Box from "@material-ui/core/Box";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import DalsiButton from "./DalsiButton.jsx";
@@ -15,6 +16,11 @@ import SelectKraj from "./SelectKraj.jsx";
 import GrafStran from "./GrafStran.jsx";
 import GrafSnemovna from "./GrafSnemovna.jsx";
 import TargetScroller from "react-target-scroller";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import { spacing } from '@material-ui/system';
+
+
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -197,13 +203,13 @@ const Kalkulacka = function () {
           </Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetailsInside}>
-          <Typography>
+          <Typography paragraph={true}>
             Stejný výsledek voleb může vést k mírně odlišnému rozložení sil ve
             sněmovně a případně i k různým vládám. Tady si můžete vyzkoušet, jak
             by dopadly čtvery předchozí volby, kdyby se na ně vztahovaly
             aktuálně navrhované změny ve způsobu přepočtení hlasů na mandáty.{" "}
           </Typography>
-          <Typography>
+          <Typography paragraph={true}>
             Které sněmovní volby si s námi chcete přepočítat?
           </Typography>
           <SimpleSelect
@@ -212,15 +218,17 @@ const Kalkulacka = function () {
             setRok={setRok}
           ></SimpleSelect>
 
-          <Typography>
-            {vysledek &&
+          <GrafStran
+            vysledek={vysledek}
+            titulek={
+              vysledek &&
               `${
                 vysledek.CR.STRANA.length
               } politických stran obdrželo ${vysledek.CR.UCAST._attributes.PLATNE_HLASY.toLocaleString(
                 "cs-CZ"
-              )} platných hlasů`}
-          </Typography>
-          <GrafStran vysledek={vysledek}></GrafStran>
+              )} platných hlasů`
+            }
+          ></GrafStran>
           <DalsiButton onClick={dalsiButtonClick}></DalsiButton>
         </AccordionDetails>
       </Accordion>
@@ -245,20 +253,30 @@ const Kalkulacka = function () {
             {`V roce ${rok}, který jste si vybrali, překonalo hranici pro vstup do sněmovny ${postupuji.length} stran:`}
           </Typography>
           <List dense={true} disablePadding={true}>
-            {postupuji.map((strana) => {
-              return (
-                <ListItem key={strana._attributes.KSTRANA} dense={true}>
-                  <ListItemText
-                    primary={strana._attributes.NAZ_STR}
-                    secondary={`${strana.HODNOTY_STRANA._attributes.PROC_HLASU.toLocaleString(
-                      "cs-CZ"
-                    )} %, ${strana.HODNOTY_STRANA._attributes.HLASY.toLocaleString(
-                      "cs-CZ"
-                    )} hlasů`}
-                  />
-                </ListItem>
-              );
-            })}
+            <Box display="flex" flexWrap="wrap" justifyContent="center">
+              {postupuji.map((strana, i) => {
+                return (
+                  <Card key={strana._attributes.KSTRANA} variant="outlined" style={{margin: "0.2rem"}}>
+                    <CardContent>
+                      <Typography variant="subtitle2" align="right">
+                        {i + 1}. {strana._attributes.NAZ_STR}
+                      </Typography>
+                      <Typography variant="body2" align="right">
+                        {`${strana.HODNOTY_STRANA._attributes.PROC_HLASU.toLocaleString(
+                          "cs-CZ"
+                        )} %`}
+                      </Typography>
+
+                      <Typography variant="body2" align="right">
+                        {`                   ${strana.HODNOTY_STRANA._attributes.HLASY.toLocaleString(
+                          "cs-CZ"
+                        )} hlasů`}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </Box>
           </List>
           <Typography paragraph={true}>
             Strany musí na celostátní úrovni dostat aspoň 5 % hlasů. Dokud ji na
