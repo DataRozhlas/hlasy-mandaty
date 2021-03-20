@@ -18,9 +18,6 @@ import GrafSnemovna from "./GrafSnemovna.jsx";
 import TargetScroller from "react-target-scroller";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { spacing } from '@material-ui/system';
-
-
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -209,15 +206,14 @@ const Kalkulacka = function () {
             by dopadly čtvery předchozí volby, kdyby se na ně vztahovaly
             aktuálně navrhované změny ve způsobu přepočtení hlasů na mandáty.{" "}
           </Typography>
-          <Typography paragraph={true}>
-            Které sněmovní volby si s námi chcete přepočítat?
-          </Typography>
-          <SimpleSelect
-            stahniData={stahniData}
-            rok={rok}
-            setRok={setRok}
-          ></SimpleSelect>
-
+          <Typography>Které volby si s námi chcete přepočítat?</Typography>
+          <Box mb={2}>
+            <SimpleSelect
+              stahniData={stahniData}
+              rok={rok}
+              setRok={setRok}
+            ></SimpleSelect>
+          </Box>
           <GrafStran
             vysledek={vysledek}
             titulek={
@@ -252,32 +248,38 @@ const Kalkulacka = function () {
           <Typography paragraph={true}>
             {`V roce ${rok}, který jste si vybrali, překonalo hranici pro vstup do sněmovny ${postupuji.length} stran:`}
           </Typography>
-          <List dense={true} disablePadding={true}>
-            <Box display="flex" flexWrap="wrap" justifyContent="center">
-              {postupuji.map((strana, i) => {
-                return (
-                  <Card key={strana._attributes.KSTRANA} variant="outlined" style={{margin: "0.2rem"}}>
-                    <CardContent>
-                      <Typography variant="subtitle2" align="right">
-                        {i + 1}. {strana._attributes.NAZ_STR}
-                      </Typography>
-                      <Typography variant="body2" align="right">
-                        {`${strana.HODNOTY_STRANA._attributes.PROC_HLASU.toLocaleString(
-                          "cs-CZ"
-                        )} %`}
-                      </Typography>
+          <Box display="flex" flexWrap="wrap" justifyContent="center" mb={2}>
+            {postupuji.map((strana, i) => {
+              return (
+                <Card
+                  key={strana._attributes.KSTRANA}
+                  variant="outlined"
+                  style={{ margin: "0.2rem" }}
+                >
+                  <CardContent>
+                    <Typography
+                      variant="subtitle2"
+                      align="center"
+                      gutterBottom={true}
+                    >
+                      {i + 1}. {strana._attributes.NAZ_STR}
+                    </Typography>
+                    <Typography variant="body2" align="center">
+                      {`${strana.HODNOTY_STRANA._attributes.PROC_HLASU.toLocaleString(
+                        "cs-CZ"
+                      )} %`}
+                    </Typography>
 
-                      <Typography variant="body2" align="right">
-                        {`                   ${strana.HODNOTY_STRANA._attributes.HLASY.toLocaleString(
-                          "cs-CZ"
-                        )} hlasů`}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </Box>
-          </List>
+                    <Typography variant="body2" align="center">
+                      {`${strana.HODNOTY_STRANA._attributes.HLASY.toLocaleString(
+                        "cs-CZ"
+                      )} hlasů`}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </Box>
           <Typography paragraph={true}>
             Strany musí na celostátní úrovni dostat aspoň 5 % hlasů. Dokud ji na
             začátku února{" "}
@@ -293,10 +295,11 @@ const Kalkulacka = function () {
             hlasů.
           </Typography>
           <Typography paragraph={true}>
-            Přísné pravidlo přispělo k tomu, že za posledních patnáct let
-            kandidovala do sněmovny jenom jedna: Koalice pro Českou republiku se
-            skládala ze sedmi subjektů a v roce 2006 získala 8 140 hlasů – na
-            postup do sněmovny by jí (těsně) nestačilo ani o milon hlasů víc.
+            Nejpřísnější pravidlo v Evropě přispělo k tomu, že za posledních
+            patnáct let kandidovala do sněmovny jenom jedna: Koalice pro Českou
+            republiku se skládala ze sedmi subjektů a v roce 2006 získala 8 140
+            hlasů – na postup do sněmovny by jí (těsně) nestačilo ani o milon
+            hlasů víc.
           </Typography>
           <Typography paragraph={true}>
             Do letošních voleb se chystají dvě koalice, kterým předvolební

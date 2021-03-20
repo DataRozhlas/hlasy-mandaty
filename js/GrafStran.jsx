@@ -1,5 +1,6 @@
 import React from "react";
 import Highcharts from "highcharts";
+import blueGrey from '@material-ui/core/colors/blueGrey';
 import HighchartsReact from "highcharts-react-official";
 
 function GrafStran({ vysledek, titulek }) {
@@ -40,6 +41,7 @@ function GrafStran({ vysledek, titulek }) {
         {
           data: data,
           name: "hlasů",
+          color: blueGrey[700],
         },
       ],
     };

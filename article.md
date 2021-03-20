@@ -9,6 +9,10 @@ options: [noheader, nopic] #wide, noheader (, nopic)
 <div id="kalkulacka"></div>
 </wide>
 
+
+
+
+
 Poslanci se musí dobrat shody.
 
 
