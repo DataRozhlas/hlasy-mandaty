@@ -35,6 +35,7 @@
     "webpack": "^4.41.0"
   },
   "devDependencies": {
+    "d3": "^6.6.0",
     "xml-js": "^1.6.11"
   }
 }

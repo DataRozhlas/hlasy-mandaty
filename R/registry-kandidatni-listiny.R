@@ -1,3 +1,5 @@
+
+
 library(foreign)
 #2013
 download.file("https://volby.cz/opendata/ps2013/PS2013reg20131026.zip", "2013.zip")
@@ -20,7 +22,7 @@ file.remove("2010.zip")
 
 download.file("https://volby.cz/opendata/ps2006/PS2006reg2006.zip", "2006.zip")
 unzip("2006.zip")
-read.dbf("PSRKL.dbf")
+data <- read.dbf("PSRKL.dbf") 
 file.remove("PSRK.dbf")
 file.remove("PSRKL.dbf")
-file.remove("2010.zip")
+file.remove("2006.zip")
