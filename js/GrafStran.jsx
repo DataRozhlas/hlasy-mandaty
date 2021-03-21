@@ -1,14 +1,12 @@
 import React from "react";
 import Highcharts from "highcharts";
-import blueGrey from '@material-ui/core/colors/blueGrey';
 import HighchartsReact from "highcharts-react-official";
 
-function GrafStran({ vysledek, titulek }) {
-  if (vysledek) {
-    const data = vysledek.CR.STRANA.map((strana) => [
-      strana._attributes.NAZ_STR,
-      strana.HODNOTY_STRANA._attributes.HLASY,
-    ]).sort((a, b) => a[1] < b[1] ? 1 : -1);
+function GrafStran({ vysledky, titulek }) {
+  if (vysledky) {
+    const data = vysledky.CR.strana
+      .map((strana) => [strana.zkratka, strana.hlasy])
+      .sort((a, b) => (a[1] < b[1] ? 1 : -1));
     const options = {
       chart: {
         type: "bar",
@@ -35,13 +33,20 @@ function GrafStran({ vysledek, titulek }) {
         visible: false,
       },
       xAxis: {
-        type: 'category',
+        type: "category",
+      },
+      tooltip: {
+        formatter: function () {
+          return vysledky.CR.strana.filter(
+            (strana) => strana.zkratka === this.key
+          )[0].nazev;
+        },
       },
       series: [
         {
           data: data,
           name: "hlasů",
-          color: blueGrey[700],
+          color: "#e63946",
         },
       ],
     };
@@ -51,7 +56,6 @@ function GrafStran({ vysledek, titulek }) {
           highcharts={Highcharts}
           options={options}
           containerProps={{ style: { maxWidth: "100%" } }}
-          immutable={true}
         />
       </>
     );

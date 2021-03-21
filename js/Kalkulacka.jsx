@@ -36,7 +36,7 @@ function Kalkulacka() {
   const [krok, setKrok] = useState(1);
   const [scrollTarget, setScrollTarget] = useState();
   const [rok, setRok] = useState(2017);
-  const [vysledky, setVysledky] = useState({});
+  const [vysledky, setVysledky] = useState();
 
   //SIDE EFFECTS
 
@@ -71,6 +71,9 @@ function Kalkulacka() {
           posledni={i + 1 === kapitoly.length}
           krok={krok}
           setKrok={setKrok}
+          rok={rok}
+          setRok={setRok}
+          vysledky={vysledky}
         />
       ))}
     </div>

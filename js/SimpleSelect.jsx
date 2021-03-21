@@ -15,11 +15,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SimpleSelect({ stahniData, rok, setRok }) {
+function SimpleSelect({ rok, setRok }) {
   const classes = useStyles();
 
   const zmenRok = (event) => {
-    stahniData(event.target.value);
     setRok(event.target.value);
   };
 

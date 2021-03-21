@@ -4,8 +4,15 @@ import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import DalsiButton from "./DalsiButton.jsx";
 import Typography from "@material-ui/core/Typography";
+import DalsiButton from "./DalsiButton.jsx";
+import UvodniSlovo from "./UvodniSlovo.jsx";
+import Dhondt from "./Dhondt.jsx";
+import Benda from "./Benda.jsx";
+import Poslanci from "./Poslanci.jsx";
+import Vnitro1 from "./Vnitro1.jsx";
+import Vnitro2 from "./Vnitro2.jsx";
+import Senat from "./Senat.jsx";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -26,7 +33,17 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-function Akordeon({ id, nadpis, podnadpis, posledni, krok, setKrok }) {
+function Akordeon({
+  id,
+  nadpis,
+  podnadpis,
+  posledni,
+  krok,
+  setKrok,
+  rok,
+  setRok,
+  vysledky,
+}) {
   const classes = useStyles();
 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -52,10 +69,18 @@ function Akordeon({ id, nadpis, podnadpis, posledni, krok, setKrok }) {
         </Typography>
       </AccordionSummary>
       <AccordionDetails className={classes.accordionDetailsInside}>
-        <Typography>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-          malesuada lacus ex, sit amet blandit leo lobortis eget.
-        </Typography>
+        <UvodniSlovo
+          krok={krok}
+          rok={rok}
+          setRok={setRok}
+          vysledky={vysledky}
+        />
+        <Dhondt krok={krok} />
+        <Benda krok={krok} />
+        <Poslanci krok={krok} />
+        <Vnitro1 krok={krok} />
+        <Vnitro2 krok={krok} />
+        <Senat krok={krok} />
         {posledni ? null : (
           <DalsiButton onClick={dalsiButtonClick}></DalsiButton>
         )}
