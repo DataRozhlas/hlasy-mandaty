@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import TargetScroller from "react-target-scroller";
 import Typography from "@material-ui/core/Typography";
 import Akordeon from "./Akordeon.jsx";
-import data from "./../data/2017.json";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -12,6 +11,8 @@ const useStyles = makeStyles((theme) => {
     },
   };
 });
+
+const jeMobil = window.innerWidth < 768;
 
 const kapitoly = [
   ["Voliči „rozdají karty“", "Jakou hru s nimi půjde hrát?"],
@@ -30,15 +31,25 @@ const kapitoly = [
 function Kalkulacka() {
   const classes = useStyles();
   const prvniBeh = useRef(true);
-  const jeMobil = window.innerWidth < 768;
 
-  //state
+  //STATE
   const [krok, setKrok] = useState(1);
-  const [scrollTarget, setScrollTarget] = useState("");
+  const [scrollTarget, setScrollTarget] = useState();
   const [rok, setRok] = useState(2017);
-  const [vysledky, setVysledky] = useState(data);
+  const [vysledky, setVysledky] = useState({});
 
-  //side effects
+  //SIDE EFFECTS
+
+  //fetch data
+  useEffect(() => {
+    fetch(`https://data.irozhlas.cz/hlasy-mandaty/data/${rok}.json`)
+      .then((response) => response.json())
+      .then((data) => {
+        setVysledky(data);
+      });
+  }, [rok]);
+
+  //scrolling
   useEffect(() => {
     if (prvniBeh.current) {
       prvniBeh.current = false;
