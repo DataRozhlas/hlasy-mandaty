@@ -56,6 +56,7 @@ function GrafStran({ vysledky, titulek }) {
           highcharts={Highcharts}
           options={options}
           containerProps={{ style: { maxWidth: "100%" } }}
+          immutable={true}
         />
       </>
     );
