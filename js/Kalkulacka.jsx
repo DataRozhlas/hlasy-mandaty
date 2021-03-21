@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TargetScroller from "react-target-scroller";
 import Typography from "@material-ui/core/Typography";
 import Akordeon from "./Akordeon.jsx";
+import data from "./../data/2017.json";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -28,16 +29,19 @@ const kapitoly = [
 
 function Kalkulacka() {
   const classes = useStyles();
-  const isFirstRun = useRef(true);
+  const prvniBeh = useRef(true);
+  const jeMobil = window.innerWidth < 768;
 
   //state
   const [krok, setKrok] = useState(1);
   const [scrollTarget, setScrollTarget] = useState("");
+  const [rok, setRok] = useState(2017);
+  const [vysledky, setVysledky] = useState(data);
 
   //side effects
   useEffect(() => {
-    if (isFirstRun.current) {
-      isFirstRun.current = false;
+    if (prvniBeh.current) {
+      prvniBeh.current = false;
       return;
     }
     setTimeout(() => setScrollTarget(`#panel${krok}a-header`), 500);
@@ -46,7 +50,7 @@ function Kalkulacka() {
   //funkce
   return (
     <div className={classes.root}>
-      <TargetScroller target={scrollTarget} offset={40} />
+      <TargetScroller target={scrollTarget} offset={jeMobil ? 0 : 40} />
       {kapitoly.map((kapitola, i) => (
         <Akordeon
           key={i}
