@@ -10,8 +10,7 @@ options: [noheader, nopic] #wide, noheader (, nopic)
 </wide>
 
 
-
-
+<br>
 
 Poslanci se musí dobrat shody.
 
