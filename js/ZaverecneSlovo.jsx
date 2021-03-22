@@ -4,6 +4,8 @@ import Link from "@material-ui/core/Link";
 
 function ZaverecneSlovo({ krok }) {
   switch (krok) {
+    case false:
+        return null;
     case 1:
       return null;
     case 2:
@@ -15,7 +17,7 @@ function ZaverecneSlovo({ krok }) {
             snižuje.{" "}
           </Typography>
           <Typography paragraph={true}>
-            Donedávna platné nejpřísnější koaliční klauzule v Evropě přispěla k
+            Donedávna platná nejpřísnější koaliční klauzule v Evropě přispěla k
             tomu, že za posledních patnáct let kandidovala do sněmovny jenom
             jedna: Koalice pro Českou republiku se skládala ze sedmi subjektů a
             v roce 2006 získala 8 140 hlasů – na postup do sněmovny by jí

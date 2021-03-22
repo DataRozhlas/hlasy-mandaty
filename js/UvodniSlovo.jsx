@@ -1,4 +1,5 @@
 import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import GrafStran from "./GrafStran.jsx";
 import SimpleSelect from "./SimpleSelect.jsx";
 import Typography from "@material-ui/core/Typography";
@@ -7,9 +8,20 @@ import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 
+const useStyles = makeStyles((theme) => {
+  return {
+    vlevo: {
+      alignSelf: "flex-start",
+    },
+  };
+});
+
 function UvodniSlovo({ krok, rok, setRok, vysledky, postupuji }) {
+  const classes = useStyles();
 
   switch (krok) {
+    case false:
+      return null;
     case 1:
       return (
         <>
@@ -37,8 +49,8 @@ function UvodniSlovo({ krok, rok, setRok, vysledky, postupuji }) {
       return (
         <>
           {" "}
-          <Typography paragraph={true}>
-            {`V roce ${rok}, který jste si vybrali, překonalo hranici pro vstup do sněmovny ${postupuji.length} stran:`}
+          <Typography paragraph={true} className={classes.vlevo}>
+            {`V roce ${rok}, který jste si vybrali, by podle všech dosud zvažovaných návrhů překonalo hranici pro vstup do sněmovny ${postupuji.length} stran, tedy stejně jako ve skutečnosti:`}
           </Typography>
           <Box display="flex" flexWrap="wrap" justifyContent="center" mb={2}>
             {postupuji.map((strana, i) => {
@@ -68,6 +80,10 @@ function UvodniSlovo({ krok, rok, setRok, vysledky, postupuji }) {
               );
             })}
           </Box>
+          <Typography paragraph={true} className={classes.vlevo}>
+            Je ovšem možné, že pokud by pro ně platila méně přísná pravidla,
+            kandidovalo by více koalic a výsledky mohly vypadat jinak.
+          </Typography>
         </>
       );
     case 3:

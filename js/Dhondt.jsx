@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => {
       borderLeft: "0.2rem solid",
       paddingLeft: "1rem",
       borderColor: "#6200ea",
+      alignSelf: "flex-start",
     },
   };
 });
@@ -19,6 +20,8 @@ const url =
 function Dhondt({ krok }) {
   const classes = useStyles();
   switch (krok) {
+    case false:
+      return null;
     case 1:
       return null;
     case 2:

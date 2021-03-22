@@ -20,6 +20,8 @@ function Vnitro2( {krok} ) {
   const classes = useStyles();
 
   switch (krok) {
+    case false:
+      return null;
     case 1:
       return null;
     case 2:

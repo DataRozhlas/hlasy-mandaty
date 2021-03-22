@@ -20,6 +20,8 @@ function Senat({ krok }) {
   const classes = useStyles();
 
   switch (krok) {
+    case false:
+        return null;
     case 1:
       return null;
     case 2:

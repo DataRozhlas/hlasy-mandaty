@@ -23,9 +23,9 @@ const kapitoly = [
     "Kolik poslanců měl který kraj?",
     "Víc obvyvatel + vyšší účast = víc mandátů",
   ],
-  ["Jak se dělily mandáty?", "D'Hondtův dělitel"],
-  ["Celostátní rozpočítání a dělení po krajích", "Hareova kvóta"],
-  ["Celá republika jako jeden kraj", "Hagenbach-Bischoffova kvóta"],
+  ["Jak se dělily mandáty?", ""],
+  ["Celostátní rozpočítání a dělení po krajích", ""],
+  ["Celá republika jako jeden kraj", ""],
   ["Jak by se lišilo zastoupení ve sněmovně?", ""],
 ];
 

@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => {
       borderLeft: "0.2rem solid",
       paddingLeft: "1rem",
       borderColor: "#64dd17",
+      alignSelf: "flex-start",
     },
   };
 });
@@ -17,7 +18,10 @@ const url = "https://www.psp.cz/sqw/text/orig2.sqw?idd=186875";
 
 function Benda({ krok }) {
   const classes = useStyles();
+  
   switch (krok) {
+    case false:
+      return null;
     case 1:
       return null;
     case 2:

@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => {
       borderLeft: "0.2rem solid",
       paddingLeft: "1rem",
       borderColor: "#8d6e63",
+      alignSelf: "flex-start",
     },
   };
 });
@@ -18,6 +19,8 @@ const url = "https://www.psp.cz/sqw/text/orig2.sqw?idd=166236";
 function Poslanci({ krok }) { 
   const classes = useStyles();
   switch (krok) {
+    case false:
+        return null;
     case 1:
       return null;
     case 2:
@@ -26,7 +29,7 @@ function Poslanci({ krok }) {
           <Link href={url} target="_blank">
             Návrh skupiny poslanců z roku 2019
           </Link>
-          , který je teoreticky stále ve hře, počítá s tím, že by pro koalice
+          , který je teoreticky také stále ve hře, počítá s tím, že by pro koalice
           platila stejná podmínka jako pro samostatné strany, tedy 5 % hlasů
           celostátně.
         </Typography>
