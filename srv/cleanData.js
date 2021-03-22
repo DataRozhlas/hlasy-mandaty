@@ -11,6 +11,7 @@ roky.forEach((rok) => {
   const result = {
     CR: {
       hlasy: data.VYSLEDKY.CR.UCAST._attributes.PLATNE_HLASY,
+      ucast: data.VYSLEDKY.CR.UCAST._attributes.UCAST_PROC,
       strana: data.VYSLEDKY.CR.STRANA.map((strana) => {
         return {
           id: strana._attributes.KSTRANA,

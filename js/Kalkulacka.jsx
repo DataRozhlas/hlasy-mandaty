@@ -17,7 +17,7 @@ const jeMobil = window.innerWidth < 768;
 
 const kapitoly = [
   ["Voliči „rozdají karty“", "Jakou hru s nimi půjde hrát?"],
-  ["Kdo se dostane sněmovny?", "A proč bylo málo koalic"],
+  ["Kdo se dostane sněmovny?", "A proč tak málo koalic"],
   ["Čára mezi kandidáty a poslanci", "Mandátové/volební číslo"],
   [
     "Kolik poslanců měl který kraj?",
@@ -35,7 +35,7 @@ function Kalkulacka() {
   const prvniBehLoad = useRef(true);
 
   //STATE
-  const [krok, setKrok] = useState(1);
+  const [krok, setKrok] = useState(3);
   const [scrollTarget, setScrollTarget] = useState();
   const [rok, setRok] = useState(2017);
   const [vysledky, setVysledky] = useState(data);

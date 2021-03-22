@@ -7,6 +7,7 @@ import Link from "@material-ui/core/Link";
 import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -60,34 +61,45 @@ function UvodniSlovo({ krok, rok, setRok, vysledky, postupuji }) {
                   variant="outlined"
                   style={{ margin: "0.2rem" }}
                 >
-                  <CardContent>
-                    <Typography
-                      variant="subtitle2"
-                      align="center"
-                      gutterBottom={true}
-                    >
-                      {i + 1}. {strana.zkratka}
-                    </Typography>
-                    <Typography variant="body2" align="center">
-                      {`${strana.proc.toLocaleString("cs-CZ")} %`}
-                    </Typography>
+                  <Tooltip title={strana.nazev} style={{ cursor: "default" }}>
+                    <CardContent>
+                      <Typography
+                        variant="subtitle2"
+                        align="center"
+                        gutterBottom={true}
+                      >
+                        {i + 1}. {strana.zkratka}
+                      </Typography>
+                      <Typography variant="body2" align="center">
+                        {`${strana.proc.toLocaleString("cs-CZ")} %`}
+                      </Typography>
 
-                    <Typography variant="body2" align="center">
-                      {`${strana.hlasy.toLocaleString("cs-CZ")} hlasů`}
-                    </Typography>
-                  </CardContent>
+                      <Typography variant="body2" align="center">
+                        {`${strana.hlasy.toLocaleString("cs-CZ")} hlasů`}
+                      </Typography>
+                    </CardContent>
+                  </Tooltip>
                 </Card>
               );
             })}
           </Box>
           <Typography paragraph={true} className={classes.vlevo}>
-            Je ovšem možné, že pokud by pro ně platila méně přísná pravidla,
-            kandidovalo by více koalic a výsledky mohly vypadat jinak.
+            Je ovšem možné, že kdyby pro ně byla platila méně přísná pravidla,
+            bylo by kandidovalo více koalic a výsledky mohly vypadat jinak.
           </Typography>
         </>
       );
     case 3:
-      return <div>povidy3</div>;
+      return (
+        <>
+          <Typography paragraph={true} className={classes.vlevo}>
+            Teď je potřeba aspoň přibližně spočítat, kolik hlasů je při dané
+            volební účasti – v roce {rok} to bylo celostátně{" "}
+            {vysledky.CR.ucast.toLocaleString("cs-CZ")} % – potřeba získat na
+            obsazení jednoho místo v poslanecké sněmovně.
+          </Typography>
+        </>
+      );
     case 4:
       return <div>povidy4</div>;
     case 5:
