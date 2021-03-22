@@ -1,11 +1,35 @@
 import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
 
-function Benda( {krok} ) {
+const useStyles = makeStyles((theme) => {
+  return {
+    boxik: {
+      borderLeft: "0.2rem solid",
+      paddingLeft: "1rem",
+      borderColor: "#64dd17",
+    },
+  };
+});
+
+const url = "https://www.psp.cz/sqw/text/orig2.sqw?idd=186875";
+
+function Benda({ krok }) {
+  const classes = useStyles();
   switch (krok) {
     case 1:
       return null;
     case 2:
-      return <div>povidy2</div>;
+      return (
+        <Typography paragraph={true} className={classes.boxik}>
+          <Link href={url} target="_blank">
+            V návrhu poslance ODS Marka Bendy
+          </Link>
+          , který sněmovna projedná ve druhém čtení, je hranice pro dvoučlenné
+          koalice stanovena na 8 % a pro počtenější na 11 % hlasů.
+        </Typography>
+      );
     case 3:
       return <div>povidy3</div>;
     case 4:

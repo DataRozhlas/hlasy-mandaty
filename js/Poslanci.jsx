@@ -1,11 +1,36 @@
 import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
 
-function Poslanci( {krok} ) {
+const useStyles = makeStyles((theme) => {
+  return {
+    boxik: {
+      borderLeft: "0.2rem solid",
+      paddingLeft: "1rem",
+      borderColor: "#8d6e63",
+    },
+  };
+});
+
+const url = "https://www.psp.cz/sqw/text/orig2.sqw?idd=166236";
+
+function Poslanci({ krok }) { 
+  const classes = useStyles();
   switch (krok) {
     case 1:
       return null;
     case 2:
-      return <div>povidy2</div>;
+      return (
+        <Typography paragraph={true} className={classes.boxik}>
+          <Link href={url} target="_blank">
+            Návrh skupiny poslanců z roku 2019
+          </Link>
+          , který je teoreticky stále ve hře, počítá s tím, že by pro koalice
+          platila stejná podmínka jako pro samostatné strany, tedy 5 % hlasů
+          celostátně.
+        </Typography>
+      );
     case 3:
       return <div>povidy3</div>;
     case 4:

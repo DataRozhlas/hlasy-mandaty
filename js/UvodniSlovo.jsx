@@ -2,6 +2,7 @@ import React from "react";
 import GrafStran from "./GrafStran.jsx";
 import SimpleSelect from "./SimpleSelect.jsx";
 import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
 import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";

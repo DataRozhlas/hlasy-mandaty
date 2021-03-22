@@ -1,11 +1,29 @@
 import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
+
+const useStyles = makeStyles((theme) => {
+  return {
+    boxik: {
+      borderLeft: "0.2rem solid",
+      paddingLeft: "1rem",
+      borderColor: "#ffd600",
+      alignSelf: "flex-start",
+    },
+  };
+});
+
+const url = "https://www.psp.cz/sqw/text/orig2.sqw?idd=185756";
 
 function Vnitro2( {krok} ) {
+  const classes = useStyles();
+
   switch (krok) {
     case 1:
       return null;
     case 2:
-      return <div>povidy2</div>;
+      return null;
     case 3:
       return <div>povidy3</div>;
     case 4:

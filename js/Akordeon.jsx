@@ -13,6 +13,7 @@ import Poslanci from "./Poslanci.jsx";
 import Vnitro1 from "./Vnitro1.jsx";
 import Vnitro2 from "./Vnitro2.jsx";
 import Senat from "./Senat.jsx";
+import ZaverecneSlovo from "./ZaverecneSlovo.jsx";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -83,9 +84,11 @@ function Akordeon({
         <Dhondt krok={krok} />
         <Benda krok={krok} />
         <Poslanci krok={krok} />
+        <Senat krok={krok} />
         <Vnitro1 krok={krok} />
         <Vnitro2 krok={krok} />
-        <Senat krok={krok} />
+        <ZaverecneSlovo krok={krok} />
+
         {posledni ? null : (
           <DalsiButton onClick={dalsiButtonClick}></DalsiButton>
         )}

@@ -1,11 +1,36 @@
 import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
 
-function Senat( {krok} ) {
+const useStyles = makeStyles((theme) => {
+  return {
+    boxik: {
+      borderLeft: "0.2rem solid",
+      paddingLeft: "1rem",
+      borderColor: "#dd2c00",
+      alignSelf: "flex-start",
+    },
+  };
+});
+
+const url = "https://www.senat.cz/xqw/webdav/pssenat/original/98286/82486";
+
+function Senat({ krok }) {
+  const classes = useStyles();
+
   switch (krok) {
     case 1:
       return null;
     case 2:
-      return <div>povidy2</div>;
+      return (
+        <Typography paragraph={true} className={classes.boxik}>
+          <Link href={url} target="_blank">
+            V návrhu skupiny senátorů
+          </Link>{" "}
+          by koalicím také stačilo stejně jako stranám 5 % hlasů.
+        </Typography>
+      );
     case 3:
       return <div>povidy3</div>;
     case 4:
