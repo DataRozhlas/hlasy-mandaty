@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TargetScroller from "react-target-scroller";
 import Typography from "@material-ui/core/Typography";
 import Akordeon from "./Akordeon.jsx";
+import data from "./../data/2017.json";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -30,18 +31,23 @@ const kapitoly = [
 
 function Kalkulacka() {
   const classes = useStyles();
-  const prvniBeh = useRef(true);
+  const prvniBehScroll = useRef(true);
+  const prvniBehLoad = useRef(true);
 
   //STATE
   const [krok, setKrok] = useState(1);
   const [scrollTarget, setScrollTarget] = useState();
   const [rok, setRok] = useState(2017);
-  const [vysledky, setVysledky] = useState();
+  const [vysledky, setVysledky] = useState(data);
 
   //SIDE EFFECTS
 
   //fetch data
   useEffect(() => {
+    if (prvniBehLoad.current) {
+      prvniBehLoad.current = false;
+      return;
+    }
     fetch(`https://data.irozhlas.cz/hlasy-mandaty/data/${rok}.json`)
       .then((response) => response.json())
       .then((data) => {
@@ -51,8 +57,8 @@ function Kalkulacka() {
 
   //scrolling
   useEffect(() => {
-    if (prvniBeh.current) {
-      prvniBeh.current = false;
+    if (prvniBehScroll.current) {
+      prvniBehScroll.current = false;
       return;
     }
     setTimeout(() => setScrollTarget(`#panel${krok}a-header`), 500);

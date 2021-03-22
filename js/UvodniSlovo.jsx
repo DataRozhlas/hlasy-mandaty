@@ -6,11 +6,8 @@ import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 
-const postupuji = vysledky.CR.strana.filter(strana => {
-    
-})
+function UvodniSlovo({ krok, rok, setRok, vysledky, postupuji }) {
 
-function UvodniSlovo({ krok, rok, setRok, vysledky }) {
   switch (krok) {
     case 1:
       return (
@@ -27,14 +24,11 @@ function UvodniSlovo({ krok, rok, setRok, vysledky }) {
           </Box>
           <GrafStran
             vysledky={vysledky}
-            titulek={
-              vysledky &&
-              `${
-                vysledky.CR.strana.length
-              } politických stran obdrželo ${vysledky.CR.hlasy.toLocaleString(
-                "cs-CZ"
-              )} platných hlasů`
-            }
+            titulek={`${
+              vysledky.CR.strana.length
+            } politických stran obdrželo ${vysledky.CR.hlasy.toLocaleString(
+              "cs-CZ"
+            )} platných hlasů`}
           ></GrafStran>
         </>
       );
@@ -49,7 +43,7 @@ function UvodniSlovo({ krok, rok, setRok, vysledky }) {
             {postupuji.map((strana, i) => {
               return (
                 <Card
-                  key={strana._attributes.KSTRANA}
+                  key={strana.id}
                   variant="outlined"
                   style={{ margin: "0.2rem" }}
                 >
@@ -59,18 +53,14 @@ function UvodniSlovo({ krok, rok, setRok, vysledky }) {
                       align="center"
                       gutterBottom={true}
                     >
-                      {i + 1}. {strana._attributes.NAZ_STR}
+                      {i + 1}. {strana.zkratka}
                     </Typography>
                     <Typography variant="body2" align="center">
-                      {`${strana.HODNOTY_STRANA._attributes.PROC_HLASU.toLocaleString(
-                        "cs-CZ"
-                      )} %`}
+                      {`${strana.proc.toLocaleString("cs-CZ")} %`}
                     </Typography>
 
                     <Typography variant="body2" align="center">
-                      {`${strana.HODNOTY_STRANA._attributes.HLASY.toLocaleString(
-                        "cs-CZ"
-                      )} hlasů`}
+                      {`${strana.hlasy.toLocaleString("cs-CZ")} hlasů`}
                     </Typography>
                   </CardContent>
                 </Card>

@@ -54,6 +54,10 @@ function Akordeon({
     setKrok(krok + 1);
   };
 
+  const postupuji = vysledky.CR.strana
+  .filter((strana) => strana.proc > 5)
+  .sort((a, b) => (a.proc < b.proc ? 1 : -1));
+
   return (
     <Accordion expanded={krok === id} onChange={handleChange(id)}>
       <AccordionSummary
@@ -74,6 +78,7 @@ function Akordeon({
           rok={rok}
           setRok={setRok}
           vysledky={vysledky}
+          postupuji={postupuji}
         />
         <Dhondt krok={krok} />
         <Benda krok={krok} />
