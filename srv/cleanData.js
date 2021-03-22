@@ -17,7 +17,7 @@ roky.forEach((rok) => {
           nazev: ciselnik.filter(polozka => polozka.KSTRANA==strana._attributes.KSTRANA)[0].NAZEVCELK,
           zkratka: ciselnik.filter(polozka => polozka.KSTRANA==strana._attributes.KSTRANA)[0].ZKRATKAK8,
           hlasy: strana.HODNOTY_STRANA._attributes.HLASY,
-          //proc: strana.HODNOTY_STRANA._attributes.PROC_HLASU,
+          proc: strana.HODNOTY_STRANA._attributes.PROC_HLASU,
         };
       }),
     },
