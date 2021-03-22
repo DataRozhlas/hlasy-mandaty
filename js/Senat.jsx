@@ -16,12 +16,11 @@ const useStyles = makeStyles((theme) => {
 
 const url = "https://www.senat.cz/xqw/webdav/pssenat/original/98286/82486";
 
-function Senat({ krok }) {
+function Senat({ krok, vysledky, postupuji, hlasyPostupujici, kvota }) {
   const classes = useStyles();
-
   switch (krok) {
     case false:
-        return null;
+      return null;
     case 1:
       return null;
     case 2:
@@ -34,7 +33,13 @@ function Senat({ krok }) {
         </Typography>
       );
     case 3:
-      return <div>povidy3</div>;
+      return (
+        <Typography paragraph={true} className={classes.boxik}>
+          Senátní návrh se v tomto bodu doslova shoduje s návrhem poslanců,
+          volební číslo je tedy také{" "}
+          <strong>{kvota.toLocaleString("cs-CZ")}</strong>.
+        </Typography>
+      );
     case 4:
       return <div>povidy4</div>;
     case 5:

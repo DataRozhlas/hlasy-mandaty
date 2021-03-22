@@ -32,7 +32,7 @@ function ZaverecneSlovo({ krok }) {
         </>
       );
     case 3:
-      return <div>povidy3</div>;
+      return null;
     case 4:
       return <div>povidy4</div>;
     case 5:

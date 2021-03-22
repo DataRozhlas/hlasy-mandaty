@@ -93,10 +93,11 @@ function UvodniSlovo({ krok, rok, setRok, vysledky, postupuji }) {
       return (
         <>
           <Typography paragraph={true} className={classes.vlevo}>
-            Teď je potřeba aspoň přibližně spočítat, kolik hlasů je při dané
-            volební účasti – v roce {rok} to bylo celostátně{" "}
-            {vysledky.CR.ucast.toLocaleString("cs-CZ")} % – potřeba získat na
-            obsazení jednoho místo v poslanecké sněmovně.
+            Teď je potřeba aspoň přibližně spočítat, jaký nejmenší počet hlasů
+            při dané volební účasti – v roce {rok} to bylo celostátně{" "}
+            {vysledky.CR.ucast.toLocaleString("cs-CZ")} % – potřebuje politická
+            strana získat, aby mohla obsadit jedno místo v poslanecké sněmovně.
+            K tomu slouží různé <em>volební kvóty</em>.
           </Typography>
         </>
       );

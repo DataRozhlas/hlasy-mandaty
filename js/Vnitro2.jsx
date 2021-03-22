@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => {
 
 const url = "https://www.psp.cz/sqw/text/orig2.sqw?idd=185756";
 
-function Vnitro2( {krok} ) {
+function Vnitro2( {krok, vysledky, postupuji, hlasyPostupujici, kvota} ) {
   const classes = useStyles();
 
   switch (krok) {
@@ -27,7 +27,7 @@ function Vnitro2( {krok} ) {
     case 2:
       return null;
     case 3:
-      return <div>povidy3</div>;
+      return null;
     case 4:
       return <div>povidy4</div>;
     case 5:

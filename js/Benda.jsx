@@ -16,9 +16,9 @@ const useStyles = makeStyles((theme) => {
 
 const url = "https://www.psp.cz/sqw/text/orig2.sqw?idd=186875";
 
-function Benda({ krok }) {
+function Benda({ krok, vysledky, postupuji, kvota }) {
   const classes = useStyles();
-  
+
   switch (krok) {
     case false:
       return null;
@@ -35,7 +35,15 @@ function Benda({ krok }) {
         </Typography>
       );
     case 3:
-      return <div>povidy3</div>;
+      return (
+        <Typography paragraph={true} className={classes.boxik}>
+          Návrh Marka Bendy, který získal díky hlasům ANO a SPD podporu ústavně
+          právního výboru, chce <em>republikové mandátové číslo</em> zachovat ve
+          stejné podobě: <strong>{kvota.toLocaleString("cs-CZ")}</strong>. V
+          další fázi by se pak mandáty v krajích rozdělovaly pomocí{" "}
+          <em>Imperialiho kvóty</em>.
+        </Typography>
+      );
     case 4:
       return <div>povidy4</div>;
     case 5:

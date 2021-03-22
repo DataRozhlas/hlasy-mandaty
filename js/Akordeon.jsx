@@ -56,8 +56,14 @@ function Akordeon({
   };
 
   const postupuji = vysledky.CR.strana
-  .filter((strana) => strana.proc > 5)
-  .sort((a, b) => (a.proc < b.proc ? 1 : -1));
+    .filter((strana) => strana.proc > 5)
+    .sort((a, b) => (a.proc < b.proc ? 1 : -1));
+
+  const hlasyPostupujici = postupuji.reduce((acc, curr) => acc + curr.hlasy, 0);
+
+  const republikoveCislo = Math.round(vysledky.CR.hlasy / 200);
+
+  const volebniCislo = Math.round(hlasyPostupujici / 200 * 100 / 100);
 
   return (
     <Accordion expanded={krok === id} onChange={handleChange(id)}>
@@ -81,12 +87,46 @@ function Akordeon({
           vysledky={vysledky}
           postupuji={postupuji}
         />
-        <Dhondt krok={krok} />
-        <Benda krok={krok} />
-        <Poslanci krok={krok} />
-        <Senat krok={krok} />
-        <Vnitro1 krok={krok} />
-        <Vnitro2 krok={krok} />
+        <Dhondt
+          krok={krok}
+          vysledky={vysledky}
+          postupuji={postupuji}
+          kvota={republikoveCislo}
+        />
+        <Benda
+          krok={krok}
+          vysledky={vysledky}
+          postupuji={postupuji}
+          kvota={republikoveCislo}
+        />
+        <Poslanci
+          krok={krok}
+          vysledky={vysledky}
+          postupuji={postupuji}
+          hlasyPostupujici={hlasyPostupujici}
+          kvota={volebniCislo}
+        />
+        <Senat
+          krok={krok}
+          vysledky={vysledky}
+          postupuji={postupuji}
+          hlasyPostupujici={hlasyPostupujici}
+          kvota={volebniCislo}
+        />
+        <Vnitro1
+          krok={krok}
+          vysledky={vysledky}
+          postupuji={postupuji}
+          hlasyPostupujici={hlasyPostupujici}
+          kvota={volebniCislo}
+        />
+        <Vnitro2
+          krok={krok}
+          vysledky={vysledky}
+          postupuji={postupuji}
+          hlasyPostupujici={hlasyPostupujici}
+          kvota={volebniCislo}
+        />
         <ZaverecneSlovo krok={krok} />
 
         {posledni ? null : (

@@ -17,8 +17,10 @@ const useStyles = makeStyles((theme) => {
 const url =
   "https://www.zakonyprolidi.cz/cs/1995-247/zneni-20190302#cast1-oddil2";
 
-function Dhondt({ krok }) {
+function Dhondt({ krok, vysledky, postupuji, kvota }) {
   const classes = useStyles();
+  
+
   switch (krok) {
     case false:
       return null;
@@ -48,7 +50,18 @@ function Dhondt({ krok }) {
         </>
       );
     case 3:
-      return <div>povidy3</div>;
+      return (
+        <Typography paragraph={true} className={classes.boxik}>
+          V systému, který dosud platil, se nejprve spočítalo{" "}
+          <em>republikové mandátové číslo</em>. Součet všech platných hlasů se
+          vydělil počtem poslanců a výsledek se zaokrouhlil na celé číslo.
+          Takhle: {vysledky.CR.hlasy.toLocaleString("cs-CZ")} hlasů : 200
+          poslanců = <strong>{kvota.toLocaleString("cs-CZ")}</strong>. Toto
+          číslo se pak použilo pro přidělení mandátů jednotlivým krajům. V nich se
+          následně poslanecká křesla mezi strany rozpočítala pomocí{" "} 
+          <em>D'Hondtova dělitele</em>.
+        </Typography>
+      );
     case 4:
       return <div>povidy4</div>;
     case 5:
