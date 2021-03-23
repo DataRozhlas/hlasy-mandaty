@@ -10,7 +10,7 @@ Představitelé vlády i opozice představili už šest návrhů, jak konkrétn�
 
 „D'Hondtův dělitel sám o sobě znevýhodňuje menší subjekty. V kombinaci se 14 nestejně velkými volebními kraji dochází k rušení principu rovnosti,“ odůvodnil rozhodnutí předseda Ústavního soudu Pavel Rychetský.
 
-Návrh lidoveckých poslanců jako by nález Ústavních soudců předjímal a oba protiústavní postupy ruší. „Ačkoli žádný systém nebude nikdy úplně čistý, ten náš nepočítá s žádným bonusem pro vítěze, je čistě poměrný," [řekl](https://www.psp.cz/sqw/hp.sqw?k=4012&z=14622) předkladatel zákona Marek Výborný (KDU-ČSL) minulý týden kolegům z Ústavně právního výboru.
+Návrh lidoveckých poslanců jako by nález Ústavních soudců předjímal a oba protiústavní postupy ruší. „Ačkoli žádný systém nebude nikdy úplně čistý, ten náš nepočítá s žádným bonusem pro vítěze, je čistě poměrný," [řekl](https://www.psp.cz/sqw/hp.sqw?k=4012&z=14622) předkladatel zákona Marek Výborný (KDU-ČSL) minulý týden kolegům z ústavně právního výboru.
 
 Ti se však nakonec rozhodli projednávání lidoveckého návrhu přerušit a pouze si jej ponechávají v záloze pro případ, že by sněmovna potopila jejich favorita. Tím se stal [návrh poslance ODS Marka Bendy](https://www.psp.cz/sqw/historie.sqw?o=8&t=1170), ve kterém by rozdělování mandátů v krajích zůstalo zachováno, v dalším kroku by se však k rozpočítání hlasů mezi strany použila Imperialihoo kvóta. To přináší menší poměrnost rozdělení mandátů a větší strany tedy mohou být nadále zvýhodněny, i když méně než při stávající metodě.
 
