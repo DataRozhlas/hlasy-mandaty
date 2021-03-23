@@ -16,10 +16,6 @@ const useStyles = makeStyles((theme) => {
       borderColor: "#6200ea",
       alignSelf: "flex-start",
     },
-    flexboxik: {
-      display: "flex",
-      flexDirection: "column",
-    },
   };
 });
 
@@ -46,14 +42,20 @@ const pridelDhondtvKrajich = (kraje, vybranyKraj) => {
   const setridenyResult = result.sort((a, b) => {
     return a.delitel < b.delitel ? 1 : -1;
   });
-  console.log(setridenyResult);
   return setridenyResult;
 };
 
-function Dhondt({ krok, vysledky, postupuji, kvota, krajeDhondt, rok }) {
+function Dhondt({
+  krok,
+  vysledky,
+  postupuji,
+  kvota,
+  krajeDhondt,
+  rok,
+  kraj,
+  setKraj,
+}) {
   const classes = useStyles();
-
-  const [kraj, setKraj] = useState("Liberecký");
 
   switch (krok) {
     case false:
@@ -109,7 +111,7 @@ function Dhondt({ krok, vysledky, postupuji, kvota, krajeDhondt, rok }) {
       );
     case 5:
       return (
-        <Box className={(classes.boxik, classes.flexboxik)}>
+        <Box className={classes.boxik} mb={2}>
           <Typography paragraph={true}>
             Před zásahem Ústavního soudu se mandáty v krajích rozdělovaly{" "}
             <Link
@@ -134,12 +136,9 @@ function Dhondt({ krok, vysledky, postupuji, kvota, krajeDhondt, rok }) {
             nezrušil.) Takhle to dopadalo ve vámi zvoleném roce {rok} v
             jednotlivých krajích:
           </Typography>
-
-          <SelectKraj
-            kraj={kraj}
-            setKraj={setKraj}
-            vysledek={vysledky}
-          ></SelectKraj>
+          <Box display="flex" justifyContent="center">
+            <SelectKraj kraj={kraj} setKraj={setKraj}></SelectKraj>
+          </Box>
           <Box display="flex" flexWrap="wrap" justifyContent="center" mb={2}>
             {pridelDhondtvKrajich(vysledky.kraje, kraj).map((mandat, i) => {
               return (
@@ -154,7 +153,9 @@ function Dhondt({ krok, vysledky, postupuji, kvota, krajeDhondt, rok }) {
                       align="center"
                       gutterBottom={true}
                     >
-                      {i + 1}. mandát získává {mandat.nazev}
+                      {i + 1}. mandát{" "}
+                      {mandat.nazev === "Piráti" ? "získávají" : "získává"}{" "}
+                      {mandat.nazev}
                     </Typography>
                     <Typography variant="body2" align="center">
                       {mandat.hlasy.toLocaleString("cs-CZ")} hlasů

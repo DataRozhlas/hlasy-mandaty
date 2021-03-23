@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
@@ -47,6 +47,8 @@ function Akordeon({
 }) {
   const classes = useStyles();
 
+  const [kraj, setKraj] = useState("Liberecký");
+
   const handleChange = (panel) => (event, isExpanded) => {
     setKrok(isExpanded ? panel : false);
   };
@@ -65,7 +67,7 @@ function Akordeon({
 
   const volebniCislo = Math.round(((hlasyPostupujici / 200) * 100) / 100);
 
-  const krajeDhondt = (vysledky, jenSoucet) => {
+  const krajeDhondt = (vysledky, jenSoucet, kraj) => {
     const kraje = vysledky.kraje.map((kraj) => {
       return {
         id: kraj.id,
@@ -76,6 +78,7 @@ function Akordeon({
         mandaty: kraj.mandaty,
       };
     });
+    if (kraj) return kraje.filter((i) => i.nazev === kraj)[0].mandaty;
     const rozdelenoNapoprve = kraje.reduce(
       (acc, curr) => acc + Math.floor(curr.deleni),
       0
@@ -119,12 +122,17 @@ function Akordeon({
           postupuji={postupuji}
           kvota={republikoveCislo}
           krajeDhondt={krajeDhondt}
+          kraj={kraj}
+          setKraj={setKraj}
         />
         <Benda
           krok={krok}
           vysledky={vysledky}
           postupuji={postupuji}
           kvota={republikoveCislo}
+          kraj={kraj}
+          setKraj={setKraj}
+          krajeDhondt={krajeDhondt}
         />
         <Poslanci
           krok={krok}

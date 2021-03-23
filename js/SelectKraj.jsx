@@ -6,6 +6,9 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
 const useStyles = makeStyles((theme) => ({
+  input: {
+    color: "red",
+  },
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
@@ -16,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SelectKraj({ kraj, setKraj, vysledky }) {
+function SelectKraj({ kraj, setKraj }) {
   const classes = useStyles();
   const zmenKraj = (event) => {
     setKraj(event.target.value);
