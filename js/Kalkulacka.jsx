@@ -17,15 +17,15 @@ const jeMobil = window.innerWidth < 768;
 
 const kapitoly = [
   ["Voliči „rozdají karty“", "Jakou hru s nimi půjde hrát?"],
-  ["Kdo se dostane sněmovny?", "A proč bylo málo koalic"],
-  ["Čára mezi kandidáty a poslanci", "Mandátové/volební číslo"],
+  ["Kdo se dostane sněmovny?", "A proč tak málo koalic"],
+  ["Čára mezi kandidáty a poslanci", "Mandátové číslo a jiné kvóty"],
   [
-    "Kolik poslanců měl který kraj?",
-    "Víc obvyvatel + vyšší účast = víc mandátů",
+    "Kolik poslanců má mít který kraj?",
+    "Rozhodoval počet obyvatel a účast",
   ],
-  ["Jak se dělily mandáty?", "D'Hondtův dělitel"],
-  ["Celostátní rozpočítání a dělení po krajích", "Hareova kvóta"],
-  ["Celá republika jako jeden kraj", "Hagenbach-Bischoffova kvóta"],
+  ["Jak se dělily mandáty?", ""],
+  ["Celostátní rozpočítání a dělení po krajích", ""],
+  ["Celá republika jako jeden kraj", ""],
   ["Jak by se lišilo zastoupení ve sněmovně?", ""],
 ];
 
@@ -35,7 +35,7 @@ function Kalkulacka() {
   const prvniBehLoad = useRef(true);
 
   //STATE
-  const [krok, setKrok] = useState(1);
+  const [krok, setKrok] = useState(4);
   const [scrollTarget, setScrollTarget] = useState();
   const [rok, setRok] = useState(2017);
   const [vysledky, setVysledky] = useState(data);

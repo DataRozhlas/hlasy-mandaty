@@ -56,8 +56,38 @@ function Akordeon({
   };
 
   const postupuji = vysledky.CR.strana
-  .filter((strana) => strana.proc > 5)
-  .sort((a, b) => (a.proc < b.proc ? 1 : -1));
+    .filter((strana) => strana.proc > 5)
+    .sort((a, b) => (a.proc < b.proc ? 1 : -1));
+
+  const hlasyPostupujici = postupuji.reduce((acc, curr) => acc + curr.hlasy, 0);
+
+  const republikoveCislo = Math.round(vysledky.CR.hlasy / 200);
+
+  const volebniCislo = Math.round(((hlasyPostupujici / 200) * 100) / 100);
+
+  const krajeDhondt = (vysledky, jenSoucet) => {
+    const kraje = vysledky.kraje.map((kraj) => {
+      return {
+        id: kraj.id,
+        nazev: kraj.nazev,
+        hlasy: kraj.hlasy,
+        deleni: kraj.hlasy / republikoveCislo,
+        zbytek: kraj.hlasy % republikoveCislo,
+        mandaty: kraj.mandaty,
+      };
+    });
+    const rozdelenoNapoprve = kraje.reduce(
+      (acc, curr) => acc + Math.floor(curr.deleni),
+      0
+    );
+    const zbyva = 200 - rozdelenoNapoprve;
+    if (jenSoucet) return zbyva;
+    const krajeSerazene = kraje.sort((a, b) => (a.zbytek < b.zbytek ? 1 : -1));
+    const result = krajeSerazene.map((kraj, i) => {
+      return { ...kraj, extramandat: i < zbyva };
+    });
+    return result.sort((a, b) => (a.mandaty < b.mandaty ? 1 : -1));
+  };
 
   return (
     <Accordion expanded={krok === id} onChange={handleChange(id)}>
@@ -80,13 +110,50 @@ function Akordeon({
           setRok={setRok}
           vysledky={vysledky}
           postupuji={postupuji}
+          krajeDhondt={krajeDhondt}
         />
-        <Dhondt krok={krok} />
-        <Benda krok={krok} />
-        <Poslanci krok={krok} />
-        <Senat krok={krok} />
-        <Vnitro1 krok={krok} />
-        <Vnitro2 krok={krok} />
+        <Dhondt
+          krok={krok}
+          rok={rok}
+          vysledky={vysledky}
+          postupuji={postupuji}
+          kvota={republikoveCislo}
+          krajeDhondt={krajeDhondt}
+        />
+        <Benda
+          krok={krok}
+          vysledky={vysledky}
+          postupuji={postupuji}
+          kvota={republikoveCislo}
+        />
+        <Poslanci
+          krok={krok}
+          vysledky={vysledky}
+          postupuji={postupuji}
+          hlasyPostupujici={hlasyPostupujici}
+          kvota={volebniCislo}
+        />
+        <Senat
+          krok={krok}
+          vysledky={vysledky}
+          postupuji={postupuji}
+          hlasyPostupujici={hlasyPostupujici}
+          kvota={volebniCislo}
+        />
+        <Vnitro1
+          krok={krok}
+          vysledky={vysledky}
+          postupuji={postupuji}
+          hlasyPostupujici={hlasyPostupujici}
+          kvota={volebniCislo}
+        />
+        <Vnitro2
+          krok={krok}
+          vysledky={vysledky}
+          postupuji={postupuji}
+          hlasyPostupujici={hlasyPostupujici}
+          kvota={volebniCislo}
+        />
         <ZaverecneSlovo krok={krok} />
 
         {posledni ? null : (

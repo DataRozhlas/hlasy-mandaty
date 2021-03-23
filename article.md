@@ -1,10 +1,23 @@
-title: "Vyzkoušejte si: Jak se změní přepočítávání hlasů na mandáty?"
+title: "Vyzkoušejte si: Jak se může změnit přepočítávání hlasů na mandáty?"
 perex: "V říjnových sněmovních volbách se začnou poslanecké mandáty rozdělovat podle nového klíče. Ten by měl omezit dosavadní zvýhodňování nejsilnějších stran a může tak posílit zastoupení těch menších. Poslanci teď posuzují několik variant. Porovnejte je mezi sebou i se starým klíčem v interaktivní kalkulačce."
 coverimg_note: "Foto <a href='https://ctk.cz'>ČTK</a>"
 styles: ["https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"]
 libraries: []
 options: [noheader, nopic] #wide, noheader (, nopic)
 ---
+
+Na veřejnosti se zatím objevilo šest ucelených návrhů. [První z nich předložila skupina lidoveckých poslanců](https://www.psp.cz/sqw/historie.sqw?o=8&t=649) už v roce 2019, tedy víc než rok před [rozhodnutím Ústavního soudu](https://www.irozhlas.cz/zpravy-domov/ustavni-soud-navrh-zakona-snemovna-snemovni-volby-senatori_2102030920_dok), který zrušil pasáže volebního zákona, kde se stanoví zvýšený vstupní práh pro koalice a použití D'Hondtova dělitele ve spojení s rozdělením republiky na 14 nestejně velkých volebních krajů.
+
+„D'Hondtův dělitel sám o sobě znevýhodňuje menší subjekty, ale v kombinaci se 14 nestejně velkými volebními kraji dochází k rušení principu rovnosti,“ odůvodnil rozhodnutí předseda Ústavního soudu Pavel Rychetský. „Zajistit rovné volební právo je nezpochybnitelný ústavní příkaz,“ řekl.
+
+Návrh lidoveckých poslanců jako by nález Ústavních soudců předjímal a oba protiústavní ppstupy řeší jinak (podrobněji o tom v interaktivní kalkulačce na konci článku). „Ačkoli žádný systém nebude nikdy úplně čistý, ten náš nepočítá s žádným bonusem pro vítěze, je čistě poměrný," [řekl](https://www.psp.cz/sqw/hp.sqw?k=4012&z=14622) předkladatel zákona Marek Výborný (KDU-ČSL) minulý týden kolegům z Ústavně právního výboru.
+
+Ti se však nakonec rozhodli projednávání Výborného návrhu přerušit. V praxi to znamená, že si jej nechávají v záloze pro případ, že by sněmovna potopila jejich favorita. Tím se stal [návrh poslance ODS Marka Bendy](https://www.psp.cz/sqw/historie.sqw?o=8&t=1170), ve kterém by rozdělování mandátů v krajích zůstalo zachováno, v dalším kroku by se však k rozpočítání hlasů mezi strany použila Imperialihoo kvóta. To přináší menší poměrnost rozdělení mandátů a větší strany mohou být opět zvýhodněny, i když méně než při stávající metodě.
+
+Benda svůj návrh prosadil díky hlasům ANO a SPD, naopak Piráti a STAN proti němu protestovali. Nejvíc jim vadí, že při rozdělování zbylých mandátů ve druhém skrutiniu by si mohly strany samy určit, ze kterých krajů pošlou do sněmovny „náhradníky“. „Bendův návrh zavádí pravidlo, že výběr poslanců do Sněmovny bude zčásti v rukou vedení politických stran a nikoliv voličů. U malých stran to může představovat dokonce většinu klubu, v praxi tedy 5 poslanců z 9 vybere vedení strany a ne veřejnost, jak by tomu mělo být,“ komentoval to Vojtěch Pikal (Piráti).
+
+Bendův návrh projedná celá sněmovna na nejbližší schůzi ve druhém čtení. Do konce tohoto týdne k němu také mohou všichni poslanci podávat [další pozměňovací návrhy](https://www.psp.cz/sqw/historie.sqw?o=8&t=1170).
+
 <wide>
 <div id="kalkulacka"></div>
 </wide>

@@ -16,10 +16,12 @@ const useStyles = makeStyles((theme) => {
 
 const url = "https://www.psp.cz/sqw/text/orig2.sqw?idd=185756";
 
-function Vnitro1({ krok }) {
+function Vnitro1({ krok, vysledky, postupuji, hlasyPostupujici, kvota }) {
   const classes = useStyles();
 
   switch (krok) {
+    case false:
+      return null;
     case 1:
       return null;
     case 2:
@@ -34,9 +36,14 @@ function Vnitro1({ krok }) {
         </Typography>
       );
     case 3:
-      return <div>povidy3</div>;
+      return (
+        <Typography paragraph={true} className={classes.boxik}>
+          Vládní návrh se odlišuje jen v nepodstatném detailu: volební číslo se
+          zaokrouhluje na setiny nahoru.
+        </Typography>
+      );
     case 4:
-      return <div>povidy4</div>;
+      return null;
     case 5:
       return <div>povidy5</div>;
     case 6:

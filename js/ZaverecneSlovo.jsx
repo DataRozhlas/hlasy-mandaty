@@ -1,9 +1,21 @@
 import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 
+const useStyles = makeStyles((theme) => {
+  return {
+    vlevo: {
+      alignSelf: "flex-start",
+    },
+  };
+});
+
 function ZaverecneSlovo({ krok }) {
+  const classes = useStyles();
   switch (krok) {
+    case false:
+      return null;
     case 1:
       return null;
     case 2:
@@ -15,7 +27,7 @@ function ZaverecneSlovo({ krok }) {
             snižuje.{" "}
           </Typography>
           <Typography paragraph={true}>
-            Donedávna platné nejpřísnější koaliční klauzule v Evropě přispěla k
+            Donedávna platná nejpřísnější koaliční klauzule v Evropě přispěla k
             tomu, že za posledních patnáct let kandidovala do sněmovny jenom
             jedna: Koalice pro Českou republiku se skládala ze sedmi subjektů a
             v roce 2006 získala 8 140 hlasů – na postup do sněmovny by jí
@@ -30,9 +42,14 @@ function ZaverecneSlovo({ krok }) {
         </>
       );
     case 3:
-      return <div>povidy3</div>;
+      return null;
     case 4:
-      return <div>povidy4</div>;
+      return (
+        <Typography paragraph={true} className={classes.vlevo}>
+          Ostatní návrhy počítají s tím, že by se nejdřív rozdělovaly mandáty
+          stranám, až potom případně do krajů.
+        </Typography>
+      );
     case 5:
       return <div>povidy5</div>;
     case 6:
