@@ -134,7 +134,7 @@ function UvodniSlovo({ krok, rok, setRok, vysledky, postupuji, krajeDhondt }) {
       })}
     </Box>);
     case 5:
-      return <div>povidy5</div>;
+      return null;
     case 6:
       return <div>povidy6</div>;
     case 7:

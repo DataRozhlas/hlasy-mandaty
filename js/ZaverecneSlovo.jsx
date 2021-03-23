@@ -47,7 +47,7 @@ function ZaverecneSlovo({ krok }) {
       return (
         <Typography paragraph={true} className={classes.vlevo}>
           Ostatní návrhy počítají s tím, že by se nejdřív rozdělovaly mandáty
-          stranám, až potom případně do krajů, s výjimkou návrhu počítajícím s
+          stranám, až potom případně do krajů, s výjimkou návrhu počítajícího s
           jediným volebním obvodem pro celou republiku.
         </Typography>
       );

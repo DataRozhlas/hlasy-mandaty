@@ -9,16 +9,17 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
+    alignSelf: "center"
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
 }));
 
-function SelectKraj({ vybranykraj, setVybranykraj, vysledek }) {
+function SelectKraj({ kraj, setKraj, vysledky }) {
   const classes = useStyles();
   const zmenKraj = (event) => {
-    setVybranykraj(event.target.value);
+    setKraj(event.target.value);
   };
 
   return (
@@ -27,20 +28,23 @@ function SelectKraj({ vybranykraj, setVybranykraj, vysledek }) {
       <Select
         labelId="select-kraj-label"
         id="select-kraj"
-        value={vybranykraj}
+        value={kraj}
         onChange={zmenKraj}
       >
-        {vysledek &&
-          vysledek.KRAJ.map((kraj) => {
-            return (
-              <MenuItem
-                key={kraj._attributes.CIS_KRAJ}
-                value={kraj._attributes.NAZ_KRAJ}
-              >
-                {kraj._attributes.NAZ_KRAJ}
-              </MenuItem>
-            );
-          })}
+          <MenuItem value={"Středočeský"}>Středočeský</MenuItem>
+          <MenuItem value={"Hl. m. Praha"}>Hl. m. Praha</MenuItem>
+          <MenuItem value={"Jihočeský"}>Jihočeský</MenuItem>
+          <MenuItem value={"Plzeňský"}>Plzeňský</MenuItem>
+          <MenuItem value={"Karlovarský"}>Karlovarský</MenuItem>
+          <MenuItem value={"Ústecký"}>Ústecký</MenuItem>
+          <MenuItem value={"Liberecký"}>Liberecký</MenuItem>
+          <MenuItem value={"Královéhradecký"}>Královéhradecký</MenuItem>
+          <MenuItem value={"Pardubický"}>Pardubický</MenuItem>
+          <MenuItem value={"Vysočina"}>Vysočina</MenuItem>
+          <MenuItem value={"Jihomoravský"}>Jihomoravský</MenuItem>
+          <MenuItem value={"Olomoucký"}>Olomoucký</MenuItem>
+          <MenuItem value={"Zlínský"}>Zlínský</MenuItem>
+          <MenuItem value={"Moravskoslezský"}>Moravskoslezský</MenuItem>
       </Select>
     </FormControl>
   );
