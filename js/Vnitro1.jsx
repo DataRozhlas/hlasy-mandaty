@@ -29,7 +29,7 @@ function Vnitro1({ krok, vysledky, postupuji, hlasyPostupujici, kvota }) {
         <Typography paragraph={true} className={classes.boxik}>
           <Link href={url} target="_blank">
             Vládní návrh
-          </Link>{" "}
+          </Link>
           , který připravilo ministerstvo vnitra, požadoval v obou svých
           variantách 7 % po dvoukoalicích, 9 % po trojkoalicích a 11 % po
           větších uskupeních.

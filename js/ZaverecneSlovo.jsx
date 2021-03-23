@@ -27,11 +27,11 @@ function ZaverecneSlovo({ krok }) {
             snižuje.{" "}
           </Typography>
           <Typography paragraph={true}>
-            Donedávna platná nejpřísnější koaliční klauzule v Evropě přispěla k
-            tomu, že za posledních patnáct let kandidovala do sněmovny jenom
+            Donedávna platná nejpřísnější klauzule pro koalice v Evropě přispěla
+            k tomu, že za posledních patnáct let kandidovala do sněmovny jenom
             jedna: Koalice pro Českou republiku se skládala ze sedmi subjektů a
             v roce 2006 získala 8 140 hlasů – na postup do sněmovny by jí
-            (těsně) nestačilo ani o milon hlasů víc.
+            nestačilo ani o milon hlasů víc.
           </Typography>
           <Typography paragraph={true}>
             Do letošních voleb se chystají dvě koalice, kterým předvolební
@@ -47,7 +47,8 @@ function ZaverecneSlovo({ krok }) {
       return (
         <Typography paragraph={true} className={classes.vlevo}>
           Ostatní návrhy počítají s tím, že by se nejdřív rozdělovaly mandáty
-          stranám, až potom případně do krajů.
+          stranám, až potom případně do krajů, s výjimkou návrhu počítajícím s
+          jediným volebním obvodem pro celou republiku.
         </Typography>
       );
     case 5:

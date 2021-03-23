@@ -35,7 +35,7 @@ function Senat({ krok, vysledky, postupuji, hlasyPostupujici, kvota }) {
     case 3:
       return (
         <Typography paragraph={true} className={classes.boxik}>
-          Senátní návrh se v tomto bodu doslova shoduje s návrhem poslanců,
+          Senátní návrh se v tomto bodu slovo od slova shoduje s návrhem poslanců,
           volební číslo je tedy také{" "}
           <strong>{kvota.toLocaleString("cs-CZ")}</strong>.
         </Typography>
