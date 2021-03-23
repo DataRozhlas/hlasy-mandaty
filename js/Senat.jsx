@@ -41,7 +41,7 @@ function Senat({ krok, vysledky, postupuji, hlasyPostupujici, kvota }) {
         </Typography>
       );
     case 4:
-      return <div>povidy4</div>;
+      return null;
     case 5:
       return <div>povidy5</div>;
     case 6:

@@ -17,9 +17,8 @@ const useStyles = makeStyles((theme) => {
 const url =
   "https://www.zakonyprolidi.cz/cs/1995-247/zneni-20190302#cast1-oddil2";
 
-function Dhondt({ krok, vysledky, postupuji, kvota }) {
+function Dhondt({ krok, vysledky, postupuji, kvota, krajeDhondt, rok }) {
   const classes = useStyles();
-  
 
   switch (krok) {
     case false:
@@ -57,13 +56,22 @@ function Dhondt({ krok, vysledky, postupuji, kvota }) {
           vydělil počtem poslanců a výsledek se zaokrouhlil na celé číslo.
           Takhle: {vysledky.CR.hlasy.toLocaleString("cs-CZ")} hlasů : 200
           poslanců = <strong>{kvota.toLocaleString("cs-CZ")}</strong>. Toto
-          číslo se pak použilo pro přidělení mandátů jednotlivým krajům. V nich se
-          následně poslanecká křesla mezi strany rozpočítala pomocí{" "} 
+          číslo se pak použilo pro přidělení mandátů jednotlivým krajům. V nich
+          se následně poslanecká křesla mezi strany rozpočítala pomocí{" "}
           <em>D'Hondtova dělitele</em>.
         </Typography>
       );
     case 4:
-      return <div>povidy4</div>;
+      return (
+        <Typography paragraph={true} className={classes.boxik}>
+          V přepočtu, který se používal poslední dvě dekády, se nejprve
+          rozdělily hlasy do krajů. Počet hlasů v každém kraji se vydělil{" "}
+          <em>republikovým mandátovým číslem</em> a výsledek se zaokrouhlil
+          dolů. V roce {rok} po tomto prvním dělení zbylo{" "}
+          {krajeDhondt(vysledky, true)} poslaneckých křesel. Ta se rozdělila
+          krajům s největším zbytkem po dělení (v červeném rámečku).
+        </Typography>
+      );
     case 5:
       return <div>povidy5</div>;
     case 6:

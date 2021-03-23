@@ -20,8 +20,8 @@ const kapitoly = [
   ["Kdo se dostane sněmovny?", "A proč tak málo koalic"],
   ["Čára mezi kandidáty a poslanci", "Mandátové číslo a jiné kvóty"],
   [
-    "Kolik poslanců měl který kraj?",
-    "Víc obvyvatel + vyšší účast = víc mandátů",
+    "Kolik poslanců má mít který kraj?",
+    "Rozhodoval počet obyvatel a účast",
   ],
   ["Jak se dělily mandáty?", ""],
   ["Celostátní rozpočítání a dělení po krajích", ""],
@@ -35,7 +35,7 @@ function Kalkulacka() {
   const prvniBehLoad = useRef(true);
 
   //STATE
-  const [krok, setKrok] = useState(3);
+  const [krok, setKrok] = useState(4);
   const [scrollTarget, setScrollTarget] = useState();
   const [rok, setRok] = useState(2017);
   const [vysledky, setVysledky] = useState(data);

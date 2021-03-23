@@ -45,7 +45,9 @@ function Benda({ krok, vysledky, postupuji, kvota }) {
         </Typography>
       );
     case 4:
-      return <div>povidy4</div>;
+      return (<Typography paragraph={true} className={classes.boxik}>
+        Ústavně právní výbor a poslanec Benda navrhují tento postup zachovat.
+      </Typography>);
     case 5:
       return <div>povidy5</div>;
     case 6:

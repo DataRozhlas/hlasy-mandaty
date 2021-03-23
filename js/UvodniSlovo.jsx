@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-function UvodniSlovo({ krok, rok, setRok, vysledky, postupuji }) {
+function UvodniSlovo({ krok, rok, setRok, vysledky, postupuji, krajeDhondt }) {
   const classes = useStyles();
 
   switch (krok) {
@@ -102,7 +102,37 @@ function UvodniSlovo({ krok, rok, setRok, vysledky, postupuji }) {
         </>
       );
     case 4:
-      return <div>povidy4</div>;
+      const kraje = krajeDhondt(vysledky);
+      return (<Box display="flex" flexWrap="wrap" justifyContent="center" mb={2}>
+      {kraje.map((kraj, i) => {
+        return (
+          <Card
+            key={kraj.id}
+            variant="outlined"
+            style={{ margin: "0.2rem" , borderColor: kraj.extramandat ? "#e63946" : null}}
+          >
+              <CardContent>
+                <Typography
+                  variant="subtitle2"
+                  align="center"
+                  gutterBottom={true}
+                >
+                  {kraj.nazev}
+                </Typography>
+                <Typography variant="body2" align="center">
+                   {`${kraj.extramandat ? `${kraj.mandaty - 1} + 1` : kraj.mandaty} mandátů`}
+                </Typography>
+                <Typography variant="body2" align="center">
+                  {`${kraj.hlasy.toLocaleString("cs-Cz")} hlasů`}
+                </Typography>
+                <Typography variant="body2" align="center">
+                  {`(zbytek ${kraj.zbytek.toLocaleString("cs-Cz")})`}
+                </Typography>
+              </CardContent>
+          </Card>
+        );
+      })}
+    </Box>);
     case 5:
       return <div>povidy5</div>;
     case 6:
