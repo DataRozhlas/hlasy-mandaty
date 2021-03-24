@@ -92,6 +92,17 @@ function Benda({
         return [result, pocitanyKraj.mandaty, mandaty_imperiali];
       };
       const bendaKraj = spoctiBendaKraj(vysledky, kraj);
+      const komuSebrat = (bendaKraj) => {
+        const rozdil = bendaKraj[2] - bendaKraj[1];
+        const nejmensiZbytky = bendaKraj[0]
+          .filter((i) => i.mandaty_imperiali > 0)
+          .sort((a, b) => {
+            return a.zbytek > b.zbytek ? 1 : -1;
+          });
+        const vypsat = nejmensiZbytky.slice(0, rozdil);
+        const result = vypsat.map((i) => i.zkratka);
+        return result.join(", ");
+      };
       return (
         <Box className={classes.boxik}>
           <Typography paragraph={true}>
@@ -111,7 +122,7 @@ function Benda({
             <strong>{imperiali.toLocaleString("cs-CZ")}</strong> (tj.{" "}
             {hlasyPostupujicimvKraji.toLocaleString("cs-CZ")} : {krajskaKvota}).
             Tou se u každé strany vydělí počet hlasů. Kolikrát se do něj kvóta
-            vejde, tolik má strana mandátů.{" "}
+            vejde, tolik by měla mít strana mandátů.{" "}
           </Typography>
           <Box display="flex" flexWrap="wrap" justifyContent="center" mb={2}>
             {bendaKraj[0].map((strana, i) => {
@@ -147,12 +158,36 @@ function Benda({
                 );
             })}
           </Box>
-          <Typography paragraph={true}>
-            Pokud z tohoto dělení vyjde vyšší počet mandátů než kolik by jich
-            kraj měl mít, odečtou se mandáty stranám s nejmenším zbytkem po
-            dělení. Pokud se nerozdělí mandáty všechny, převádí se ty
-            zbývajícího do dalšího skrutinia.
-          </Typography>
+          {bendaKraj[2] > bendaKraj[1] ? (
+            <Typography paragraph={true}>
+              V kraji se podařilo rozdělit o {bendaKraj[2] - bendaKraj[1]}{" "}
+              {bendaKraj[2] - bendaKraj[1] === 1
+                ? "mandát"
+                : bendaKraj[2] - bendaKraj[1] < 5
+                ? "mandáty"
+                : "mandátů"}{" "}
+              víc než kolik mu připadlo v kroku 4. Je proto potřeba odebrat{" "}
+              {bendaKraj[2] - bendaKraj[1] > 1
+                ? "tyto mandáty stranám"
+                : "tento mandát straně"}{" "}
+              s nejnižším zbytkem po dělení ({komuSebrat(bendaKraj)}).
+            </Typography>
+          ) : null}
+          {bendaKraj[2] < bendaKraj[1] ? (
+            <Typography paragraph={true}>
+              V kraji se podařilo rozdělit o {bendaKraj[1] - bendaKraj[2]}{" "}
+              {bendaKraj[1] - bendaKraj[2] === 1
+                ? "mandát"
+                : bendaKraj[1] - bendaKraj[2] < 5
+                ? "mandáty"
+                : "mandátů"}{" "}
+              míň než kolik mu připadlo v kroku 4.{" "}
+              {bendaKraj[1] - bendaKraj[2] === 1
+                ? "Tento mandát se bude"
+                : "Tyto mandáty se budou"}{" "}
+              rozdělovat v dalším kroku.
+            </Typography>
+          ) : null}
         </Box>
       );
     case 6:
