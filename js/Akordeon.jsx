@@ -134,7 +134,6 @@ function Akordeon({
           kvota={republikoveCislo}
           kraj={kraj}
           setKraj={setKraj}
-          krajeDhondt={krajeDhondt}
           setScrollTarget={setScrollTarget}
         />
         <Poslanci

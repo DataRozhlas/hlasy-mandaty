@@ -28,7 +28,6 @@ function Benda({
   kvota,
   kraj,
   setKraj,
-  krajeDhondt,
   setScrollTarget,
 }) {
   const classes = useStyles();
@@ -118,7 +117,107 @@ function Benda({
       }),
     };
 
-    return mandatyKorekce;
+    // § 51 / 1 kolik mandátů zbývá rozdělit ve druhém skrutiniu?
+
+    const zbyvaRozdelit = {
+      ...mandatyKorekce,
+      druheSkrutinium: {
+        rozdeleno: mandatyKorekce.kraje.reduce((acc, curr) => {
+          return (
+            acc +
+            (curr.mandatyHrube > curr.mandaty
+              ? curr.mandaty
+              : curr.mandatyHrube)
+          );
+        }, 0),
+        strany: mandatyKorekce.CR.strana.map((strana) => {
+          return {
+            ...strana,
+            nevyuziteHlasy: mandatyKorekce.kraje.reduce((acc, curr) => {
+              return (
+                acc +
+                curr.strany.filter((i) => i.nazev === strana.nazev)[0].zbytek
+              );
+            }, 0),
+          };
+        }),
+      },
+    };
+
+    const secistNevyuzite = {
+      ...zbyvaRozdelit,
+      druheSkrutinium: {
+        ...zbyvaRozdelit.druheSkrutinium,
+        nevyuziteHlasy: zbyvaRozdelit.druheSkrutinium.strany.reduce(
+          (acc, curr) => {
+            return acc + curr.nevyuziteHlasy;
+          },
+          0
+        ),
+      },
+    };
+
+    const zjistitKvotu = {
+      ...secistNevyuzite,
+      druheSkrutinium: {
+        ...secistNevyuzite.druheSkrutinium,
+        kvota: Math.round(
+          secistNevyuzite.druheSkrutinium.nevyuziteHlasy /
+            (200 - secistNevyuzite.druheSkrutinium.rozdeleno + 1)
+        ),
+      },
+    };
+
+    const pridelMandaty = {
+      ...zjistitKvotu,
+      druheSkrutinium: {
+        ...zjistitKvotu.druheSkrutinium,
+        strany: zjistitKvotu.druheSkrutinium.strany.map((strana) => {
+          return {
+            ...strana,
+            mandaty: Math.floor(
+              strana.nevyuziteHlasy / zjistitKvotu.druheSkrutinium.kvota
+            ),
+            zbytek: strana.nevyuziteHlasy % zjistitKvotu.druheSkrutinium.kvota,
+          };
+        }),
+      },
+    };
+
+    const rozdelenoVprvnimKroku = {
+      ...pridelMandaty,
+      druheSkrutinium: {
+        ...pridelMandaty.druheSkrutinium,
+        rozdelenoVprvnimKroku: pridelMandaty.druheSkrutinium.strany.reduce(
+          (acc, curr) => {
+            return acc + curr.mandaty;
+          },
+          0
+        ),
+      },
+    };
+
+    const doserMandaty = {
+      ...rozdelenoVprvnimKroku,
+      druheSkrutinium: {
+        ...rozdelenoVprvnimKroku.druheSkrutinium,
+        strany: rozdelenoVprvnimKroku.druheSkrutinium.strany
+          .sort((a, b) => (a.zbytek < b.zbytek ? 1 : -1))
+          .map((strana, i) => {
+            return {
+              ...strana,
+              extramandat:
+                i <
+                200 -
+                  (rozdelenoVprvnimKroku.druheSkrutinium.rozdelenoVprvnimKroku +
+                    rozdelenoVprvnimKroku.druheSkrutinium.rozdeleno)
+                  ? 1
+                  : 0,
+            };
+          }),
+      },
+    };
+    return doserMandaty;
   };
 
   switch (krok) {
@@ -154,7 +253,6 @@ function Benda({
       );
     case 5:
       const bendaVysledky = bendaRepublika(vysledky);
-      console.log(bendaVysledky);
       const bendaVysledkyKraj = bendaVysledky.kraje.filter(
         (i) => i.nazev === kraj
       )[0];
@@ -217,9 +315,11 @@ function Benda({
                             : "mandátů"}
                         </Typography>
                         <Typography variant="body2" align="center">
-                          {strana.hlasy.toLocaleString("cs-CZ")} hlasů
+                          za {strana.hlasy.toLocaleString("cs-CZ")} hlasů
                         </Typography>
-                        <Typography variant="body2" align="center"></Typography>
+                        <Typography variant="body2" align="center">
+                          (zbytek {strana.zbytek.toLocaleString("cs-CZ")})
+                        </Typography>
                       </CardContent>
                     </Card>
                   );
@@ -263,8 +363,64 @@ function Benda({
         </Box>
       );
     case 6:
+      const v = bendaRepublika(vysledky);
+      console.log(v);
       return (
-        <Typography>Podle návrhu poslance Bendy zbývá rozdělit {}</Typography>
+        <Box className={classes.boxik}>
+          <Typography paragraph={true}>
+            Druhé skrutinium si můžeme představit jako další volební kraj, do
+            kterého se převede{" "}
+            {v.druheSkrutinium.nevyuziteHlasy.toLocaleString("cs-CZ")}{" "}
+            „nevyužitých“ hlasů postupujících stran ze zbytků při dělení v
+            ostatních krajích. V minulém kroku se metodou poslance Bendy
+            podařilo rozdělit {v.druheSkrutinium.rozdeleno} mandátů, zbývá tedy{" "}
+            {200 - v.druheSkrutinium.rozdeleno}. Strany si je rozdělí
+            následovně:
+          </Typography>
+          <Box display="flex" flexWrap="wrap" justifyContent="center" mb={2}>
+            {v.druheSkrutinium.strany
+              .sort((a, b) => (a.nevyuziteHlasy < b.nevyuziteHlasy ? 1 : -1))
+              .map((strana) => {
+                if (strana.mandaty > 0 || strana.extramandat > 0)
+                  return (
+                    <Card
+                      key={strana.id}
+                      variant="outlined"
+                      style={{ margin: "0.2rem" }}
+                    >
+                      <CardContent>
+                        <Typography
+                          variant="subtitle2"
+                          align="center"
+                          gutterBottom={true}
+                        >
+                          {strana.zkratka}
+                        </Typography>
+                        <Typography variant="body2" align="center">
+                          {strana.mandaty + strana.extramandat}{" "}
+                          {strana.mandaty + strana.extramandat === 1
+                            ? "mandát"
+                            : strana.mandaty + strana.extramandat < 5
+                            ? "mandáty"
+                            : "mandátů"}
+                        </Typography>
+                        <Typography variant="body2" align="center">
+                          za {strana.nevyuziteHlasy.toLocaleString("cs-CZ")}{" "}
+                          hlasů
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  );
+              })}
+          </Box>
+          <Typography paragraph={true}>
+            Největší kritiku zatím návrh sklidil za to, že dává stranám možnost,
+            aby si samy vybraly pořadí krajslých kandidátek, z nichž by se
+            mandáty ve druhém skrutiniu obsazovaly. Kdyby tak neučinily do
+            dvanácti hodin od sečtení voleb, mandáty by automaticky spadly do
+            krajů s největšími zbytky po dělení hlasů v prvním skrutiniu.
+          </Typography>
+        </Box>
       );
     case 7:
       return <div>povidy7</div>;

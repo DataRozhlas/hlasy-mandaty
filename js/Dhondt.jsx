@@ -179,7 +179,7 @@ function Dhondt({
         </Box>
       );
     case 6:
-      return <Typography paragraph={true} className={classes.boxik}>V dosavadním systému už jsou všechny mandáty rozdělené.</Typography>   ;
+      return <Typography paragraph={true} className={classes.boxik}>V dosavadním systému sčítání už by byly všechny mandáty rozdělené.</Typography>   ;
     case 7:
       return <div>povidy7</div>;
     case 8:
