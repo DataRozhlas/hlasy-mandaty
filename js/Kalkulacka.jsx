@@ -24,7 +24,7 @@ const kapitoly = [
     "Rozhodoval počet obyvatel a účast",
   ],
   ["První dělení mandátů mezi strany", "První skrutinium"],
-  ["Rozdělení zbývajících mandátů", "Druhé skrtutinium"],
+  ["Rozdělení zbývajících mandátů", "Druhé skrutinium"],
   ["Jak by se lišilo zastoupení ve sněmovně?", ""],
 ];
 

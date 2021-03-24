@@ -32,6 +32,94 @@ function Benda({
   setScrollTarget,
 }) {
   const classes = useStyles();
+  const postupujiNazvy = postupuji.map((strana) => strana.nazev);
+  const bendaRepublika = (vysledky) => {
+    // § 49
+    const jenPostupujiciStranyCR = vysledky.CR.strana.filter((strana) =>
+      postupujiNazvy.includes(strana.nazev)
+    );
+    const jenPostupujiciStranyKraje = vysledky.kraje.map((kraj) => {
+      return {
+        ...kraj,
+        strany: kraj.strany.filter((strana) =>
+          postupujiNazvy.includes(strana.nazev)
+        ),
+      };
+    });
+    const jenPostupujiciStrany = {
+      CR: { ...vysledky.CR, strana: jenPostupujiciStranyCR },
+      kraje: jenPostupujiciStranyKraje,
+    };
+    // § 50 / 2
+    const hlasyPostupujicich = jenPostupujiciStrany.kraje.map((kraj) => {
+      return {
+        ...kraj,
+        hlasyPostupujicich: kraj.strany.reduce((acc, curr) => {
+          return acc + curr.hlasy;
+        }, 0),
+      };
+    });
+    const postupujiciSectene = {
+      ...jenPostupujiciStrany,
+      kraje: hlasyPostupujicich.map((kraj) => {
+        return {
+          ...kraj,
+          krajskeVolebniCislo: Math.round(
+            kraj.hlasyPostupujicich / (kraj.mandaty + 2)
+          ),
+        };
+      }),
+    };
+    // § 50 / 3
+    const mandatyHrube = {
+      ...postupujiciSectene,
+      kraje: postupujiciSectene.kraje.map((kraj) => {
+        return {
+          ...kraj,
+          strany: kraj.strany.map((strana) => {
+            return {
+              ...strana,
+              mandatyHrube: Math.floor(strana.hlasy / kraj.krajskeVolebniCislo),
+              zbytek: strana.hlasy % kraj.krajskeVolebniCislo,
+            };
+          }),
+        };
+      }),
+    };
+    // § 50 / 4 bylo v některém kraji přiděleno příliš mnoho mandátů?
+
+    const mandatyHrubeKontrola = {
+      ...mandatyHrube,
+      kraje: mandatyHrube.kraje.map((kraj) => {
+        return {
+          ...kraj,
+          mandatyHrube: kraj.strany.reduce((acc, curr) => {
+            return acc + curr.mandatyHrube;
+          }, 0),
+        };
+      }),
+    };
+
+    const mandatyKorekce = {
+      ...mandatyHrubeKontrola,
+      kraje: mandatyHrubeKontrola.kraje.map((kraj) => {
+        if (kraj.mandatyHrube > kraj.mandaty) {
+          kraj.strany.sort((a, b) => (a.zbytek > b.zbytek ? 1 : -1));
+          const rozdil = kraj.mandatyHrube - kraj.mandaty;
+          return {
+            ...kraj,
+            strany: kraj.strany.map((strana, i) => {
+              if (i < rozdil) {
+                return { ...strana, mandatyKorekce: 1 };
+              } else return strana;
+            }),
+          };
+        } else return kraj;
+      }),
+    };
+
+    return mandatyKorekce;
+  };
 
   switch (krok) {
     case false:
@@ -65,56 +153,14 @@ function Benda({
         </Typography>
       );
     case 5:
-      const krajskaKvota = krajeDhondt(vysledky, false, kraj) + 2;
-      const hlasyPostupujicimvKraji = vysledky.kraje
-        .filter((i) => {
-          return i.nazev === kraj;
-        })[0]
-        .strany.reduce((acc, curr) => {
-          return curr.mandaty > 0 ? acc + curr.hlasy : acc;
-        }, 0);
-      const imperiali = Math.round(hlasyPostupujicimvKraji / krajskaKvota);
-      const postupujiNazvy = postupuji.map((strana) => strana.nazev);
-      const spoctiBendaKraj = (vysledky, kraj, postupujiNazvy) => {
-        const pocitanyKrajAll = vysledky.kraje.filter((i) => {
-          return i.nazev === kraj;
-        })[0];
-        const pocitanyKrajPostupujici = pocitanyKrajAll.strany.filter(
-          (strana) => {
-            return postupujiNazvy.includes(strana.nazev);
-          }
-        );
-        const pocitanyKraj = {
-          ...pocitanyKrajAll,
-          strany: pocitanyKrajPostupujici,
-        };
-        console.log(pocitanyKraj, pocitanyKrajPostupujici);
-        const result = pocitanyKraj.strany
-          .map((i) => {
-            return {
-              ...i,
-              mandaty_imperiali: Math.floor(i.hlasy / imperiali),
-              zbytek: i.hlasy % imperiali,
-            };
-          })
-          .sort((a, b) => (a.mandaty_imperiali < b.mandaty_imperiali ? 1 : -1));
-        const mandaty_imperiali = result.reduce((acc, curr) => {
-          return acc + curr.mandaty_imperiali;
-        }, 0);
-        return [result, pocitanyKraj.mandaty, mandaty_imperiali];
-      };
-      const bendaKraj = spoctiBendaKraj(vysledky, kraj, postupujiNazvy);
-      const komuSebrat = (bendaKraj) => {
-        const rozdil = bendaKraj[2] - bendaKraj[1];
-        const nejmensiZbytky = bendaKraj[0]
-          .filter((i) => i.mandaty_imperiali > 0)
-          .sort((a, b) => {
-            return a.zbytek > b.zbytek ? 1 : -1;
-          });
-        const vypsat = nejmensiZbytky.slice(0, rozdil);
-        const result = vypsat.map((i) => i.zkratka);
-        return result.join(", ");
-      };
+      const bendaVysledky = bendaRepublika(vysledky);
+      console.log(bendaVysledky);
+      const bendaVysledkyKraj = bendaVysledky.kraje.filter(
+        (i) => i.nazev === kraj
+      )[0];
+      const krajskaKvota = bendaVysledkyKraj.mandaty + 2;
+      const zbyvaRozdelit =
+        bendaVysledkyKraj.mandaty - bendaVysledkyKraj.mandatyHrube;
       return (
         <Box className={classes.boxik}>
           <Typography paragraph={true}>
@@ -134,72 +180,81 @@ function Benda({
           <Typography paragraph={true}>
             Ve vybraném kraji se má rozdělit {krajskaKvota - 2} mandátů + 2 ={" "}
             {krajskaKvota}. Postupující strany zde dostaly dohromady{" "}
-            {hlasyPostupujicimvKraji.toLocaleString("cs-CZ")} hlasů. Dál tedy
-            budeme počítat se zaokroulenou kvótou{" "}
-            <strong>{imperiali.toLocaleString("cs-CZ")}</strong> (tj.{" "}
-            {hlasyPostupujicimvKraji.toLocaleString("cs-CZ")} : {krajskaKvota}).
-            Tou se u každé strany vydělí počet hlasů. Kolikrát se do něj kvóta
-            vejde, tolik by měla mít strana mandátů.{" "}
+            {bendaVysledkyKraj.hlasyPostupujicich.toLocaleString("cs-CZ")}{" "}
+            hlasů. Dál tedy budeme počítat se zaokroulenou kvótou{" "}
+            <strong>
+              {bendaVysledkyKraj.krajskeVolebniCislo.toLocaleString("cs-CZ")}
+            </strong>{" "}
+            (tj. {bendaVysledkyKraj.hlasyPostupujicich.toLocaleString("cs-CZ")}{" "}
+            : {krajskaKvota}). Tou se u každé strany vydělí počet hlasů.
+            Kolikrát se do něj kvóta vejde, tolik by měla mít strana mandátů.{" "}
           </Typography>
           <Box display="flex" flexWrap="wrap" justifyContent="center" mb={2}>
-            {bendaKraj[0].map((strana, i) => {
-              if (strana.mandaty_imperiali > 0)
-                return (
-                  <Card
-                    key={strana.id}
-                    variant="outlined"
-                    style={{ margin: "0.2rem" }}
-                  >
-                    <CardContent>
-                      <Typography
-                        variant="subtitle2"
-                        align="center"
-                        gutterBottom={true}
-                      >
-                        {strana.zkratka}
-                      </Typography>
-                      <Typography variant="body2" align="center">
-                        {strana.mandaty_imperiali}{" "}
-                        {strana.mandaty_imperiali === 1
-                          ? "mandát"
-                          : strana.mandaty_imperiali < 5
-                          ? "mandáty"
-                          : "mandátů"}
-                      </Typography>
-                      <Typography variant="body2" align="center">
-                        {strana.hlasy.toLocaleString("cs-CZ")} hlasů
-                      </Typography>
-                      <Typography variant="body2" align="center"></Typography>
-                    </CardContent>
-                  </Card>
-                );
-            })}
+            {bendaVysledkyKraj.strany
+              .sort((a, b) => (a.hlasy < b.hlasy ? 1 : -1))
+              .map((strana) => {
+                if (strana.mandatyHrube > 0)
+                  return (
+                    <Card
+                      key={strana.id}
+                      variant="outlined"
+                      style={{ margin: "0.2rem" }}
+                    >
+                      <CardContent>
+                        <Typography
+                          variant="subtitle2"
+                          align="center"
+                          gutterBottom={true}
+                        >
+                          {strana.zkratka}
+                        </Typography>
+                        <Typography variant="body2" align="center">
+                          {strana.mandatyHrube}{" "}
+                          {strana.mandatyHrube === 1
+                            ? "mandát"
+                            : strana.mandatyHrube < 5
+                            ? "mandáty"
+                            : "mandátů"}
+                        </Typography>
+                        <Typography variant="body2" align="center">
+                          {strana.hlasy.toLocaleString("cs-CZ")} hlasů
+                        </Typography>
+                        <Typography variant="body2" align="center"></Typography>
+                      </CardContent>
+                    </Card>
+                  );
+              })}
           </Box>
-          {bendaKraj[2] > bendaKraj[1] ? (
+          {zbyvaRozdelit < 0 ? (
             <Typography paragraph={true}>
-              V kraji se podařilo rozdělit o {bendaKraj[2] - bendaKraj[1]}{" "}
-              {bendaKraj[2] - bendaKraj[1] === 1
+              V kraji se podařilo rozdělit o {-zbyvaRozdelit}{" "}
+              {-zbyvaRozdelit === 1
                 ? "mandát"
-                : bendaKraj[2] - bendaKraj[1] < 5
+                : -zbyvaRozdelit < 5
                 ? "mandáty"
                 : "mandátů"}{" "}
               víc než kolik mu připadlo v kroku 4. Je proto potřeba odebrat{" "}
-              {bendaKraj[2] - bendaKraj[1] > 1
+              {-zbyvaRozdelit > 1
                 ? "tyto mandáty stranám"
                 : "tento mandát straně"}{" "}
-              s nejnižším zbytkem po dělení ({komuSebrat(bendaKraj)}).
+              s nejnižším zbytkem po dělení (
+              {bendaVysledkyKraj.strany
+                .filter((strana) => strana.mandatyKorekce)
+                .map((strana) => strana.nazev)
+                .join(", ")}
+              ).
             </Typography>
           ) : null}
-          {bendaKraj[2] < bendaKraj[1] ? (
+          {zbyvaRozdelit > 0 ? (
             <Typography paragraph={true}>
-              V kraji se podařilo rozdělit o {bendaKraj[1] - bendaKraj[2]}{" "}
-              {bendaKraj[1] - bendaKraj[2] === 1
+              V kraji se podařilo rozdělit o {zbyvaRozdelit}{" "}
+              {zbyvaRozdelit === 1
                 ? "mandát"
-                : bendaKraj[1] - bendaKraj[2] < 5
+                : zbyvaRozdelit < 5
                 ? "mandáty"
                 : "mandátů"}{" "}
               míň než kolik mu připadlo v kroku 4.{" "}
-              {bendaKraj[1] - bendaKraj[2] === 1
+              {zbyvaRozdelit === 1
                 ? "Tento mandát se bude"
                 : "Tyto mandáty se budou"}{" "}
               rozdělovat v dalším kroku.
@@ -208,13 +263,8 @@ function Benda({
         </Box>
       );
     case 6:
-      const bendaRepublika = (vysledky) => {
-        return result;
-      };
       return (
-        <Typography>
-          Podle návrhu poslance Bendy zbývá rozdělit {console.log(vysledky)}
-        </Typography>
+        <Typography>Podle návrhu poslance Bendy zbývá rozdělit {}</Typography>
       );
     case 7:
       return <div>povidy7</div>;
