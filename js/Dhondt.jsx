@@ -54,6 +54,7 @@ function Dhondt({
   rok,
   kraj,
   setKraj,
+  setScrollTarget
 }) {
   const classes = useStyles();
 
@@ -178,7 +179,7 @@ function Dhondt({
         </Box>
       );
     case 6:
-      return <div>povidy6</div>;
+      return <Typography paragraph={true} className={classes.boxik}>V dosavadním systému už jsou všechny mandáty rozdělené.</Typography>   ;
     case 7:
       return <div>povidy7</div>;
     case 8:

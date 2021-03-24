@@ -44,10 +44,11 @@ function Akordeon({
   rok,
   setRok,
   vysledky,
+  setScrollTarget
 }) {
   const classes = useStyles();
 
-  const [kraj, setKraj] = useState("Liberecký");
+  const [kraj, setKraj] = useState("Karlovarský");
 
   const handleChange = (panel) => (event, isExpanded) => {
     setKrok(isExpanded ? panel : false);
@@ -124,6 +125,7 @@ function Akordeon({
           krajeDhondt={krajeDhondt}
           kraj={kraj}
           setKraj={setKraj}
+          setScrollTarget={setScrollTarget}
         />
         <Benda
           krok={krok}
@@ -133,6 +135,7 @@ function Akordeon({
           kraj={kraj}
           setKraj={setKraj}
           krajeDhondt={krajeDhondt}
+          setScrollTarget={setScrollTarget}
         />
         <Poslanci
           krok={krok}

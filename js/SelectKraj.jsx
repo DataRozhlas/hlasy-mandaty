@@ -4,6 +4,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import { CollectionsOutlined } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -19,9 +20,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SelectKraj({ kraj, setKraj }) {
+function SelectKraj({ kraj, setKraj, setScrollTarget }) {
   const classes = useStyles();
   const zmenKraj = (event) => {
+//    setScrollTarget(event.target);
     setKraj(event.target.value);
   };
 

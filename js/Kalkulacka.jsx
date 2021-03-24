@@ -23,9 +23,8 @@ const kapitoly = [
     "Kolik poslanců má mít který kraj?",
     "Rozhodoval počet obyvatel a účast",
   ],
-  ["První dělení mandátů mezi strany", ""],
-  ["Celostátní rozpočítání a dělení po krajích", ""],
-  ["Celá republika jako jeden kraj", ""],
+  ["První dělení mandátů mezi strany", "První skrutinium"],
+  ["Rozdělení zbývajících mandátů", "Druhé skrtutinium"],
   ["Jak by se lišilo zastoupení ve sněmovně?", ""],
 ];
 
@@ -80,6 +79,7 @@ function Kalkulacka() {
           rok={rok}
           setRok={setRok}
           vysledky={vysledky}
+          setScrollTarget={setScrollTarget}
         />
       ))}
     </div>

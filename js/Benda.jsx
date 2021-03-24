@@ -29,6 +29,7 @@ function Benda({
   kraj,
   setKraj,
   krajeDhondt,
+  setScrollTarget,
 }) {
   const classes = useStyles();
 
@@ -73,10 +74,21 @@ function Benda({
           return curr.mandaty > 0 ? acc + curr.hlasy : acc;
         }, 0);
       const imperiali = Math.round(hlasyPostupujicimvKraji / krajskaKvota);
-      const spoctiBendaKraj = (vysledky, kraj) => {
-        const pocitanyKraj = vysledky.kraje.filter((i) => {
+      const postupujiNazvy = postupuji.map((strana) => strana.nazev);
+      const spoctiBendaKraj = (vysledky, kraj, postupujiNazvy) => {
+        const pocitanyKrajAll = vysledky.kraje.filter((i) => {
           return i.nazev === kraj;
         })[0];
+        const pocitanyKrajPostupujici = pocitanyKrajAll.strany.filter(
+          (strana) => {
+            return postupujiNazvy.includes(strana.nazev);
+          }
+        );
+        const pocitanyKraj = {
+          ...pocitanyKrajAll,
+          strany: pocitanyKrajPostupujici,
+        };
+        console.log(pocitanyKraj, pocitanyKrajPostupujici);
         const result = pocitanyKraj.strany
           .map((i) => {
             return {
@@ -91,7 +103,7 @@ function Benda({
         }, 0);
         return [result, pocitanyKraj.mandaty, mandaty_imperiali];
       };
-      const bendaKraj = spoctiBendaKraj(vysledky, kraj);
+      const bendaKraj = spoctiBendaKraj(vysledky, kraj, postupujiNazvy);
       const komuSebrat = (bendaKraj) => {
         const rozdil = bendaKraj[2] - bendaKraj[1];
         const nejmensiZbytky = bendaKraj[0]
@@ -112,7 +124,12 @@ function Benda({
             kraji připadly, zvětšeným o dva. Názorná ukázka:
           </Typography>
           <Box display="flex" justifyContent="center">
-            <SelectKraj kraj={kraj} setKraj={setKraj}></SelectKraj>
+            <SelectKraj
+              kraj={kraj}
+              setKraj={setKraj}
+              id="bendaselect"
+              setScrollTarget={setScrollTarget}
+            ></SelectKraj>
           </Box>
           <Typography paragraph={true}>
             Ve vybraném kraji se má rozdělit {krajskaKvota - 2} mandátů + 2 ={" "}
@@ -191,7 +208,14 @@ function Benda({
         </Box>
       );
     case 6:
-      return <div>povidy6</div>;
+      const bendaRepublika = (vysledky) => {
+        return result;
+      };
+      return (
+        <Typography>
+          Podle návrhu poslance Bendy zbývá rozdělit {console.log(vysledky)}
+        </Typography>
+      );
     case 7:
       return <div>povidy7</div>;
     case 8:
