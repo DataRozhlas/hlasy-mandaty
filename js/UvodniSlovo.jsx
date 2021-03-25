@@ -116,8 +116,11 @@ function UvodniSlovo({ krok, rok, setRok, vysledky, postupuji }) {
     case 6:
       return null;
     case 7:
-      return <div>povidy7</div>;
-    case 8:
+        return (
+            <Box mb={2}>
+              <SimpleSelect rok={rok} setRok={setRok}></SimpleSelect>
+            </Box>
+          );    case 8:
       return <div>povidy8</div>;
   }
 }
