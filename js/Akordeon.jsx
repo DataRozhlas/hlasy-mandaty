@@ -125,7 +125,6 @@ function Akordeon({
           krajeDhondt={krajeDhondt}
           kraj={kraj}
           setKraj={setKraj}
-          setScrollTarget={setScrollTarget}
         />
         <Benda
           krok={krok}
@@ -135,7 +134,6 @@ function Akordeon({
           kvota={republikoveCislo}
           kraj={kraj}
           setKraj={setKraj}
-          setScrollTarget={setScrollTarget}
         />
         <Poslanci
           krok={krok}

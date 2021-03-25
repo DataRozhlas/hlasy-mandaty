@@ -6,7 +6,9 @@ import Box from "@material-ui/core/Box";
 import SelectKraj from "./SelectKraj.jsx";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import GrafSnemovna from "./GrafSnemovna.jsx";
 import Tooltip from "@material-ui/core/Tooltip";
+import { ContactSupportOutlined } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -45,17 +47,11 @@ const pridelDhondtvKrajich = (kraje, vybranyKraj) => {
   return setridenyResult;
 };
 
-function Dhondt({
-  krok,
-  vysledky,
-  postupuji,
-  kvota,
-  krajeDhondt,
-  rok,
-  kraj,
-  setKraj,
-  setScrollTarget
-}) {
+const dHondt = (vysledky) => {
+  return vysledky;
+}
+
+function Dhondt({ krok, vysledky, kvota, krajeDhondt, rok, kraj, setKraj }) {
   const classes = useStyles();
 
   switch (krok) {
@@ -87,6 +83,8 @@ function Dhondt({
         </>
       );
     case 3:
+      const d = dHondt(vysledky);
+      console.log(d);
       return (
         <Typography paragraph={true} className={classes.boxik}>
           V systému, který dosud platil, se nejprve spočítalo{" "}
@@ -179,9 +177,25 @@ function Dhondt({
         </Box>
       );
     case 6:
-      return <Typography paragraph={true} className={classes.boxik}>V dosavadním systému sčítání už by byly všechny mandáty rozdělené.</Typography>   ;
+      return (
+        <Typography paragraph={true} className={classes.boxik}>
+          V dosavadním systému sčítání už by byly všechny mandáty rozdělené.
+        </Typography>
+      );
     case 7:
-      return <div>povidy7</div>;
+      // const d = {
+      //   graf: vysledky.CR.kraje.reduce((acc, curr) => {
+      //     curr.strany
+      //   }),
+      // };
+      return (
+        <Box className={classes.boxik}>
+          {/* <GrafSnemovna
+            data={d.graf}
+            titulek={`${rok}, D'Hondtova metoda`}
+          ></GrafSnemovna>*/}
+        </Box> 
+      );
     case 8:
       return <div>povidy8</div>;
   }

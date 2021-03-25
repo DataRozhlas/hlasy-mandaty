@@ -22,225 +22,221 @@ const useStyles = makeStyles((theme) => {
 
 const url = "https://www.psp.cz/sqw/text/orig2.sqw?idd=186875";
 
-function Benda({
-  rok,
-  krok,
-  vysledky,
-  postupuji,
-  kvota,
-  kraj,
-  setKraj,
-  setScrollTarget,
-}) {
-  const classes = useStyles();
-  const postupujiNazvy = postupuji.map((strana) => strana.nazev);
-  const bendaRepublika = (vysledky) => {
-    // § 49
-    const jenPostupujiciStranyCR = vysledky.CR.strana.filter((strana) =>
-      postupujiNazvy.includes(strana.nazev)
-    );
-    const jenPostupujiciStranyKraje = vysledky.kraje.map((kraj) => {
+const bendaRepublika = (vysledky) => {
+  // § 49
+
+  const jenPostupujiciStranyCR = {
+    ...vysledky,
+    CR: {
+      ...vysledky.CR,
+      strana: vysledky.CR.strana.filter((strana) => strana.proc > 5),
+    },
+  };
+
+  const jenPostupujiciStrany = {
+    ...jenPostupujiciStranyCR,
+    kraje: jenPostupujiciStranyCR.kraje.map((kraj) => {
       return {
         ...kraj,
         strany: kraj.strany.filter((strana) =>
-          postupujiNazvy.includes(strana.nazev)
+          jenPostupujiciStranyCR.CR.strana
+            .map((i) => i.nazev)
+            .includes(strana.nazev)
         ),
       };
-    });
-    const jenPostupujiciStrany = {
-      CR: { ...vysledky.CR, strana: jenPostupujiciStranyCR },
-      kraje: jenPostupujiciStranyKraje,
+    }),
+  };
+  // § 50 / 2
+  const hlasyPostupujicich = jenPostupujiciStrany.kraje.map((kraj) => {
+    return {
+      ...kraj,
+      hlasyPostupujicich: kraj.strany.reduce((acc, curr) => {
+        return acc + curr.hlasy;
+      }, 0),
     };
-    // § 50 / 2
-    const hlasyPostupujicich = jenPostupujiciStrany.kraje.map((kraj) => {
+  });
+  const postupujiciSectene = {
+    ...jenPostupujiciStrany,
+    kraje: hlasyPostupujicich.map((kraj) => {
       return {
         ...kraj,
-        hlasyPostupujicich: kraj.strany.reduce((acc, curr) => {
-          return acc + curr.hlasy;
+        krajskeVolebniCislo: Math.round(
+          kraj.hlasyPostupujicich / (kraj.mandaty + 2)
+        ),
+      };
+    }),
+  };
+  // § 50 / 3
+  const mandatyHrube = {
+    ...postupujiciSectene,
+    kraje: postupujiciSectene.kraje.map((kraj) => {
+      return {
+        ...kraj,
+        strany: kraj.strany.map((strana) => {
+          return {
+            ...strana,
+            mandatyHrube: Math.floor(strana.hlasy / kraj.krajskeVolebniCislo),
+            zbytek: strana.hlasy % kraj.krajskeVolebniCislo,
+          };
+        }),
+      };
+    }),
+  };
+  // § 50 / 4 bylo v některém kraji přiděleno příliš mnoho mandátů?
+
+  const mandatyHrubeKontrola = {
+    ...mandatyHrube,
+    kraje: mandatyHrube.kraje.map((kraj) => {
+      return {
+        ...kraj,
+        mandatyHrube: kraj.strany.reduce((acc, curr) => {
+          return acc + curr.mandatyHrube;
         }, 0),
       };
-    });
-    const postupujiciSectene = {
-      ...jenPostupujiciStrany,
-      kraje: hlasyPostupujicich.map((kraj) => {
+    }),
+  };
+
+  const mandatyKorekce = {
+    ...mandatyHrubeKontrola,
+    kraje: mandatyHrubeKontrola.kraje.map((kraj) => {
+      if (kraj.mandatyHrube > kraj.mandaty) {
+        kraj.strany.sort((a, b) => (a.zbytek > b.zbytek ? 1 : -1));
+        const rozdil = kraj.mandatyHrube - kraj.mandaty;
         return {
           ...kraj,
-          krajskeVolebniCislo: Math.round(
-            kraj.hlasyPostupujicich / (kraj.mandaty + 2)
-          ),
-        };
-      }),
-    };
-    // § 50 / 3
-    const mandatyHrube = {
-      ...postupujiciSectene,
-      kraje: postupujiciSectene.kraje.map((kraj) => {
-        return {
-          ...kraj,
-          strany: kraj.strany.map((strana) => {
-            return {
-              ...strana,
-              mandatyHrube: Math.floor(strana.hlasy / kraj.krajskeVolebniCislo),
-              zbytek: strana.hlasy % kraj.krajskeVolebniCislo,
-            };
+          strany: kraj.strany.map((strana, i) => {
+            if (i < rozdil) {
+              return { ...strana, mandatyKorekce: 1 };
+            } else return strana;
           }),
         };
-      }),
-    };
-    // § 50 / 4 bylo v některém kraji přiděleno příliš mnoho mandátů?
+      } else return kraj;
+    }),
+  };
 
-    const mandatyHrubeKontrola = {
-      ...mandatyHrube,
-      kraje: mandatyHrube.kraje.map((kraj) => {
+  // § 51 / 1 kolik mandátů zbývá rozdělit ve druhém skrutiniu?
+
+  const zbyvaRozdelit = {
+    ...mandatyKorekce,
+    druheSkrutinium: {
+      rozdeleno: mandatyKorekce.kraje.reduce((acc, curr) => {
+        return (
+          acc +
+          (curr.mandatyHrube > curr.mandaty ? curr.mandaty : curr.mandatyHrube)
+        );
+      }, 0),
+      strany: mandatyKorekce.CR.strana.map((strana) => {
         return {
-          ...kraj,
-          mandatyHrube: kraj.strany.reduce((acc, curr) => {
-            return acc + curr.mandatyHrube;
+          ...strana,
+          nevyuziteHlasy: mandatyKorekce.kraje.reduce((acc, curr) => {
+            return (
+              acc +
+              curr.strany.filter((i) => i.nazev === strana.nazev)[0].zbytek
+            );
           }, 0),
         };
       }),
-    };
-
-    const mandatyKorekce = {
-      ...mandatyHrubeKontrola,
-      kraje: mandatyHrubeKontrola.kraje.map((kraj) => {
-        if (kraj.mandatyHrube > kraj.mandaty) {
-          kraj.strany.sort((a, b) => (a.zbytek > b.zbytek ? 1 : -1));
-          const rozdil = kraj.mandatyHrube - kraj.mandaty;
-          return {
-            ...kraj,
-            strany: kraj.strany.map((strana, i) => {
-              if (i < rozdil) {
-                return { ...strana, mandatyKorekce: 1 };
-              } else return strana;
-            }),
-          };
-        } else return kraj;
-      }),
-    };
-
-    // § 51 / 1 kolik mandátů zbývá rozdělit ve druhém skrutiniu?
-
-    const zbyvaRozdelit = {
-      ...mandatyKorekce,
-      druheSkrutinium: {
-        rozdeleno: mandatyKorekce.kraje.reduce((acc, curr) => {
-          return (
-            acc +
-            (curr.mandatyHrube > curr.mandaty
-              ? curr.mandaty
-              : curr.mandatyHrube)
-          );
-        }, 0),
-        strany: mandatyKorekce.CR.strana.map((strana) => {
-          return {
-            ...strana,
-            nevyuziteHlasy: mandatyKorekce.kraje.reduce((acc, curr) => {
-              return (
-                acc +
-                curr.strany.filter((i) => i.nazev === strana.nazev)[0].zbytek
-              );
-            }, 0),
-          };
-        }),
-      },
-    };
-
-    const secistNevyuzite = {
-      ...zbyvaRozdelit,
-      druheSkrutinium: {
-        ...zbyvaRozdelit.druheSkrutinium,
-        nevyuziteHlasy: zbyvaRozdelit.druheSkrutinium.strany.reduce(
-          (acc, curr) => {
-            return acc + curr.nevyuziteHlasy;
-          },
-          0
-        ),
-      },
-    };
-
-    const zjistitKvotu = {
-      ...secistNevyuzite,
-      druheSkrutinium: {
-        ...secistNevyuzite.druheSkrutinium,
-        kvota: Math.round(
-          secistNevyuzite.druheSkrutinium.nevyuziteHlasy /
-            (200 - secistNevyuzite.druheSkrutinium.rozdeleno + 1)
-        ),
-      },
-    };
-
-    const pridelMandaty = {
-      ...zjistitKvotu,
-      druheSkrutinium: {
-        ...zjistitKvotu.druheSkrutinium,
-        strany: zjistitKvotu.druheSkrutinium.strany.map((strana) => {
-          return {
-            ...strana,
-            mandaty: Math.floor(
-              strana.nevyuziteHlasy / zjistitKvotu.druheSkrutinium.kvota
-            ),
-            zbytek: strana.nevyuziteHlasy % zjistitKvotu.druheSkrutinium.kvota,
-          };
-        }),
-      },
-    };
-
-    const rozdelenoVprvnimKroku = {
-      ...pridelMandaty,
-      druheSkrutinium: {
-        ...pridelMandaty.druheSkrutinium,
-        rozdelenoVprvnimKroku: pridelMandaty.druheSkrutinium.strany.reduce(
-          (acc, curr) => {
-            return acc + curr.mandaty;
-          },
-          0
-        ),
-      },
-    };
-
-    const doserMandaty = {
-      ...rozdelenoVprvnimKroku,
-      druheSkrutinium: {
-        ...rozdelenoVprvnimKroku.druheSkrutinium,
-        strany: rozdelenoVprvnimKroku.druheSkrutinium.strany
-          .sort((a, b) => (a.zbytek < b.zbytek ? 1 : -1))
-          .map((strana, i) => {
-            return {
-              ...strana,
-              extramandat:
-                i <
-                200 -
-                  (rozdelenoVprvnimKroku.druheSkrutinium.rozdelenoVprvnimKroku +
-                    rozdelenoVprvnimKroku.druheSkrutinium.rozdeleno)
-                  ? 1
-                  : 0,
-            };
-          }),
-      },
-    };
-
-    const doGrafu = {
-      ...doserMandaty,
-      graf: doserMandaty.druheSkrutinium.strany.map((strana) => {
-        return [
-          strana.zkratka,
-          strana.mandaty +
-            strana.extramandat +
-            doserMandaty.kraje.reduce((acc, curr) => {
-              const partaj = curr.strany.filter(
-                (i) => i.nazev === strana.nazev
-              )[0];
-              const result = partaj.mandatyKorekce
-                ? partaj.mandatyHrube - partaj.mandatyKorekce
-                : partaj.mandatyHrube;
-              return acc + result;
-            }, 0),
-        ];
-      }),
-    };
-    return doGrafu;
+    },
   };
+
+  const secistNevyuzite = {
+    ...zbyvaRozdelit,
+    druheSkrutinium: {
+      ...zbyvaRozdelit.druheSkrutinium,
+      nevyuziteHlasy: zbyvaRozdelit.druheSkrutinium.strany.reduce(
+        (acc, curr) => {
+          return acc + curr.nevyuziteHlasy;
+        },
+        0
+      ),
+    },
+  };
+
+  const zjistitKvotu = {
+    ...secistNevyuzite,
+    druheSkrutinium: {
+      ...secistNevyuzite.druheSkrutinium,
+      kvota: Math.round(
+        secistNevyuzite.druheSkrutinium.nevyuziteHlasy /
+          (200 - secistNevyuzite.druheSkrutinium.rozdeleno + 1)
+      ),
+    },
+  };
+
+  const pridelMandaty = {
+    ...zjistitKvotu,
+    druheSkrutinium: {
+      ...zjistitKvotu.druheSkrutinium,
+      strany: zjistitKvotu.druheSkrutinium.strany.map((strana) => {
+        return {
+          ...strana,
+          mandaty: Math.floor(
+            strana.nevyuziteHlasy / zjistitKvotu.druheSkrutinium.kvota
+          ),
+          zbytek: strana.nevyuziteHlasy % zjistitKvotu.druheSkrutinium.kvota,
+        };
+      }),
+    },
+  };
+
+  const rozdelenoVprvnimKroku = {
+    ...pridelMandaty,
+    druheSkrutinium: {
+      ...pridelMandaty.druheSkrutinium,
+      rozdelenoVprvnimKroku: pridelMandaty.druheSkrutinium.strany.reduce(
+        (acc, curr) => {
+          return acc + curr.mandaty;
+        },
+        0
+      ),
+    },
+  };
+
+  const doserMandaty = {
+    ...rozdelenoVprvnimKroku,
+    druheSkrutinium: {
+      ...rozdelenoVprvnimKroku.druheSkrutinium,
+      strany: rozdelenoVprvnimKroku.druheSkrutinium.strany
+        .sort((a, b) => (a.zbytek < b.zbytek ? 1 : -1))
+        .map((strana, i) => {
+          return {
+            ...strana,
+            extramandat:
+              i <
+              200 -
+                (rozdelenoVprvnimKroku.druheSkrutinium.rozdelenoVprvnimKroku +
+                  rozdelenoVprvnimKroku.druheSkrutinium.rozdeleno)
+                ? 1
+                : 0,
+          };
+        }),
+    },
+  };
+
+  const doGrafu = {
+    ...doserMandaty,
+    graf: doserMandaty.druheSkrutinium.strany.map((strana) => {
+      return [
+        strana.zkratka,
+        strana.mandaty +
+          strana.extramandat +
+          doserMandaty.kraje.reduce((acc, curr) => {
+            const partaj = curr.strany.filter(
+              (i) => i.nazev === strana.nazev
+            )[0];
+            const result = partaj.mandatyKorekce
+              ? partaj.mandatyHrube - partaj.mandatyKorekce
+              : partaj.mandatyHrube;
+            return acc + result;
+          }, 0),
+      ];
+    }),
+  };
+  return doGrafu;
+};
+
+function Benda({ rok, krok, vysledky, kvota, kraj, setKraj }) {
+  const classes = useStyles();
 
   switch (krok) {
     case false:
@@ -294,7 +290,6 @@ function Benda({
               kraj={kraj}
               setKraj={setKraj}
               id="bendaselect"
-              setScrollTarget={setScrollTarget}
             ></SelectKraj>
           </Box>
           <Typography paragraph={true}>
@@ -445,15 +440,12 @@ function Benda({
       );
     case 7:
       const d = bendaRepublika(vysledky);
-      console.log(d);
       return (
         <Box className={classes.boxik}>
-          <Box style={{alignSelf: "center"}}>
           <GrafSnemovna
             data={d.graf}
             titulek={`${rok}, návrh poslance Bendy`}
           ></GrafSnemovna>
-          </Box>
         </Box>
       );
     case 8:
