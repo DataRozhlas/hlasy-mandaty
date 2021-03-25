@@ -43,13 +43,19 @@ function Senat({ krok, vysledky }) {
     case 4:
       return null;
     case 5:
-      return <div>povidy5</div>;
+      return (<Typography paragraph={true} className={classes.boxik}>
+        Senátní návrh by dopadl stejně jako návrh poslanecký.
+      </Typography>);
     case 6:
-      return <div>povidy6</div>;
+      return (<Typography paragraph={true} className={classes.boxik}>
+        Senátní návrh by dopadl stejně jako návrh poslanecký.
+      </Typography>);
     case 7:
-      return <div>povidy7</div>;
+      return (<Typography paragraph={true} className={classes.boxik}>
+        Senátní návrh by dopadl stejně jako návrh poslanecký.
+      </Typography>);
     case 8:
-      return <div>povidy8</div>;
+      return null;
   }
 }
 

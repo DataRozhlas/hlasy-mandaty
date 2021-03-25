@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => {
 
 const poslanciRepublika = (vysledky) => {
   const volebniCislo = {
-    ...vysledky,
+    CR: vysledky.CR,
     hlasyPostupujici: vysledky.CR.strana.reduce((acc, curr) => {
       return acc + curr.hlasy;
     }, 0),
