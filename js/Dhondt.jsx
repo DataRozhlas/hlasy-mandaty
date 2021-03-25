@@ -48,7 +48,6 @@ const pridelDhondtvKrajich = (kraje, vybranyKraj) => {
 };
 
 const DhondtRepublika = (vysledky) => {
-  
   const volebniCislo = {
     ...vysledky,
     republikoveVolebniCislo: Math.round(vysledky.CR.hlasy / 200),

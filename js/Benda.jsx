@@ -402,29 +402,27 @@ function Benda({ rok, krok, vysledky, kvota, kraj, setKraj }) {
       );
     case 7:
       const d = bendaRepublika(vysledky);
-      const doGrafu = {
-        ...d,
-        graf: d.druheSkrutinium.strany.map((strana) => {
-          return [
-            strana.zkratka,
-            strana.mandaty +
-              strana.extramandat +
-              d.kraje.reduce((acc, curr) => {
-                const partaj = curr.strany.filter(
-                  (i) => i.nazev === strana.nazev
-                )[0];
-                const result = partaj.mandatyKorekce
-                  ? partaj.mandatyHrube - partaj.mandatyKorekce
-                  : partaj.mandatyHrube;
-                return acc + result;
-              }, 0),
-          ];
-        }),
-      };
+      const doGrafu = d.druheSkrutinium.strany.map((strana) => {
+        return [
+          strana.zkratka,
+          strana.mandaty +
+            strana.extramandat +
+            d.kraje.reduce((acc, curr) => {
+              const partaj = curr.strany.filter(
+                (i) => i.nazev === strana.nazev
+              )[0];
+              const result = partaj.mandatyKorekce
+                ? partaj.mandatyHrube - partaj.mandatyKorekce
+                : partaj.mandatyHrube;
+              return acc + result;
+            }, 0),
+        ];
+      });
+
       return (
         <Box className={classes.boxik} mb={2}>
           <GrafSnemovna
-            data={doGrafu.graf}
+            data={doGrafu}
             titulek={`${rok}, návrh poslance Bendy`}
           ></GrafSnemovna>
         </Box>

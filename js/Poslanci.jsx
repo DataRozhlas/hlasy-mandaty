@@ -161,7 +161,6 @@ function Poslanci({ krok, vysledky, rok }) {
       );
     case 6:
       const p6 = poslanciRepublika(vysledky);
-      console.log(p6);
       return (
         <Box className={classes.boxik} mb={2}>
           <Typography paragraph={true}>
@@ -223,13 +222,13 @@ function Poslanci({ krok, vysledky, rok }) {
         </Box>
       );
     case 7:
-      const p7 = poslanciRepublika(vysledky);
-      const doGrafu = p7.CR.strana.map((s) => {
-        const zkratka = s.zkratka;
-        const mandaty = s.mandatyPoslanci + s.extraMandat;
+        const p7 = poslanciRepublika(vysledky);
+        const doGrafu = p7.CR.strana.map((s) => {
+          const zkratka = s.zkratka;
+          const mandaty = s.mandatyPoslanci + s.extraMandat;
 
-        return [zkratka, mandaty];
-      });
+          return [zkratka, mandaty];
+        });
       return (
         <Box className={classes.boxik} mb={2}>
           <GrafSnemovna

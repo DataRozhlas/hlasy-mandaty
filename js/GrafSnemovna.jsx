@@ -17,6 +17,11 @@ function GrafSnemovna({ data, titulek }) {
       credits: {
         enabled: false,
       },
+      plotOptions: {
+        series: {
+          animation: false,
+        },
+      },
       legend: {
         labelFormat: '{name} <span style="opacity: 0.4">{y}</span>',
       },
@@ -24,7 +29,7 @@ function GrafSnemovna({ data, titulek }) {
         {
           name: "poslanců",
           keys: ["name", "y"],
-          data: data.sort((a, b) => (a[1] < b[1] ? 1 : -1)),
+          data: data,
           dataLabels: {
             enabled: true,
             format: "{point.name}",

@@ -45,11 +45,26 @@ function Vnitro1({ krok, vysledky }) {
     case 4:
       return null;
     case 5:
-      return <div>povidy5</div>;
+      return (
+        <Typography paragraph={true} className={classes.boxik}>
+          Vládní návrh v první variantě se 14 volebními kraji také používá až na
+          nepodstatný rozdíl v zaokrouhlování stejný postup a dopadl by stejně
+          jako návrh poslanců KDU-ČSL.
+        </Typography>
+      );
     case 6:
-      return <div>povidy6</div>;
+      return (
+        <Typography paragraph={true} className={classes.boxik}>
+          Vládní návrh by v první variantě se 14 volebními kraji dopadl stejně
+          jako návrh lidoveckých poslanců a senátorů.
+        </Typography>
+      );
     case 7:
-      return <div>povidy7</div>;
+      return (
+        <Typography paragraph={true} className={classes.boxik}>
+          Vládní návrh by v první variantě se 14 volebními kraji dopadl stejně.
+        </Typography>
+      );
     case 8:
       return <div>povidy8</div>;
   }

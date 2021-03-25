@@ -30,9 +30,9 @@ function UvodniSlovo({ krok, rok, setRok, vysledky, postupuji }) {
             Stejný výsledek voleb může vést k mírně odlišnému rozložení sil ve
             sněmovně a případně i k různým vládám. Tady si můžete vyzkoušet, jak
             by dopadly čtvery předchozí volby, kdyby se na ně vztahovaly
-            aktuálně navrhované změny ve způsobu přepočtení hlasů na mandáty.{" "}
+            aktuálně navrhované změny ve způsobu přepočtení hlasů na mandáty.
+            Které volby si s námi chcete přepočítat?
           </Typography>
-          <Typography>Které volby si s námi chcete přepočítat?</Typography>
           <Box mb={2}>
             <SimpleSelect rok={rok} setRok={setRok}></SimpleSelect>
           </Box>
@@ -49,7 +49,9 @@ function UvodniSlovo({ krok, rok, setRok, vysledky, postupuji }) {
     case 2:
       return (
         <>
-          {" "}
+          <Box mb={2}>
+            <SimpleSelect rok={rok} setRok={setRok}></SimpleSelect>
+          </Box>{" "}
           <Typography paragraph={true} className={classes.vlevo}>
             {`V roce ${rok}, který jste si vybrali, by podle všech dosud zvažovaných návrhů překonalo hranici pro vstup do sněmovny ${postupuji.length} stran, tedy stejně jako ve skutečnosti:`}
           </Typography>
@@ -92,6 +94,9 @@ function UvodniSlovo({ krok, rok, setRok, vysledky, postupuji }) {
     case 3:
       return (
         <>
+          <Box mb={2}>
+            <SimpleSelect rok={rok} setRok={setRok}></SimpleSelect>
+          </Box>
           <Typography paragraph={true} className={classes.vlevo}>
             Teď je potřeba aspoň přibližně spočítat, jaký nejmenší počet hlasů
             při dané volební účasti – v roce {rok} to bylo celostátně{" "}
@@ -114,13 +119,18 @@ function UvodniSlovo({ krok, rok, setRok, vysledky, postupuji }) {
         </Box>
       );
     case 6:
-      return null;
+      return (
+        <Box mb={2}>
+          <SimpleSelect rok={rok} setRok={setRok}></SimpleSelect>
+        </Box>
+      );
     case 7:
-        return (
-            <Box mb={2}>
-              <SimpleSelect rok={rok} setRok={setRok}></SimpleSelect>
-            </Box>
-          );    case 8:
+      return (
+        <Box mb={2}>
+          <SimpleSelect rok={rok} setRok={setRok}></SimpleSelect>
+        </Box>
+      );
+    case 8:
       return <div>povidy8</div>;
   }
 }

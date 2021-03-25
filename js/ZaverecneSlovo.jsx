@@ -52,13 +52,13 @@ function ZaverecneSlovo({ krok }) {
         </Typography>
       );
     case 5:
-      return <div>povidy5</div>;
+      return null;
     case 6:
-      return <div>povidy6</div>;
+      return null;
     case 7:
-      return <div>povidy7</div>;
+      return null;
     case 8:
-      return <div>povidy8</div>;
+      return null;
   }
 }
 

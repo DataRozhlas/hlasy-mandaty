@@ -25,7 +25,7 @@ const kapitoly = [
   ],
   ["První dělení mandátů mezi strany", "První skrutinium"],
   ["Rozdělení zbývajících mandátů", "Druhé skrutinium"],
-  ["Jak by se lišilo zastoupení ve sněmovně?", ""],
+  ["Komu co prospěje?", "Jak by se změnilo složení sněmovny"],
 ];
 
 function Kalkulacka() {

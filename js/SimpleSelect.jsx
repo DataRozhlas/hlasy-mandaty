@@ -24,7 +24,7 @@ function SimpleSelect({ rok, setRok }) {
 
   return (
       <FormControl className={classes.formControl}>
-        <InputLabel id="select-rok-label">Sněmovní volby</InputLabel>
+        <InputLabel id="select-rok-label">Vyberte sněmovní volby</InputLabel>
         <Select
           labelId="select-rok-label"
           id="select-rok"

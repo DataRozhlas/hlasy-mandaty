@@ -48,7 +48,7 @@ function Akordeon({
 }) {
   const classes = useStyles();
 
-  const [kraj, setKraj] = useState("Karlovarský");
+  const [kraj, setKraj] = useState("Liberecký");
 
   const handleChange = (panel) => (event, isExpanded) => {
     setKrok(isExpanded ? panel : false);
