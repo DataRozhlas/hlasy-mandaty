@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-function UvodniSlovo({ krok, rok, setRok, vysledky, postupuji, krajeDhondt }) {
+function UvodniSlovo({ krok, rok, setRok, vysledky, postupuji }) {
   const classes = useStyles();
 
   switch (krok) {
@@ -102,39 +102,17 @@ function UvodniSlovo({ krok, rok, setRok, vysledky, postupuji, krajeDhondt }) {
         </>
       );
     case 4:
-      const kraje = krajeDhondt(vysledky);
-      return (<Box display="flex" flexWrap="wrap" justifyContent="center" mb={2}>
-      {kraje.map((kraj, i) => {
-        return (
-          <Card
-            key={kraj.id}
-            variant="outlined"
-            style={{ margin: "0.2rem" , borderColor: kraj.extramandat ? "#e63946" : null}}
-          >
-              <CardContent>
-                <Typography
-                  variant="subtitle2"
-                  align="center"
-                  gutterBottom={true}
-                >
-                  {kraj.nazev}
-                </Typography>
-                <Typography variant="body2" align="center">
-                   {`${kraj.extramandat ? `${kraj.mandaty - 1} + 1` : kraj.mandaty} mandátů`}
-                </Typography>
-                <Typography variant="body2" align="center">
-                  {`${kraj.hlasy.toLocaleString("cs-Cz")} hlasů`}
-                </Typography>
-                <Typography variant="body2" align="center">
-                  {`(zbytek ${kraj.zbytek.toLocaleString("cs-Cz")})`}
-                </Typography>
-              </CardContent>
-          </Card>
-        );
-      })}
-    </Box>);
+      return (
+        <Box mb={2}>
+          <SimpleSelect rok={rok} setRok={setRok}></SimpleSelect>
+        </Box>
+      );
     case 5:
-      return null;
+      return (
+        <Box mb={2}>
+          <SimpleSelect rok={rok} setRok={setRok}></SimpleSelect>
+        </Box>
+      );
     case 6:
       return null;
     case 7:

@@ -47,11 +47,63 @@ const pridelDhondtvKrajich = (kraje, vybranyKraj) => {
   return setridenyResult;
 };
 
-const dHondt = (vysledky) => {
-  return vysledky;
-}
+const DhondtRepublika = (vysledky) => {
+  const jenPostupujiciStranyCR = {
+    ...vysledky,
+    CR: {
+      ...vysledky.CR,
+      strana: vysledky.CR.strana.filter((strana) => strana.proc > 5),
+    },
+  };
 
-function Dhondt({ krok, vysledky, kvota, krajeDhondt, rok, kraj, setKraj }) {
+  const jenPostupujiciStrany = {
+    ...jenPostupujiciStranyCR,
+    kraje: jenPostupujiciStranyCR.kraje.map((kraj) => {
+      return {
+        ...kraj,
+        strany: kraj.strany.filter((strana) =>
+          jenPostupujiciStranyCR.CR.strana
+            .map((i) => i.nazev)
+            .includes(strana.nazev)
+        ),
+      };
+    }),
+  };
+
+  const volebniCislo = {
+    ...jenPostupujiciStrany,
+    republikoveVolebniCislo: Math.round(jenPostupujiciStrany.CR.hlasy / 200),
+  };
+
+  const mandatyVKrajich = {
+    ...volebniCislo,
+    kraje: volebniCislo.kraje
+      .map((kraj) => {
+        return {
+          ...kraj,
+          mandatyDhondtZaklad: Math.floor(
+            kraj.hlasy / volebniCislo.republikoveVolebniCislo
+          ),
+          mandatyDhondtZbytek:
+            kraj.hlasy % volebniCislo.republikoveVolebniCislo,
+        };
+      })
+      .sort((a, b) => (a.mandaty < b.mandaty ? 1 : -1)),
+  };
+
+  const zbytekZkraju = {
+    ...mandatyVKrajich,
+    zbytekZkraju:
+      200 -
+      mandatyVKrajich.kraje.reduce((acc, curr) => {
+        return acc + curr.mandatyDhondtZaklad;
+      }, 0),
+  };
+
+  return zbytekZkraju;
+};
+
+function Dhondt({ krok, vysledky, krajeDhondt, rok, kraj, setKraj }) {
   const classes = useStyles();
 
   switch (krok) {
@@ -83,30 +135,75 @@ function Dhondt({ krok, vysledky, kvota, krajeDhondt, rok, kraj, setKraj }) {
         </>
       );
     case 3:
-      const d = dHondt(vysledky);
+      const d = DhondtRepublika(vysledky);
       console.log(d);
       return (
         <Typography paragraph={true} className={classes.boxik}>
           V systému, který dosud platil, se nejprve spočítalo{" "}
           <em>republikové mandátové číslo</em>. Součet všech platných hlasů se
           vydělil počtem poslanců a výsledek se zaokrouhlil na celé číslo.
-          Takhle: {vysledky.CR.hlasy.toLocaleString("cs-CZ")} hlasů : 200
-          poslanců = <strong>{kvota.toLocaleString("cs-CZ")}</strong>. Toto
-          číslo se pak použilo pro přidělení mandátů jednotlivým krajům. V nich
-          se následně poslanecká křesla mezi strany rozpočítala pomocí{" "}
+          Takhle: {d.CR.hlasy.toLocaleString("cs-CZ")} hlasů : 200 poslanců ={" "}
+          <strong>{d.republikoveVolebniCislo.toLocaleString("cs-CZ")}</strong>.
+          Toto číslo se pak použilo pro přidělení mandátů jednotlivým krajům. V
+          nich se následně poslanecká křesla mezi strany rozpočítala pomocí{" "}
           <em>D'Hondtova dělitele</em>.
         </Typography>
       );
     case 4:
+      const d4 = DhondtRepublika(vysledky);
       return (
-        <Typography paragraph={true} className={classes.boxik}>
-          V přepočtu, který se používal poslední dvě dekády, se nejprve
-          rozdělily hlasy do krajů. Počet hlasů v každém kraji se vydělil{" "}
-          <em>republikovým mandátovým číslem</em> a výsledek se zaokrouhlil
-          dolů. V roce {rok} po tomto prvním dělení zbylo{" "}
-          {krajeDhondt(vysledky, true)} poslaneckých křesel. Ta se rozdělila
-          krajům s největším zbytkem po dělení (v červeném rámečku).
-        </Typography>
+        <>
+          <Box display="flex" flexWrap="wrap" justifyContent="center" mb={2}>
+            {d4.kraje.map((kraj, i) => {
+              return (
+                <Card
+                  key={kraj.id}
+                  variant="outlined"
+                  style={{
+                    margin: "0.2rem",
+                    borderColor:
+                      kraj.mandaty > kraj.mandatyDhondtZaklad
+                        ? "#e63946"
+                        : null,
+                  }}
+                >
+                  <CardContent>
+                    <Typography
+                      variant="subtitle2"
+                      align="center"
+                      gutterBottom={true}
+                    >
+                      {kraj.nazev}
+                    </Typography>
+                    <Typography variant="body2" align="center">
+                      {`${
+                        kraj.mandaty > kraj.mandatyDhondtZaklad
+                          ? `${kraj.mandaty - 1} + 1`
+                          : kraj.mandaty
+                      } mandátů`}
+                    </Typography>
+                    <Typography variant="body2" align="center">
+                      {`${kraj.hlasy.toLocaleString("cs-Cz")} hlasů`}
+                    </Typography>
+                    <Typography variant="body2" align="center">
+                      {`(zbytek ${kraj.mandatyDhondtZbytek.toLocaleString(
+                        "cs-Cz"
+                      )})`}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </Box>
+          <Typography paragraph={true} className={classes.boxik}>
+            V přepočtu, který se používal poslední dvě dekády, se nejprve
+            rozdělily hlasy do krajů. Počet hlasů v každém kraji se vydělil{" "}
+            <em>republikovým mandátovým číslem</em> a výsledek se zaokrouhlil
+            dolů. V roce {rok} po tomto prvním dělení zbylo {d4.zbytekZkraju}{" "}
+            poslaneckých křesel. Ta se rozdělila krajům s největším zbytkem po
+            dělení (v červeném rámečku).
+          </Typography>
+        </>
       );
     case 5:
       return (
@@ -183,18 +280,25 @@ function Dhondt({ krok, vysledky, kvota, krajeDhondt, rok, kraj, setKraj }) {
         </Typography>
       );
     case 7:
-      // const d = {
-      //   graf: vysledky.CR.kraje.reduce((acc, curr) => {
-      //     curr.strany
-      //   }),
-      // };
+      const d5 = DhondtRepublika(vysledky);
+      const doGrafu = d5.CR.strana.map((s) => {
+        const zkratka = s.zkratka;
+        const mandaty = d5.kraje.reduce((acc, curr) => {
+          return (
+            acc + curr.strany.filter((p) => p.nazev === s.nazev)[0].mandaty
+          );
+        }, 0);
+
+        return [zkratka, mandaty];
+      });
+      console.log(doGrafu);
       return (
         <Box className={classes.boxik}>
-          {/* <GrafSnemovna
-            data={d.graf}
+          <GrafSnemovna
+            data={doGrafu}
             titulek={`${rok}, D'Hondtova metoda`}
-          ></GrafSnemovna>*/}
-        </Box> 
+          ></GrafSnemovna>
+        </Box>
       );
     case 8:
       return <div>povidy8</div>;
