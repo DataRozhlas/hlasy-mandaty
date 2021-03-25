@@ -6,6 +6,7 @@ import Box from "@material-ui/core/Box";
 import Link from "@material-ui/core/Link";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import GrafSnemovna from "./GrafSnemovna.jsx";
 import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = makeStyles((theme) => {
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => {
 const url = "https://www.psp.cz/sqw/text/orig2.sqw?idd=186875";
 
 function Benda({
+  rok,
   krok,
   vysledky,
   postupuji,
@@ -217,7 +219,27 @@ function Benda({
           }),
       },
     };
-    return doserMandaty;
+
+    const doGrafu = {
+      ...doserMandaty,
+      graf: doserMandaty.druheSkrutinium.strany.map((strana) => {
+        return [
+          strana.zkratka,
+          strana.mandaty +
+            strana.extramandat +
+            doserMandaty.kraje.reduce((acc, curr) => {
+              const partaj = curr.strany.filter(
+                (i) => i.nazev === strana.nazev
+              )[0];
+              const result = partaj.mandatyKorekce
+                ? partaj.mandatyHrube - partaj.mandatyKorekce
+                : partaj.mandatyHrube;
+              return acc + result;
+            }, 0),
+        ];
+      }),
+    };
+    return doGrafu;
   };
 
   switch (krok) {
@@ -364,7 +386,6 @@ function Benda({
       );
     case 6:
       const v = bendaRepublika(vysledky);
-      console.log(v);
       return (
         <Box className={classes.boxik}>
           <Typography paragraph={true}>
@@ -423,7 +444,18 @@ function Benda({
         </Box>
       );
     case 7:
-      return <div>povidy7</div>;
+      const d = bendaRepublika(vysledky);
+      console.log(d);
+      return (
+        <Box className={classes.boxik}>
+          <Box style={{alignSelf: "center"}}>
+          <GrafSnemovna
+            data={d.graf}
+            titulek={`${rok}, návrh poslance Bendy`}
+          ></GrafSnemovna>
+          </Box>
+        </Box>
+      );
     case 8:
       return <div>povidy8</div>;
   }

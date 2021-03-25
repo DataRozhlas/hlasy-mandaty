@@ -1,5 +1,6 @@
 import React from "react";
 import Highcharts from "highcharts";
+import blueGrey from '@material-ui/core/colors/red'
 import highchartsItem from "highcharts/modules/item-series"
 import HighchartsReact from "highcharts-react-official";
 
@@ -27,10 +28,9 @@ function GrafSnemovna({ data, titulek }) {
           keys: ["name", "y"],
           data: data,
           dataLabels: {
-            enabled: false,
-            format: "{point.label}",
+            enabled: true,
+            format: "{point.name}",
           },
-
           // Circular options
           center: ["50%", "88%"],
           size: "170%",

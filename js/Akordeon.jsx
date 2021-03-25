@@ -129,6 +129,7 @@ function Akordeon({
         />
         <Benda
           krok={krok}
+          rok={rok}
           vysledky={vysledky}
           postupuji={postupuji}
           kvota={republikoveCislo}
