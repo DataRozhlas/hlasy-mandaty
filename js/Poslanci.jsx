@@ -14,9 +14,29 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
+const poslanciRepublika = (vysledky) => {
+
+  const volebniCislo = {
+    ...vysledky,
+    hlasyPostupujici: vysledky.CR.strana.reduce((acc, curr) => {
+      return acc + curr.hlasy;
+    }, 0),
+    republikoveVolebniCislo:
+      Math.round(
+        (vysledky.CR.strana.reduce((acc, curr) => {
+          return acc + curr.hlasy;
+        }, 0) /
+          200) *
+          100
+      ) / 100,
+  };
+
+  return volebniCislo;
+};
+
 const url = "https://www.psp.cz/sqw/text/orig2.sqw?idd=166236";
 
-function Poslanci({ krok, vysledky, postupuji, hlasyPostupujici, kvota }) {
+function Poslanci({ krok, vysledky }) {
   const classes = useStyles();
   switch (krok) {
     case false:
@@ -35,6 +55,8 @@ function Poslanci({ krok, vysledky, postupuji, hlasyPostupujici, kvota }) {
         </Typography>
       );
     case 3:
+      const p3 = poslanciRepublika(vysledky);
+      console.log(p3);
       return (
         <Typography paragraph={true} className={classes.boxik}>
           Návrh poslanců KDU-ČSL z roku 2019 postup obrací: nejprve rozdělí
@@ -42,8 +64,8 @@ function Poslanci({ krok, vysledky, postupuji, hlasyPostupujici, kvota }) {
           <em>volební číslo</em>. Dělí také hlasy počtem mandátů, ovšem
           tentokrát ne všechny hlasy, ale jen hlasy pro strany, jež postupují do
           sněmovny. Zaokrouhluje se na dvě desetinná místa:{" "}
-          {hlasyPostupujici.toLocaleString("cs-CZ")} hlasů : 200 ={" "}
-          <strong>{kvota.toLocaleString("cs-CZ")}</strong>.
+          {p3.hlasyPostupujici.toLocaleString("cs-CZ")} hlasů : 200 ={" "}
+          <strong>{p3.republikoveVolebniCislo.toLocaleString("cs-CZ")}</strong>.
         </Typography>
       );
     case 4:

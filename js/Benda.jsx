@@ -25,29 +25,8 @@ const url = "https://www.psp.cz/sqw/text/orig2.sqw?idd=186875";
 const bendaRepublika = (vysledky) => {
   // § 49
 
-  const jenPostupujiciStranyCR = {
-    ...vysledky,
-    CR: {
-      ...vysledky.CR,
-      strana: vysledky.CR.strana.filter((strana) => strana.proc > 5),
-    },
-  };
-
-  const jenPostupujiciStrany = {
-    ...jenPostupujiciStranyCR,
-    kraje: jenPostupujiciStranyCR.kraje.map((kraj) => {
-      return {
-        ...kraj,
-        strany: kraj.strany.filter((strana) =>
-          jenPostupujiciStranyCR.CR.strana
-            .map((i) => i.nazev)
-            .includes(strana.nazev)
-        ),
-      };
-    }),
-  };
   // § 50 / 2
-  const hlasyPostupujicich = jenPostupujiciStrany.kraje.map((kraj) => {
+  const hlasyPostupujicich = vysledky.kraje.map((kraj) => {
     return {
       ...kraj,
       hlasyPostupujicich: kraj.strany.reduce((acc, curr) => {
@@ -56,7 +35,7 @@ const bendaRepublika = (vysledky) => {
     };
   });
   const postupujiciSectene = {
-    ...jenPostupujiciStrany,
+    ...vysledky,
     kraje: hlasyPostupujicich.map((kraj) => {
       return {
         ...kraj,
@@ -238,8 +217,11 @@ function Benda({ rok, krok, vysledky, kvota, kraj, setKraj }) {
         <Typography paragraph={true} className={classes.boxik}>
           Návrh Marka Bendy, který získal díky hlasům ANO a SPD podporu ústavně
           právního výboru, chce <em>republikové mandátové číslo</em> zachovat ve
-          stejné podobě: <strong>{kvota.toLocaleString("cs-CZ")}</strong>. V
-          další fázi by se pak mandáty v krajích rozdělovaly pomocí{" "}
+          stejné podobě:{" "}
+          <strong>
+            {Math.round(vysledky.CR.hlasy / 200).toLocaleString("cs-CZ")}
+          </strong>
+          . V další fázi by se pak mandáty v krajích rozdělovaly pomocí{" "}
           <em>Imperialiho kvóty</em>.
         </Typography>
       );
@@ -440,7 +422,7 @@ function Benda({ rok, krok, vysledky, kvota, kraj, setKraj }) {
         }),
       };
       return (
-        <Box className={classes.boxik}>
+        <Box className={classes.boxik} mb={2}>
           <GrafSnemovna
             data={doGrafu.graf}
             titulek={`${rok}, návrh poslance Bendy`}

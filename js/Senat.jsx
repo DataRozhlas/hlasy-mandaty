@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => {
 
 const url = "https://www.senat.cz/xqw/webdav/pssenat/original/98286/82486";
 
-function Senat({ krok, vysledky, postupuji, hlasyPostupujici, kvota }) {
+function Senat({ krok, vysledky }) {
   const classes = useStyles();
   switch (krok) {
     case false:
@@ -37,7 +37,7 @@ function Senat({ krok, vysledky, postupuji, hlasyPostupujici, kvota }) {
         <Typography paragraph={true} className={classes.boxik}>
           Senátní návrh se v tomto bodu slovo od slova shoduje s návrhem poslanců,
           volební číslo je tedy také{" "}
-          <strong>{kvota.toLocaleString("cs-CZ")}</strong>.
+          <strong>{}</strong>.
         </Typography>
       );
     case 4:

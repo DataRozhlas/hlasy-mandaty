@@ -54,7 +54,7 @@ function UvodniSlovo({ krok, rok, setRok, vysledky, postupuji }) {
             {`V roce ${rok}, který jste si vybrali, by podle všech dosud zvažovaných návrhů překonalo hranici pro vstup do sněmovny ${postupuji.length} stran, tedy stejně jako ve skutečnosti:`}
           </Typography>
           <Box display="flex" flexWrap="wrap" justifyContent="center" mb={2}>
-            {postupuji.map((strana, i) => {
+            {postupuji.CR.strana.map((strana, i) => {
               return (
                 <Card
                   key={strana.id}

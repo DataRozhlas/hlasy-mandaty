@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => {
 
 const url = "https://www.psp.cz/sqw/text/orig2.sqw?idd=185756";
 
-function Vnitro1({ krok, vysledky, postupuji, hlasyPostupujici, kvota }) {
+function Vnitro1({ krok, vysledky }) {
   const classes = useStyles();
 
   switch (krok) {

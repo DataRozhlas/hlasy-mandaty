@@ -58,15 +58,27 @@ function Akordeon({
     setKrok(krok + 1);
   };
 
-  const postupuji = vysledky.CR.strana
-    .filter((strana) => strana.proc > 5)
-    .sort((a, b) => (a.proc < b.proc ? 1 : -1));
+  const postupuji = {
+    ...vysledky,
+    CR: {
+      ...vysledky.CR,
+      strana: vysledky.CR.strana.filter((strana) => strana.proc > 5),
+    },
+  };
 
-  const hlasyPostupujici = postupuji.reduce((acc, curr) => acc + curr.hlasy, 0);
-
-  const republikoveCislo = Math.round(vysledky.CR.hlasy / 200);
-
-  const volebniCislo = Math.round(((hlasyPostupujici / 200) * 100) / 100);
+  const jenPostupujiciStrany = {
+    ...postupuji,
+    kraje: postupuji.kraje.map((kraj) => {
+      return {
+        ...kraj,
+        strany: kraj.strany.filter((strana) =>
+          postupuji.CR.strana
+            .map((i) => i.nazev)
+            .includes(strana.nazev)
+        ),
+      };
+    }),
+  };
 
   return (
     <Accordion expanded={krok === id} onChange={handleChange(id)}>
@@ -88,52 +100,37 @@ function Akordeon({
           rok={rok}
           setRok={setRok}
           vysledky={vysledky}
-          postupuji={postupuji}
+          postupuji={jenPostupujiciStrany}
         />
         <Dhondt
           krok={krok}
           rok={rok}
-          vysledky={vysledky}
-          postupuji={postupuji}
+          vysledky={jenPostupujiciStrany}
           kraj={kraj}
           setKraj={setKraj}
         />
         <Benda
           krok={krok}
           rok={rok}
-          vysledky={vysledky}
-          postupuji={postupuji}
-          kvota={republikoveCislo}
+          vysledky={jenPostupujiciStrany}
           kraj={kraj}
           setKraj={setKraj}
         />
         <Poslanci
           krok={krok}
-          vysledky={vysledky}
-          postupuji={postupuji}
-          hlasyPostupujici={hlasyPostupujici}
-          kvota={volebniCislo}
+          vysledky={jenPostupujiciStrany}
         />
         <Senat
           krok={krok}
-          vysledky={vysledky}
-          postupuji={postupuji}
-          hlasyPostupujici={hlasyPostupujici}
-          kvota={volebniCislo}
+          vysledky={jenPostupujiciStrany}
         />
         <Vnitro1
           krok={krok}
-          vysledky={vysledky}
-          postupuji={postupuji}
-          hlasyPostupujici={hlasyPostupujici}
-          kvota={volebniCislo}
+          vysledky={jenPostupujiciStrany}
         />
         <Vnitro2
           krok={krok}
-          vysledky={vysledky}
-          postupuji={postupuji}
-          hlasyPostupujici={hlasyPostupujici}
-          kvota={volebniCislo}
+          vysledky={jenPostupujiciStrany}
         />
         <ZaverecneSlovo krok={krok} />
 

@@ -48,31 +48,10 @@ const pridelDhondtvKrajich = (kraje, vybranyKraj) => {
 };
 
 const DhondtRepublika = (vysledky) => {
-  const jenPostupujiciStranyCR = {
-    ...vysledky,
-    CR: {
-      ...vysledky.CR,
-      strana: vysledky.CR.strana.filter((strana) => strana.proc > 5),
-    },
-  };
-
-  const jenPostupujiciStrany = {
-    ...jenPostupujiciStranyCR,
-    kraje: jenPostupujiciStranyCR.kraje.map((kraj) => {
-      return {
-        ...kraj,
-        strany: kraj.strany.filter((strana) =>
-          jenPostupujiciStranyCR.CR.strana
-            .map((i) => i.nazev)
-            .includes(strana.nazev)
-        ),
-      };
-    }),
-  };
-
+  
   const volebniCislo = {
-    ...jenPostupujiciStrany,
-    republikoveVolebniCislo: Math.round(jenPostupujiciStrany.CR.hlasy / 200),
+    ...vysledky,
+    republikoveVolebniCislo: Math.round(vysledky.CR.hlasy / 200),
   };
 
   const mandatyVKrajich = {
@@ -136,7 +115,6 @@ function Dhondt({ krok, vysledky, krajeDhondt, rok, kraj, setKraj }) {
       );
     case 3:
       const d = DhondtRepublika(vysledky);
-      console.log(d);
       return (
         <Typography paragraph={true} className={classes.boxik}>
           V systému, který dosud platil, se nejprve spočítalo{" "}
@@ -291,9 +269,8 @@ function Dhondt({ krok, vysledky, krajeDhondt, rok, kraj, setKraj }) {
 
         return [zkratka, mandaty];
       });
-      console.log(doGrafu);
       return (
-        <Box className={classes.boxik}>
+        <Box className={classes.boxik} mb={2}>
           <GrafSnemovna
             data={doGrafu}
             titulek={`${rok}, D'Hondtova metoda`}
