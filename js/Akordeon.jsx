@@ -119,18 +119,22 @@ function Akordeon({
         <Poslanci
           krok={krok}
           vysledky={jenPostupujiciStrany}
+          rok={rok}
         />
         <Senat
           krok={krok}
           vysledky={jenPostupujiciStrany}
+          rok={rok}
         />
         <Vnitro1
           krok={krok}
           vysledky={jenPostupujiciStrany}
+          rok={rok}
         />
         <Vnitro2
           krok={krok}
           vysledky={jenPostupujiciStrany}
+          rok={rok}
         />
         <ZaverecneSlovo krok={krok} />
 

@@ -240,7 +240,7 @@ function Benda({ rok, krok, vysledky, kvota, kraj, setKraj }) {
       const zbyvaRozdelit =
         bendaVysledkyKraj.mandaty - bendaVysledkyKraj.mandatyHrube;
       return (
-        <Box className={classes.boxik}>
+        <Box className={classes.boxik} mb={2}>
           <Typography paragraph={true}>
             Podle návrhu poslance Bendy by se mandáty v krajích rozdělovaly
             pomocí Imperialiho kvóty: součet hlasů pro strany, které postupují
@@ -344,10 +344,10 @@ function Benda({ rok, krok, vysledky, kvota, kraj, setKraj }) {
     case 6:
       const v = bendaRepublika(vysledky);
       return (
-        <Box className={classes.boxik}>
+        <Box className={classes.boxik} mb={2}>
           <Typography paragraph={true}>
-            Druhé skrutinium si můžeme představit jako další volební kraj, do
-            kterého se převede{" "}
+            Druhé skrutinium v návrhu poslance Bendy si můžeme představit jako
+            další volební kraj, do kterého se převede{" "}
             {v.druheSkrutinium.nevyuziteHlasy.toLocaleString("cs-CZ")}{" "}
             „nevyužitých“ hlasů postupujících stran ze zbytků při dělení v
             ostatních krajích. V minulém kroku se metodou poslance Bendy
