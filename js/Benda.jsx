@@ -7,7 +7,6 @@ import Link from "@material-ui/core/Link";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import GrafSnemovna from "./GrafSnemovna.jsx";
-import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -16,6 +15,7 @@ const useStyles = makeStyles((theme) => {
       paddingLeft: "1rem",
       borderColor: "#64dd17",
       alignSelf: "flex-start",
+      width: "100%",
     },
   };
 });

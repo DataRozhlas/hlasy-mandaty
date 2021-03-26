@@ -1,6 +1,5 @@
 import React from "react";
 import Highcharts from "highcharts";
-import blueGrey from "@material-ui/core/colors/red";
 import highchartsItem from "highcharts/modules/item-series";
 import HighchartsReact from "highcharts-react-official";
 
@@ -29,7 +28,9 @@ function GrafSnemovna({ data, titulek }) {
         {
           name: "poslanců",
           keys: ["name", "y"],
-          data: data,
+          data: data.sort((a, b) => {
+            return a[1] < b[1] ? 1 : -1;
+          }),
           dataLabels: {
             enabled: true,
             format: "{point.name}",

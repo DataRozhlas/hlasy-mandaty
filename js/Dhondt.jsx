@@ -7,8 +7,6 @@ import SelectKraj from "./SelectKraj.jsx";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import GrafSnemovna from "./GrafSnemovna.jsx";
-import Tooltip from "@material-ui/core/Tooltip";
-import { ContactSupportOutlined } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -17,6 +15,7 @@ const useStyles = makeStyles((theme) => {
       paddingLeft: "1rem",
       borderColor: "#6200ea",
       alignSelf: "flex-start",
+      width: "100%",
     },
   };
 });
@@ -270,9 +269,9 @@ function Dhondt({ krok, vysledky, krajeDhondt, rok, kraj, setKraj }) {
       });
       return (
         <Box className={classes.boxik} mb={2}>
-          <GrafSnemovna
+            <GrafSnemovna
             data={doGrafu}
-            titulek={`${rok}, D'Hondtova metoda`}
+            titulek={`${rok}, skutečnost (D'Hondtova metoda)`}
           ></GrafSnemovna>
         </Box>
       );

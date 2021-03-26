@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TargetScroller from "react-target-scroller";
-import Typography from "@material-ui/core/Typography";
 import Akordeon from "./Akordeon.jsx";
 import data from "./../data/2017.json";
 
@@ -34,7 +33,7 @@ function Kalkulacka() {
   const prvniBehLoad = useRef(true);
 
   //STATE
-  const [krok, setKrok] = useState(6);
+  const [krok, setKrok] = useState(1);
   const [scrollTarget, setScrollTarget] = useState();
   const [rok, setRok] = useState(2017);
   const [vysledky, setVysledky] = useState(data);
@@ -60,7 +59,7 @@ function Kalkulacka() {
       prvniBehScroll.current = false;
       return;
     }
-    setTimeout(() => setScrollTarget(`#panel${krok}a-header`), 500);
+    setTimeout(() => setScrollTarget(`#panel${krok}a-header`), 350);
   }, [krok]);
 
   //funkce

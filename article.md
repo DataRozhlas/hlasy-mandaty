@@ -1,5 +1,5 @@
 title: "Vyzkoušejte si: Jak se může změnit přepočítávání hlasů na mandáty?"
-perex: "V říjnových sněmovních volbách se začnou poslanecké mandáty rozdělovat podle nového klíče. Ten by měl omezit dosavadní zvýhodňování nejsilnějších stran a může tak posílit zastoupení těch menších. Poslanci v těchto týdnech posuzují několik variant. Porovnejte je mezi sebou i se starým klíčem v interaktivní kalkulačce."
+perex: "V říjnových sněmovních volbách se začnou poslanecké mandáty rozdělovat podle nového klíče. Ten by měl omezit dosavadní zvýhodňování nejsilnějších stran a může tak posílit zastoupení těch menších. Poslanci teď posuzují několik variant. Porovnejte je mezi sebou i se starým klíčem v interaktivní kalkulačce."
 coverimg_note: "Foto <a href='https://ctk.cz'>ČTK</a>"
 styles: ["https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"]
 libraries: []
@@ -16,7 +16,7 @@ Ti se však nakonec rozhodli projednávání lidoveckého návrhu přerušit a p
 
 Benda svůj návrh prosadil díky hlasům ANO a SPD, protestovali proti němu naopak Piráti a STAN. Nejvíc jim vadí, že při rozdělování zbylých mandátů ve druhém skrutiniu by si mohly strany samy určit, ze kterých krajů pošlou do sněmovny kandidáty. „Bendův návrh zavádí pravidlo, že výběr poslanců do Sněmovny bude zčásti v rukou vedení politických stran, nikoliv voličů. U malých stran to může představovat dokonce většinu klubu, například že 5 poslanců z 9 vybere vedení strany a ne veřejnost, jak by tomu mělo být,“ vysvětloval Vojtěch Pikal (Piráti).
 
-Bendův návrh projedná celá sněmovna ve druhém čtení nejspíš už tento týden, pokud se nenatáhne jednání o prodloužení nouzového stavu. Do konce týdne teď k němu také mohou všichni poslanci podávat [další pozměňovací návrhy](https://www.psp.cz/sqw/historie.sqw?o=8&t=1170).
+Bendův návrh projednala sněmovna ve čtvrtek ve druhém čtení a sešlo se k němu [patnáct pozměňovacích návrhů](https://www.psp.cz/sqw/historie.sqw?o=8&t=1170). Za deset dnů by měli poslanci rozhodnout o jeho konečné podobě, do které pak ještě může zasáhnou Senát.
 
 <wide>
 <div id="kalkulacka"></div>

@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => {
       paddingLeft: "1rem",
       borderColor: "#ffd600",
       alignSelf: "flex-start",
+      width: "100%",
     },
   };
 });

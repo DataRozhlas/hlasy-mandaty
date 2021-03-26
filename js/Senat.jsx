@@ -52,7 +52,7 @@ function Senat({ krok, vysledky }) {
       </Typography>);
     case 7:
       return (<Typography paragraph={true} className={classes.boxik}>
-        Senátní návrh by dopadl stejně jako návrh poslanecký.
+        Senátní návrh by ve všech čtyřech minulých volbách dopadl stejně jako návrh poslanecký.
       </Typography>);
     case 8:
       return null;
