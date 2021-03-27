@@ -2,6 +2,7 @@ import React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import highchartsItem from "highcharts/modules/item-series";
+import { ContactSupportOutlined } from "@material-ui/icons";
 
 const barvicky = {
   ANO: "#4F4CAD",
@@ -170,12 +171,23 @@ const data = {
 function GrafSnemovna({ titulek, rok, metoda }) {
   const pripravData = (data, rok, metoda, barvicky) => {
     const vybranaData = data[String(rok)][metoda];
-    const obarvenaData = vybranaData.map((d) => [
-      d[0],
-      d[1],
-      barvicky[d[0]],
-      d[0],
-    ]);
+    const obarvenaData = vybranaData.map((d) => {
+      const dhondt = data[String(rok)].dhondt.filter(
+        (f) => f[0] === d[0]
+      )[0][1];
+      return [
+        d[0],
+        d[1],
+        barvicky[d[0]],
+        `${
+          dhondt > d[1]
+            ? `${d[0]} (${d[1] - dhondt})`
+            : dhondt < d[1]
+            ? `${d[0]} (+${d[1] - dhondt})`
+            : d[0]
+        }`,
+      ];
+    });
     return obarvenaData;
   };
 
@@ -202,7 +214,7 @@ function GrafSnemovna({ titulek, rok, metoda }) {
       {
         name: "poslanců",
         keys: ["name", "y", "color", "label"],
-        data: pripravData(data, rok, metoda, barvicky),          
+        data: pripravData(data, rok, metoda, barvicky),
         dataLabels: {
           enabled: true,
           format: "{point.label}",
