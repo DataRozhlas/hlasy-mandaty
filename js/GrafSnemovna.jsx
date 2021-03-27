@@ -203,10 +203,21 @@ function GrafSnemovna({ titulek, rok, metoda, jeMobil }) {
       enabled: false,
     },
     legend: {
-      itemWidth: jeMobil ? 160 : null, 
+      itemWidth: jeMobil ? 160 : null,
       labelFormat: jeMobil
         ? '<span style="opacity: 0.4">{y}</span> {label}'
         : '{name} <span style="opacity: 0.4">{y}</span>',
+    },
+    plotOptions: {
+      item: {
+        point: {
+          events: {
+            legendItemClick: function (e) {
+              e.preventDefault();
+            },
+          },
+        },
+      },
     },
     series: [
       {
