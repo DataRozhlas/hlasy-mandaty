@@ -168,7 +168,7 @@ const data = {
   },
 };
 
-function GrafSnemovna({ titulek, rok, metoda }) {
+function GrafSnemovna({ titulek, rok, metoda, jeMobil }) {
   const pripravData = (data, rok, metoda, barvicky) => {
     const vybranaData = data[String(rok)][metoda];
     const obarvenaData = vybranaData.map((d) => {
@@ -208,7 +208,9 @@ function GrafSnemovna({ titulek, rok, metoda }) {
       },
     },
     legend: {
-      labelFormat: '{name} <span style="opacity: 0.4">{y}</span>',
+      labelFormat: jeMobil
+        ? '<span style="opacity: 0.4">{y}</span> {label}'
+        : '{name} <span style="opacity: 0.4">{y}</span>',
     },
     series: [
       {
@@ -216,7 +218,7 @@ function GrafSnemovna({ titulek, rok, metoda }) {
         keys: ["name", "y", "color", "label"],
         data: pripravData(data, rok, metoda, barvicky),
         dataLabels: {
-          enabled: true,
+          enabled: jeMobil ? false : true,
           format: "{point.label}",
         },
         // Circular options

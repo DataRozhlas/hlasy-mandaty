@@ -78,7 +78,7 @@ function Kalkulacka() {
           rok={rok}
           setRok={setRok}
           vysledky={vysledky}
-          setScrollTarget={setScrollTarget}
+          jeMobil={jeMobil}
         />
       ))}
     </div>

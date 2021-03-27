@@ -194,7 +194,7 @@ const bendaRepublika = (vysledky) => {
   return doserMandaty;
 };
 
-function Benda({ rok, krok, vysledky, kvota, kraj, setKraj }) {
+function Benda({ rok, krok, vysledky, kraj, setKraj, jeMobil }) {
   const classes = useStyles();
 
   switch (krok) {
@@ -423,7 +423,8 @@ function Benda({ rok, krok, vysledky, kvota, kraj, setKraj }) {
           <GrafSnemovna
             rok={rok}
             metoda={"benda"}
-            titulek={`${rok}, návrh poslance Bendy`}    
+            titulek={`${rok}, návrh poslance Bendy`}
+            jeMobil={jeMobil}  
           ></GrafSnemovna>
         </Box>
       );

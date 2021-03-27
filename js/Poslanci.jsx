@@ -80,7 +80,7 @@ const poslanciRepublika = (vysledky) => {
 
 const url = "https://www.psp.cz/sqw/text/orig2.sqw?idd=166236";
 
-function Poslanci({ krok, vysledky, rok }) {
+function Poslanci({ krok, vysledky, rok, jeMobil }) {
   const classes = useStyles();
   switch (krok) {
     case false:
@@ -236,7 +236,8 @@ function Poslanci({ krok, vysledky, rok }) {
           <GrafSnemovna
             rok={rok}
             metoda={"poslanci"}
-            titulek={`${rok}, návrh lidoveckých poslanců`}    
+            titulek={`${rok}, návrh poslanců KDU-ČSL`}
+            jeMobil={jeMobil}    
           ></GrafSnemovna>
         </Box>
       );

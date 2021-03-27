@@ -80,7 +80,7 @@ const vnitroRepublika = (vysledky) => {
   return druheSkrutinium;
 };
 
-function Vnitro2({ krok, vysledky, rok }) {
+function Vnitro2({ krok, vysledky, rok, jeMobil }) {
   const classes = useStyles();
 
   switch (krok) {
@@ -228,7 +228,8 @@ function Vnitro2({ krok, vysledky, rok }) {
           <GrafSnemovna
             rok={rok}
             metoda={"vnitro"}
-            titulek={`${rok}, republika jako jeden kraj`}    
+            titulek={`${rok}, republika jako jeden kraj`}
+            jeMobil={jeMobil}    
           ></GrafSnemovna>
         </Box>
       );

@@ -44,7 +44,7 @@ function Akordeon({
   rok,
   setRok,
   vysledky,
-  setScrollTarget
+  jeMobil
 }) {
   const classes = useStyles();
 
@@ -108,6 +108,7 @@ function Akordeon({
           vysledky={jenPostupujiciStrany}
           kraj={kraj}
           setKraj={setKraj}
+          jeMobil={jeMobil}
         />
         <Benda
           krok={krok}
@@ -115,11 +116,13 @@ function Akordeon({
           vysledky={jenPostupujiciStrany}
           kraj={kraj}
           setKraj={setKraj}
+          jeMobil={jeMobil}
         />
         <Poslanci
           krok={krok}
           vysledky={jenPostupujiciStrany}
           rok={rok}
+          jeMobil={jeMobil}
         />
         <Senat
           krok={krok}
@@ -135,6 +138,7 @@ function Akordeon({
           krok={krok}
           vysledky={jenPostupujiciStrany}
           rok={rok}
+          jeMobil={jeMobil}
         />
         <ZaverecneSlovo krok={krok} />
 

@@ -81,7 +81,7 @@ const DhondtRepublika = (vysledky) => {
   return zbytekZkraju;
 };
 
-function Dhondt({ krok, vysledky, krajeDhondt, rok, kraj, setKraj }) {
+function Dhondt({ krok, vysledky, rok, kraj, setKraj, jeMobil }) {
   const classes = useStyles();
 
   switch (krok) {
@@ -274,7 +274,8 @@ function Dhondt({ krok, vysledky, krajeDhondt, rok, kraj, setKraj }) {
           <GrafSnemovna
             rok={rok}
             metoda={"dhondt"}
-            titulek={`${rok}, skutečnost (D'Hondtova metoda)`}    
+            titulek={`${rok}, skutečnost (D'Hondt)`}
+            jeMobil={jeMobil}  
           ></GrafSnemovna>
         </Box>
       );
