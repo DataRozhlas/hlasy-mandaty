@@ -21,22 +21,164 @@ const barvicky = {
 };
 
 const data = {
-  2006
-   : {
-
+  2006: {
+    dhondt: [
+      ["ODS", 81],
+      ["ČSSD", 74],
+      ["KSČM", 26],
+      ["KDU-ČSL", 13],
+      ["SZ", 6],
+    ],
+    benda: [
+      ["ODS", 81],
+      ["ČSSD", 73],
+      ["KSČM", 26],
+      ["KDU-ČSL", 12],
+      ["SZ", 8],
+    ],
+    poslanci: [
+      ["ODS", 75],
+      ["ČSSD", 69],
+      ["KSČM", 27],
+      ["KDU-ČSL", 15],
+      ["SZ", 14],
+    ],
+    vnitro: [
+      ["ODS", 76],
+      ["ČSSD", 69],
+      ["KSČM", 27],
+      ["KDU-ČSL", 15],
+      ["SZ", 13],
+    ],
   },
   2010: {
-
+    dhondt: [
+      ["ČSSD", 56],
+      ["ODS", 53],
+      ["TOP 09", 41],
+      ["KSČM", 26],
+      ["VV", 24],
+    ],
+    benda: [
+      ["ČSSD", 57],
+      ["ODS", 50],
+      ["TOP 09", 42],
+      ["KSČM", 26],
+      ["VV", 25],
+    ],
+    poslanci: [
+      ["ČSSD", 54],
+      ["ODS", 50],
+      ["TOP 09", 41],
+      ["KSČM", 28],
+      ["VV", 27],
+    ],
+    vnitro: [
+      ["ČSSD", 54],
+      ["ODS", 50],
+      ["TOP 09", 41],
+      ["KSČM", 28],
+      ["VV", 27],
+    ],
   },
   2013: {
-
+    dhondt: [
+      ["ČSSD", 50],
+      ["ANO 2011", 47],
+      ["KSČM", 33],
+      ["TOP 09", 26],
+      ["ODS", 16],
+      ["KDU-ČSL", 14],
+      ["Úsvit", 14],
+    ],
+    benda: [
+      ["ČSSD", 49],
+      ["ANO 2011", 44],
+      ["KSČM", 36],
+      ["TOP 09", 27],
+      ["KDU-ČSL", 15],
+      ["ODS", 15],
+      ["Úsvit", 14],
+    ],
+    poslanci: [
+      ["ČSSD", 47],
+      ["ANO 2011", 43],
+      ["KSČM", 34],
+      ["TOP 09", 27],
+      ["ODS", 18],
+      ["Úsvit", 16],
+      ["KDU-ČSL", 15],
+    ],
+    vnitro: [
+      ["ČSSD", 47],
+      ["ANO 2011", 43],
+      ["KSČM", 34],
+      ["TOP 09", 27],
+      ["ODS", 18],
+      ["Úsvit", 16],
+      ["KDU-ČSL", 15],
+    ],
   },
   2017: {
+    dhondt: [
+      ["ANO", 78],
+      ["ODS", 25],
+      ["Piráti", 22],
+      ["SPD", 22],
+      ["ČSSD", 15],
+      ["KSČM", 15],
+      ["KDU-ČSL", 10],
+      ["TOP 09", 7],
+      ["STAN", 6],
+    ],
+    benda: [
+      ["ANO", 69],
+      ["ODS", 24],
+      ["Piráti", 24],
+      ["SPD", 23],
+      ["KSČM", 16],
+      ["ČSSD", 15],
+      ["KDU-ČSL", 11],
+      ["STAN", 9],
+      ["TOP 09", 9],
+    ],
+    poslanci: [
+      ["ANO", 63],
+      ["ODS", 24],
+      ["Piráti", 23],
+      ["SPD", 23],
+      ["KSČM", 17],
+      ["ČSSD", 16],
+      ["KDU-ČSL", 12],
+      ["STAN", 11],
+      ["TOP 09", 11],
+    ],
+    vnitro: [
+      ["ANO", 63],
+      ["ODS", 24],
+      ["Piráti", 23],
+      ["SPD", 23],
+      ["KSČM", 17],
+      ["ČSSD", 16],
+      ["KDU-ČSL", 12],
+      ["STAN", 11],
+      ["TOP 09", 11],
+    ],
+  },
+};
 
-  }
-}
+function GrafSnemovna({ titulek, rok, metoda }) {
+  const pripravData = (data, rok, metoda, barvicky) => {
+    const vybranaData = data[String(rok)][metoda];
+    const obarvenaData = vybranaData.map((d) => [
+      d[0],
+      d[1],
+      barvicky[d[0]],
+      d[0],
+    ]);
+    return obarvenaData;
+  };
 
-function GrafSnemovna({ data, titulek }) {
   highchartsItem(Highcharts);
   const options = {
     chart: {
@@ -60,11 +202,7 @@ function GrafSnemovna({ data, titulek }) {
       {
         name: "poslanců",
         keys: ["name", "y", "color", "label"],
-        data: data
-          .sort((a, b) => {
-            return a[1] < b[1] ? 1 : -1;
-          })
-          .map((d) => [d[0], d[1], barvicky[d[0]], d[0]]),
+        data: pripravData(data, rok, metoda, barvicky),          
         dataLabels: {
           enabled: true,
           format: "{point.label}",

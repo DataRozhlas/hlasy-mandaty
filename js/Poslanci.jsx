@@ -223,17 +223,19 @@ function Poslanci({ krok, vysledky, rok }) {
         </Box>
       );
     case 7:
-        const p7 = poslanciRepublika(vysledky);
-        const doGrafu = p7.CR.strana.map((s) => {
-          const zkratka = s.zkratka;
-          const mandaty = s.mandatyPoslanci + s.extraMandat;
+        // const p7 = poslanciRepublika(vysledky);
+        // const doGrafu = p7.CR.strana.map((s) => {
+        //   const zkratka = s.zkratka;
+        //   const mandaty = s.mandatyPoslanci + s.extraMandat;
 
-          return [zkratka, mandaty];
-        });
+        //   return [zkratka, mandaty];
+        // });
+
       return (
         <Box className={classes.boxik} mb={2}>
           <GrafSnemovna
-            data={doGrafu}
+            rok={rok}
+            metoda={"poslanci"}
             titulek={`${rok}, návrh lidoveckých poslanců`}
           ></GrafSnemovna>
         </Box>

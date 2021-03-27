@@ -214,17 +214,20 @@ function Vnitro2({ krok, vysledky, rok }) {
         </Box>
       );
     case 7:
-      const p7 = vnitroRepublika(vysledky);
-        const doGrafu = p7.CR.strana.map((s) => {
-          const zkratka = s.zkratka;
-          const mandaty = s.mandatyPoslanci + s.extraMandat;
+      // const p7 = vnitroRepublika(vysledky);
+      // const doGrafu = p7.CR.strana.map((s) => {
+      //   const zkratka = s.zkratka;
+      //   const mandaty = s.mandatyPoslanci + s.extraMandat;
 
-          return [zkratka, mandaty];
-        });
+      //   return [zkratka, mandaty];
+      // });
+      // console.log(doGrafu.sort((a, b) => (a[0] > b[0] ? 1 : -1)));
+
       return (
         <Box className={classes.boxik} mb={2}>
           <GrafSnemovna
-            data={doGrafu}
+            rok={rok}
+            metoda={"vnitro"}
             titulek={`${rok}, republika jako jeden kraj`}
           ></GrafSnemovna>
         </Box>

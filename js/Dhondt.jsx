@@ -7,6 +7,7 @@ import SelectKraj from "./SelectKraj.jsx";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import GrafSnemovna from "./GrafSnemovna.jsx";
+import { contours } from "d3-contour";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -256,21 +257,23 @@ function Dhondt({ krok, vysledky, krajeDhondt, rok, kraj, setKraj }) {
         </Typography>
       );
     case 7:
-      const d5 = DhondtRepublika(vysledky);
-      const doGrafu = d5.CR.strana.map((s) => {
-        const zkratka = s.zkratka;
-        const mandaty = d5.kraje.reduce((acc, curr) => {
-          return (
-            acc + curr.strany.filter((p) => p.nazev === s.nazev)[0].mandaty
-          );
-        }, 0);
+      // const d5 = DhondtRepublika(vysledky);
 
-        return [zkratka, mandaty];
-      });
+      // const doGrafu = d5.CR.strana.map((s) => {
+      //   const zkratka = s.zkratka;
+      //   const mandaty = d5.kraje.reduce((acc, curr) => {
+      //     return (
+      //       acc + curr.strany.filter((p) => p.nazev === s.nazev)[0].mandaty
+      //     );
+      //   }, 0);
+
+      //   return [zkratka, mandaty];
+      // });
       return (
         <Box className={classes.boxik} mb={2}>
-            <GrafSnemovna
-            data={doGrafu}
+          <GrafSnemovna
+            rok={rok}
+            metoda={"dhondt"}
             titulek={`${rok}, skutečnost (D'Hondtova metoda)`}
           ></GrafSnemovna>
         </Box>

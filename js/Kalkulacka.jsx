@@ -33,7 +33,7 @@ function Kalkulacka() {
   const prvniBehLoad = useRef(true);
 
   //STATE
-  const [krok, setKrok] = useState(1);
+  const [krok, setKrok] = useState(7);
   const [scrollTarget, setScrollTarget] = useState();
   const [rok, setRok] = useState(2017);
   const [vysledky, setVysledky] = useState(data);
