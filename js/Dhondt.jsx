@@ -274,9 +274,7 @@ function Dhondt({ krok, vysledky, krajeDhondt, rok, kraj, setKraj }) {
           <GrafSnemovna
             rok={rok}
             metoda={"dhondt"}
-            titulek={`${rok}, skutečnost (D'Hondtova metoda)`}
-            containerProps={{ style: { maxWidth: "100%" } }}
-            immutable={true}    
+            titulek={`${rok}, skutečnost (D'Hondtova metoda)`}    
           ></GrafSnemovna>
         </Box>
       );

@@ -236,9 +236,7 @@ function Poslanci({ krok, vysledky, rok }) {
           <GrafSnemovna
             rok={rok}
             metoda={"poslanci"}
-            titulek={`${rok}, návrh lidoveckých poslanců`}
-            containerProps={{ style: { maxWidth: "100%" } }}
-            immutable={true}    
+            titulek={`${rok}, návrh lidoveckých poslanců`}    
           ></GrafSnemovna>
         </Box>
       );

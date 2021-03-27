@@ -423,9 +423,7 @@ function Benda({ rok, krok, vysledky, kvota, kraj, setKraj }) {
           <GrafSnemovna
             rok={rok}
             metoda={"benda"}
-            titulek={`${rok}, návrh poslance Bendy`}
-            containerProps={{ style: { maxWidth: "100%" } }}
-            immutable={true}    
+            titulek={`${rok}, návrh poslance Bendy`}    
           ></GrafSnemovna>
         </Box>
       );

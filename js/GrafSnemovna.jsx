@@ -222,6 +222,7 @@ function GrafSnemovna({ titulek, rok, metoda }) {
         highcharts={Highcharts}
         options={options}
         containerProps={{ style: { maxWidth: "100%" } }}
+        immutable={true}
       />
     </>
   );

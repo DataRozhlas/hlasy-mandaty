@@ -228,9 +228,7 @@ function Vnitro2({ krok, vysledky, rok }) {
           <GrafSnemovna
             rok={rok}
             metoda={"vnitro"}
-            titulek={`${rok}, republika jako jeden kraj`}
-            containerProps={{ style: { maxWidth: "100%" } }}
-            immutable={true}    
+            titulek={`${rok}, republika jako jeden kraj`}    
           ></GrafSnemovna>
         </Box>
       );
