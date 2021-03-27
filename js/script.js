@@ -2,6 +2,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Kalkulacka from "./Kalkulacka.jsx";
+import InfoPanel from "./InfoPanel.jsx";
+
+ReactDOM.render(
+  <InfoPanel />,
+document.getElementById('infopanel')
+);
 
 ReactDOM.render(
     <Kalkulacka />,

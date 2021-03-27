@@ -2,7 +2,6 @@ import React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import highchartsItem from "highcharts/modules/item-series";
-import { ContactSupportOutlined } from "@material-ui/icons";
 
 const barvicky = {
   ANO: "#4F4CAD",
@@ -195,17 +194,13 @@ function GrafSnemovna({ titulek, rok, metoda, jeMobil }) {
   const options = {
     chart: {
       type: "item",
+      animation: false,
     },
     title: {
       text: titulek,
     },
     credits: {
       enabled: false,
-    },
-    plotOptions: {
-      series: {
-        animation: false,
-      },
     },
     legend: {
       labelFormat: jeMobil

@@ -62,7 +62,7 @@ function Vnitro1({ krok, vysledky }) {
     case 7:
       return (
         <Typography paragraph={true} className={classes.boxik}>
-          Také vládní návrh by ve variantě se 14 volebními kraji by dopadl pookaždé stejně.
+          Také vládní návrh by ve variantě se 14 volebními kraji dopadl pokaždé stejně.
         </Typography>
       );
     case 8:

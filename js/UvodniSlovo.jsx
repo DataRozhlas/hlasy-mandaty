@@ -52,7 +52,7 @@ function UvodniSlovo({ krok, rok, setRok, vysledky, postupuji }) {
             <SimpleSelect rok={rok} setRok={setRok}></SimpleSelect>
           </Box>{" "}
           <Typography paragraph={true} className={classes.vlevo}>
-            {`V roce ${rok}, který jste si vybrali, by podle všech dosud zvažovaných návrhů překonalo hranici pro vstup do sněmovny ${postupuji.length} stran, tedy stejně jako ve skutečnosti:`}
+            {`V roce ${rok}, který jste si vybrali, by podle všech dosud zvažovaných návrhů překonalo hranici pro vstup do sněmovny ${postupuji.CR.strana.length} stran, tedy stejně jako ve skutečnosti:`}
           </Typography>
           <Box display="flex" flexWrap="wrap" justifyContent="center" mb={2}>
             {postupuji.CR.strana.map((strana, i) => {
@@ -86,7 +86,7 @@ function UvodniSlovo({ krok, rok, setRok, vysledky, postupuji }) {
           </Box>
           <Typography paragraph={true} className={classes.vlevo}>
             Je ovšem možné, že kdyby pro ně byla platila méně přísná pravidla,
-            bylo by kandidovalo více koalic a výsledky mohly vypadat jinak.
+            kandidovalo by více koalic a výsledky mohly vypadat jinak.
           </Typography>
         </>
       );

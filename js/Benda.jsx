@@ -209,7 +209,7 @@ function Benda({ rok, krok, vysledky, kraj, setKraj, jeMobil }) {
             V návrhu poslance ODS Marka Bendy
           </Link>
           , který sněmovna projedná ve druhém čtení, je hranice pro dvoučlenné
-          koalice stanovena na 8 % a pro počtenější na 11 % hlasů.
+          koalice stanovena na 8 % a pro početnější na 11 % hlasů.
         </Typography>
       );
     case 3:

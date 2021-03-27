@@ -207,7 +207,7 @@ function Vnitro2({ krok, vysledky, rok, jeMobil }) {
           </Box>
           <Typography paragraph={true}>
             Obdobným způsobem se potom mandáty pro každou stranu rozpočítají
-            mezi kraje: V každém kraji dostane strana z výše přidělených tolik
+            mezi kraje: v každém kraji dostane strana z výše přidělených tolik
             mandátů, kolikrát se vejde volební číslo do počtu hlasů, které v
             daném kraji získala.{" "}
           </Typography>
