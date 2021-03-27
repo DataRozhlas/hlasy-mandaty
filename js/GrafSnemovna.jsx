@@ -1,7 +1,7 @@
 import React from "react";
 import Highcharts from "highcharts";
-import highchartsItem from "highcharts/modules/item-series";
 import HighchartsReact from "highcharts-react-official";
+import highchartsItem from "highcharts/modules/item-series";
 
 const barvicky = {
   ANO: "#4F4CAD",
