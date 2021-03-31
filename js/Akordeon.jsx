@@ -81,7 +81,7 @@ function Akordeon({
   };
 
   return (
-    <Accordion expanded={krok === id} onChange={handleChange(id)}>
+    <Accordion expanded={krok === id} onChange={handleChange(id)} mb={5}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls={`panel${id}a-content`}

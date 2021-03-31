@@ -4,20 +4,20 @@ import HighchartsReact from "highcharts-react-official";
 import highchartsItem from "highcharts/modules/item-series";
 
 const barvicky = {
-  ANO: "#4F4CAD",
-  "ANO 2011": "#4F4CAD",
-  ODS: "#3985DB",
-  Piráti: "#5C5C5C",
-  SPD: "#D29332",
-  Úsvit: "#D29332",
-  KSČM: "#C22034",
-  ČSSD: "#F88268",
-  "TOP 09": "#B577BF",
-  STAN: "#7897A5",
-  SZ: "#76C973",
+  ANO: "#5A4DB3",
+  "ANO 2011": "#5A4DB3",
+  ODS: "#287AD7",
+  Piráti: "#666666",
+  SPD: "#F1A713",
+  Úsvit: "#F1A713",
+  KSČM: "#D42B3C",
+  ČSSD: "#FB9179",
+  "TOP 09": "#AC5DAC",
+  STAN: "#6A99AF",
+  SZ: "#5DBF5A",
   VV: "#84A3D6",
   Úsvit: "#D29332",
-  "KDU-ČSL": "#F3CE53",
+  "KDU-ČSL": "#F4D63E",
 };
 
 const data = {
