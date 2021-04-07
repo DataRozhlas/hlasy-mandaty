@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const url = "https://www.psp.cz/sqw/text/orig2.sqw?idd=186875";
+const url = "https://www.psp.cz/sqw/text/tiskt.sqw?o=8&ct=1170&ct1=3";
 
 const bendaRepublika = (vysledky) => {
   // § 49
@@ -206,29 +206,34 @@ function Benda({ rok, krok, vysledky, kraj, setKraj, jeMobil }) {
       return (
         <Typography paragraph={true} className={classes.boxik}>
           <Link href={url} target="_blank">
-            V návrhu poslance ODS Marka Bendy
+            V návrhu
           </Link>
-          , který sněmovna projedná ve druhém čtení, je hranice pro dvoučlenné
-          koalice stanovena na 8 % a pro početnější na 11 % hlasů.
+          , který Poslanecká sněmovna posílá do Senátu, je hranice pro
+          dvoučlenné koalice stanovena na 8 % a pro početnější na 11 % hlasů.
         </Typography>
       );
     case 3:
       return (
         <Typography paragraph={true} className={classes.boxik}>
-          Návrh Marka Bendy, který získal díky hlasům ANO a SPD podporu ústavně
-          právního výboru, chce <em>republikové mandátové číslo</em> zachovat ve
-          stejné podobě:{" "}
+          Návrh poslanecké sněmovny chce <em>republikové mandátové číslo</em>{" "}
+          zachovat ve stejné podobě:{" "}
           <strong>
             {Math.round(vysledky.CR.hlasy / 200).toLocaleString("cs-CZ")}
           </strong>
           . V další fázi by se pak mandáty v krajích rozdělovaly pomocí{" "}
-          <em>Imperialiho kvóty</em>.
+          <Link
+            href="https://cs.wikipedia.org/wiki/Imperialiho_kv%C3%B3ta"
+            target="_blank"
+          >
+            Imperialiho kvóty
+          </Link>
+          .
         </Typography>
       );
     case 4:
       return (
         <Typography paragraph={true} className={classes.boxik}>
-          Ústavně právní výbor a poslanec Benda navrhují tento postup zachovat.
+          Podle nového systému by měl být tento postup zachován.
         </Typography>
       );
     case 5:
@@ -242,10 +247,17 @@ function Benda({ rok, krok, vysledky, kraj, setKraj, jeMobil }) {
       return (
         <Box className={classes.boxik} mb={2}>
           <Typography paragraph={true}>
-            Podle návrhu poslance Bendy by se mandáty v krajích rozdělovaly
-            pomocí Imperialiho kvóty: součet hlasů pro strany, které postupují
-            do sněmovny, se v každém kraji vydělí počtem mandátů, jež tomuto
-            kraji připadly, zvětšeným o dva. Názorná ukázka:
+            Podle aktuálního návrhu poslanců by se mandáty v krajích rozdělovaly
+            pomocí{" "}
+            <Link
+              href="https://cs.wikipedia.org/wiki/Imperialiho_kv%C3%B3ta"
+              target="_blank"
+            >
+              Imperialiho kvóty
+            </Link>
+            : součet hlasů pro strany, které postupují do sněmovny, se v každém
+            kraji vydělí počtem mandátů, jež tomuto kraji připadly, zvětšeným o
+            dva. Názorná ukázka:
           </Typography>
           <Box display="flex" justifyContent="center">
             <SelectKraj
@@ -346,8 +358,8 @@ function Benda({ rok, krok, vysledky, kraj, setKraj, jeMobil }) {
       return (
         <Box className={classes.boxik} mb={2}>
           <Typography paragraph={true}>
-            Druhé skrutinium v návrhu poslance Bendy si můžeme představit jako
-            další volební kraj, do kterého se převede{" "}
+            Druhé skrutinium v návrhu poslanecké sněmovny si můžeme představit
+            jako další volební kraj, do kterého se převede{" "}
             {v.druheSkrutinium.nevyuziteHlasy.toLocaleString("cs-CZ")}{" "}
             „nevyužitých“ hlasů postupujících stran ze zbytků při dělení v
             ostatních krajích. V minulém kroku se metodou poslance Bendy
@@ -392,11 +404,13 @@ function Benda({ rok, krok, vysledky, kraj, setKraj, jeMobil }) {
               })}
           </Box>
           <Typography paragraph={true}>
-            Největší kritiku zatím návrh sklidil za to, že dává stranám možnost,
-            aby si samy vybraly pořadí krajslých kandidátek, z nichž by se
-            mandáty ve druhém skrutiniu obsazovaly. Kdyby tak neučinily do
-            dvanácti hodin od sečtení voleb, mandáty by automaticky spadly do
-            krajů s největšími zbytky po dělení hlasů v prvním skrutiniu.
+            Původní návrh poslance Bendy sklidil největší kritiku za to, že
+            dával stranám možnost, aby si samy vybraly pořadí krajských
+            kandidátek, z nichž by se mandáty ve druhém skrutiniu obsazovaly.
+            Kdyby tak neučinily do dvanácti hodin od sečtení voleb, mandáty by
+            automaticky spadly do krajů s největšími zbytky po dělení hlasů v
+            prvním skrutiniu. Sněmovna nakonec přijala pozměňovací návrh, podle
+            kterého připadají mandáty krajům s nejvyšším zbytkem automaticky.
           </Typography>
         </Box>
       );
@@ -424,7 +438,7 @@ function Benda({ rok, krok, vysledky, kraj, setKraj, jeMobil }) {
             rok={rok}
             metoda={"benda"}
             titulek={`${rok}, návrh poslance Bendy`}
-            jeMobil={jeMobil}  
+            jeMobil={jeMobil}
           ></GrafSnemovna>
         </Box>
       );

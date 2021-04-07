@@ -110,6 +110,15 @@ function Dhondt({ krok, vysledky, rok, kraj, setKraj, jeMobil }) {
             Dvoučlenné musely získat 10 %, tříčlenné 15 % a početnější 20 %
             hlasů.
           </Typography>
+          <Typography paragraph={true} className={classes.boxik}>
+            <Link href="https://cs.wikipedia.org/wiki/Uzav%C3%ADrac%C3%AD_klauzule">
+              Jedna z nejpřísnějších
+            </Link>{" "}
+            klauzulí pro koalice v Evropě přispěla k tomu, že za posledních
+            patnáct let kandidovala do sněmovny jenom jedna: Koalice pro Českou
+            republiku se skládala ze sedmi subjektů a v roce 2006 získala 8 140
+            hlasů – na postup do sněmovny by jí nestačilo ani o milon hlasů víc.
+          </Typography>
         </>
       );
     case 3:
@@ -275,7 +284,7 @@ function Dhondt({ krok, vysledky, rok, kraj, setKraj, jeMobil }) {
             rok={rok}
             metoda={"dhondt"}
             titulek={`${rok}, skutečnost (D'Hondt)`}
-            jeMobil={jeMobil}  
+            jeMobil={jeMobil}
           ></GrafSnemovna>
         </Box>
       );

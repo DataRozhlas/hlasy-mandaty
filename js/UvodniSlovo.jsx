@@ -25,13 +25,6 @@ function UvodniSlovo({ krok, rok, setRok, vysledky, postupuji }) {
     case 1:
       return (
         <>
-          <Typography paragraph={true}>
-            Stejný výsledek voleb může vést k mírně odlišnému rozložení sil ve
-            sněmovně a případně i k různým vládám. Tady si můžete vyzkoušet, jak
-            by dopadly čtvery předchozí volby, kdyby se na ně vztahovaly
-            aktuálně navrhované změny ve způsobu přepočtení hlasů na mandáty.
-            Které volby si s námi chcete přepočítat?
-          </Typography>
           <Box mb={2}>
             <SimpleSelect rok={rok} setRok={setRok}></SimpleSelect>
           </Box>
@@ -52,7 +45,7 @@ function UvodniSlovo({ krok, rok, setRok, vysledky, postupuji }) {
             <SimpleSelect rok={rok} setRok={setRok}></SimpleSelect>
           </Box>{" "}
           <Typography paragraph={true} className={classes.vlevo}>
-            {`V roce ${rok}, který jste si vybrali, by podle všech dosud zvažovaných návrhů překonalo hranici pro vstup do sněmovny ${postupuji.CR.strana.length} stran, tedy stejně jako ve skutečnosti:`}
+            {`V roce ${rok}, který jste si vybrali, by podle dosavadního i nového systému překonalo hranici pro vstup do sněmovny ${postupuji.CR.strana.length} stran:`}
           </Typography>
           <Box display="flex" flexWrap="wrap" justifyContent="center" mb={2}>
             {postupuji.CR.strana.map((strana, i) => {

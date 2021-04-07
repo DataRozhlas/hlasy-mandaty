@@ -17,10 +17,10 @@ const jeMobil = window.innerWidth < 768;
 const kapitoly = [
   ["Voliči „rozdají karty“", "Jakou hru s nimi půjde hrát?"],
   ["Kdo se dostane sněmovny?", "A proč tak málo koalic"],
-  ["Čára mezi kandidáty a poslanci", "Mandátové číslo a jiné kvóty"],
+  ["Čára mezi kandidáty a poslanci", "Mandátové číslo"],
   [
     "Kolik poslanců má mít který kraj?",
-    "Rozhodoval počet obyvatel a účast",
+    "Rozhodne počet obyvatel a účast",
   ],
   ["První dělení mandátů mezi strany", "První skrutinium"],
   ["Rozdělení zbývajících mandátů", "Druhé skrutinium"],

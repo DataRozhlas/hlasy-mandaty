@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -57,7 +57,7 @@ function InfoPanel() {
           <GrafSnemovna
             rok={rokPanel}
             metoda={"dhondt"}
-            titulek={`${rokPanel}, skutečnost (D'Hondt)`}
+            titulek={`${rokPanel}, dosavadní systém`}
             jeMobil={true}
           ></GrafSnemovna>
         </Box>
@@ -65,23 +65,7 @@ function InfoPanel() {
           <GrafSnemovna
             rok={rokPanel}
             metoda={"benda"}
-            titulek={`${rokPanel}, návrh poslance Bendy`}
-            jeMobil={true}
-          ></GrafSnemovna>
-        </Box>
-        <Box style={{ maxWidth: 520, width: "100%" }} mb={4}>
-          <GrafSnemovna
-            rok={rokPanel}
-            metoda={"poslanci"}
-            titulek={`${rokPanel}, návrh poslanců KDU-ČSL`}
-            jeMobil={true}
-          ></GrafSnemovna>
-        </Box>
-        <Box style={{ maxWidth: 520, width: "100%" }} mb={4}>
-          <GrafSnemovna
-            rok={rokPanel}
-            metoda={"vnitro"}
-            titulek={`${rokPanel}, republika jako jeden kraj`}
+            titulek={`${rokPanel}, nový systém`}
             jeMobil={true}
           ></GrafSnemovna>
         </Box>

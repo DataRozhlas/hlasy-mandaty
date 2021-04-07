@@ -9,10 +9,10 @@ import DalsiButton from "./DalsiButton.jsx";
 import UvodniSlovo from "./UvodniSlovo.jsx";
 import Dhondt from "./Dhondt.jsx";
 import Benda from "./Benda.jsx";
-import Poslanci from "./Poslanci.jsx";
-import Vnitro1 from "./Vnitro1.jsx";
-import Vnitro2 from "./Vnitro2.jsx";
-import Senat from "./Senat.jsx";
+// import Poslanci from "./Poslanci.jsx";
+// import Vnitro1 from "./Vnitro1.jsx";
+// import Vnitro2 from "./Vnitro2.jsx";
+// import Senat from "./Senat.jsx";
 import ZaverecneSlovo from "./ZaverecneSlovo.jsx";
 
 const useStyles = makeStyles((theme) => {
@@ -118,7 +118,7 @@ function Akordeon({
           setKraj={setKraj}
           jeMobil={jeMobil}
         />
-        <Poslanci
+        {/* <Poslanci
           krok={krok}
           vysledky={jenPostupujiciStrany}
           rok={rok}
@@ -139,7 +139,7 @@ function Akordeon({
           vysledky={jenPostupujiciStrany}
           rok={rok}
           jeMobil={jeMobil}
-        />
+        /> */}
         <ZaverecneSlovo krok={krok} />
 
         {posledni ? null : (
