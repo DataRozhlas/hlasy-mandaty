@@ -1,5 +1,5 @@
 title: "Poslanci schválili nový způsob počítání voleb. Podívejte se, jak by podle nových pravidel dopadly ty předchozí"
-perex: "Hnutí ANO by mělo o devět poslanců méně, naopak klub STAN by o tři poslance poslance posílil. To jsou nejvýraznější změny při přepočtu výsledků posledních voleb podle kompromisního návrhu, na kterém se shodli poslanci. Projděte si celý přepočet krok za krokem a porovnejte si, jak by s novým zákonem vypadala sněmovna po volbách 2006, 2010, 2013 a 2017."
+perex: "Hnutí ANO by mělo o devět poslanců méně, naopak klub STAN by o tři poslance posílil. To jsou nejvýraznější změny při přepočtu výsledků posledních voleb podle kompromisního návrhu, na kterém se shodli poslanci. Projděte si celý přepočet krok za krokem a porovnejte si, jak by s novým zákonem vypadala sněmovna po volbách 2006, 2010, 2013 a 2017."
 styles: ["https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"]
 libraries: []
 options: [noheader, nopic] #wide, noheader (, nopic)
@@ -15,7 +15,7 @@ Celkově lze říci, že nový systém dál zvýhodňuje větší strany proti t
 
 Změny, na nichž se poslanecké frakce předem shodly, nyní posoudí Senát – zástupci sněmovny s ním úpravy předem projednal. Sněmovna neschválila žádnou z úprav, která by zavedla možnost korespondenčního hlasování ze zahraničí.
 
-V interaktivní kalkulačce serveru iROZHLAS.cz si můžete nově navržený a původní přepočet porovnat krok za krokem. Můžete zkusit také předchozí verzi, která zahrnuje i čistě poměrné návrhy ministerstva vnitra a lidoveckých poslanců či variantu s jediným volbením krajem, kterou poslanci zavrhli, protože pro ni nenašli podporu v Senátu.
+V interaktivní kalkulačce serveru iROZHLAS.cz si můžete nově navržený a původní přepočet porovnat krok za krokem. Můžete zkusit také [předchozí verzi, která zahrnuje i čistě poměrné návrhy ministerstva vnitra a lidoveckých poslanců či variantu s jediným volbením krajem](https://www.irozhlas.cz/zpravy-domov/volby-snemovna-hlasy-mandaty_2103280500_pek), kterou poslanci zavrhli, protože pro ni nenašli podporu v Senátu.
 
 <wide>
 <div id="kalkulacka"></div>
